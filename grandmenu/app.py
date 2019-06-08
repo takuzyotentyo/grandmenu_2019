@@ -124,7 +124,7 @@ def create_menu():
             return render_template('menu_exist.html')
         menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.SECONDARY_NAME, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).all()
         print(menu_infos)
-        return render_template('create_menu_view.html',menu_infos=menu_infos)
+        return render_template('add_menu.html',menu_infos=menu_infos)
     return render_template('create_menu.html')
 
 @app.route('/revise_menu')
