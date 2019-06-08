@@ -5,68 +5,73 @@
   <meta charset="UTF-8" />
   <title>Ground menu.com</title>
   <link rel="stylesheet" href="../static/css/normalize.css">
-  <link rel="stylesheet" href="../static/css/style.css">
   <link rel="stylesheet" href="../static/css/reset.css">
+  <link rel="stylesheet" href="../static/scss/style.css">
+  <script src="../static/js/jquery-3.4.1.min.js"></script>
+  <script src="../static/js//jQuery UI - v1.11.3 - 2015-02-12.js"></script>
+  <script src="../static/js/script.js"></script>
 </head>
 
 <body>
   <header class="header">
-   <h1 class="site_title">
-      {% if session['logged_in'] %}
-      <a href="/index">Ground Menu.com</a>
-      {% endif %}
-   </h1>
-   <center>{{session.username}}</center>
-   <a href="/logout"><div align="right">ログアウト</div></a>
+    <div class="title">
+      <a href="/redirect" class="site_title">Ground Menu.com</a>
+    </div>
+    <div class="user-name-wrapper">
+    <div class="user-name-wrapper__user-name">{{session.username}}</div>
+    <div class="user-name-wrapper__logout"><a href="/logout">ログアウト</a></div>
+    </div>
 
-  </header>
+    <nav class="global-nav-wrapper">
 
-  <section class="wrapper_global_navi">
-    <nav class="global_navi">
-     <li class="global_navi_first">
-         <a href="#" class="global_navi_bottom">店舗・メニュー</a>
-         <ul class="global_navi_second">
-             <li><a href="/add_menu">メニュー表登録・修正</a></li>
-             <li><a href="#">アップロード確認</a></li>
-             <li><a href="#">QRコード発行</a></li>
-             <li><a href="#">店舗情報登録・修正</a></li>
+     <li class="global-nav-wrapper__global-nav-1">
+         <a href="" class="global-nav-wrapper__global-nav-button">店舗・メニュー</a>
+         <ul class="global-nav-wrapper__global-nav-2">
+             <li class="global-nav-wrapper__global-nav-content"><a href="/add_menu">メニュー表登録・修正</a></li>
+             <li class="global-nav-wrapper__global-nav-content"><a href="">アップロード確認</a></li>
+             <li class="global-nav-wrapper__global-nav-content"><a href="">QRコード発行</a></li>
+             <li class="global-nav-wrapper__global-nav-content"><a href="/store_information">店舗情報登録・修正</a></li>
          </ul>
      </li>
 
-     <li class="global_navi_first">
-         <a href="#" class="global_navi_bottom">採用・広告</a>
-         <ul class="global_navi_second">
-             <li><a href="#">採用広告を出す</a></li>
-             <li><a href="#">採用基礎情報入力</a></li>
+     <li class="global-nav-wrapper__global-nav-1">
+         <a href="" class="global-nav-wrapper__global-nav-button">採用・広告</a>
+         <ul class="global-nav-wrapper__global-nav-2">
+             <li class="global-nav-wrapper__global-nav-content"><a href="">採用広告を出す</a></li>
+             <li class="global-nav-wrapper__global-nav-content"><a href="">採用基礎情報入力</a></li>
          </ul>
      </li>
 
-     <li class="global_navi_first">
-         <a href="#" class="global_navi_bottom">データ確認</a>
-         <ul class="global_navi_second">
-             <li><a href="#">店舗のデータを見る</a></li>
-             <li><a href="#">地域のデータを見る</a></li>
-             <li><a href="#">データダウンロード</a></li>
+     <li class="global-nav-wrapper__global-nav-1">
+         <a href="" class="global-nav-wrapper__global-nav-button">データ確認</a>
+         <ul class="global-nav-wrapper__global-nav-2">
+             <li class="global-nav-wrapper__global-nav-content"><a href="">店舗のデータを見る</a></li>
+             <li class="global-nav-wrapper__global-nav-content"><a href="">地域のデータを見る</a></li>
+             <li class="global-nav-wrapper__global-nav-content"><a href="">データダウンロード</a></li>
          </ul>
      </li>
 
-     <li class="global_navi_first">
-         <a href="#" class="global_navi_bottom">融資</a>
-         <ul class="global_navi_second">
-             <li><a href="#">融資を受ける</a></li>
-             <li><a href="#">返済プランを見る</a></li>
+     <li class="global-nav-wrapper__global-nav-1">
+         <a href="" class="global-nav-wrapper__global-nav-button">融資</a>
+         <ul class="global-nav-wrapper__global-nav-2">
+             <li class="global-nav-wrapper__global-nav-content"><a href="">融資を受ける</a></li>
+             <li class="global-nav-wrapper__global-nav-content"><a href="">返済プランを見る</a></li>
          </ul>
      </li>
      <!-- 他グローバルナビメニュー入れるならここ -->
-  </nav>
-</section>
-{% block global_navi %}{% endblock %}
+    </nav>
+  </header>
+<!-- ヘッダーの後ろにスペースを埋めるアジャスターを入れる -->
+  <div class="header-adjustment"></div>
 
-<footer class="footer">
-   <h1 class="site_title">
-   <a href="/index">Ground Menu.com</a></h1>
-</footer>
+  <div class="base-picture">
+  {% block global_navi %}{% endblock %}
+  </div>
 
- </body>
+  <footer class="footer">
+    <div class="title">
+      <a href="/index">Ground Menu.com</a></div>
+  </footer>
+</body>
 
 </html>
