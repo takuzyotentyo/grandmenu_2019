@@ -16,7 +16,9 @@ from sqlalchemy.orm.exc import NoResultFound
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'secret key'
+#DBの向き先スイッチング
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://efyhucxwisbkfm:65bd9fb1a4769a3eb1eb533d70bd2fd2621d339b7821350f99f8e25b85656902@ec2-184-73-169-163.compute-1.amazonaws.com:5432/dbu4difidq79a9"
+#app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://localhost/postgres"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
