@@ -1,0 +1,17 @@
+@import "../setting/setting.scss";
+@import "../mixin/mixin.scss";
+.menu-box{
+	@include menu-box;
+	&__add{
+		@include menu-box;
+		font-size: 150px;
+		text-align: center;
+		padding:50px;
+	}
+	&__delete{
+		@include menu-box;
+		font-size: 150px;
+		text-align: center;
+		padding:50px;
+	}
+}

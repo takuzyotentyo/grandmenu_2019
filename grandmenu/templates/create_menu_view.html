@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="../static/css/style.css">
+  <title>メニュー一覧</title>
+
+</head>
+
+<body>
+
+  <h1>作成したmenuのリストを表示するスペース</h1>
+  <form action="/menu_list" method="post">
+  <h1>食べ物</h1>
+  {% for menu_info in menu_infos %}
+  {% if menu_info[0] == "food" %}
+ <div class="cp_ipcheck">
+  <!-- <button class="btn-square-so-pop">{{menu_info[1]}} {{menu_info[2]}}円</button> -->
+  <input type="checkbox" name="food_" id={{menu_info[1]}} value={{menu_info[1]}}>
+  <label for={{menu_info[1]}}>{{menu_info[1]}} {{menu_info[2]}}円</label>
+ </div>
+  {% endif %}
+  {% endfor %}
+
+  <h1>飲み物</h1>
+  {% for menu_info in menu_infos %}
+  {% if menu_info[0] == "drink" %}
+  <!-- <li>{{menu_info[1]}} {{menu_info[2]}}円</li> -->
+ <div class="cp_ipcheck">
+  <!-- <button class="btn-square-so-pop">{{menu_info[1]}} {{menu_info[2]}}円</button> -->
+  <input type="checkbox" name="drink_" id={{menu_info[1]}} value={{menu_info[1]}}>
+  <label for="{{menu_info[1]}}">{{menu_info[1]}} {{menu_info[2]}}円</label>
+ </div>
+  {% endif %}
+  {% endfor %}
+  <br>
+  <button class="button" type="submit">
+    <span>確定</span>
+    <span>削除</span>
+  </button>
+  </form>
+  <br>
+  <a href="/create_menu">メニュー作成へ戻る</a>
+
+</body>
+</html>

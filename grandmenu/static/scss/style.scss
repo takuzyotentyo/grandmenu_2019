@@ -1,0 +1,30 @@
+/* 「_」抜きの名前でインポートできる
+順番は
+setting
+base
+block
+の順とする*/
+
+/*====================
+settingのインポート
+====================*/
+@import "./setting/setting.scss";
+@import "./setting/global.scss";
+
+/*====================
+mixinのインポート
+====================*/
+@import "./mixin/mixin.scss";
+/*====================
+blockのインポート
+====================*/
+@import "./block/lightbox.scss";
+@import "./block/header.scss";
+@import "./block/base-picture.scss";
+@import "./block/column.scss";
+@import "./block/welcome_text.scss";
+@import "./block/footer.scss";
+@import "./block/form-text.scss";
+@import "./block/select-box.scss";
+@import "./block/form-button.scss";
+@import "./block/menu-box.scss";

@@ -1,0 +1,13 @@
+ /*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+@import "../setting/setting.scss";
+
+.base-picture {
+	display: block;
+    position: relative;
+    width: $width-base;
+    height: $height-base;
+	background: url('../img/top.jpg');
+    background-size: cover;
+    padding: 0px;
+}

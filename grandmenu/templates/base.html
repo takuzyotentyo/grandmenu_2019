@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Ground menu.com</title>
+  <link rel="stylesheet" href="../static/css/normalize.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/reset.css">
+</head>
+
+<body>
+  <header class="header">
+   <h1 class="site_title">
+      {% if session['logged_in'] %}
+      <a href="/index">Ground Menu.com</a>
+      {% endif %}
+   </h1>
+   <center>{{session.username}}</center>
+   <a href="/logout"><div align="right">ログアウト</div></a>
+
+  </header>
+
+  <section class="wrapper_global_navi">
+    <nav class="global_navi">
+     <li class="global_navi_first">
+         <a href="#" class="global_navi_bottom">店舗・メニュー</a>
+         <ul class="global_navi_second">
+             <li><a href="/add_menu">メニュー表登録・修正</a></li>
+             <li><a href="#">アップロード確認</a></li>
+             <li><a href="#">QRコード発行</a></li>
+             <li><a href="#">店舗情報登録・修正</a></li>
+         </ul>
+     </li>
+
+     <li class="global_navi_first">
+         <a href="#" class="global_navi_bottom">採用・広告</a>
+         <ul class="global_navi_second">
+             <li><a href="#">採用広告を出す</a></li>
+             <li><a href="#">採用基礎情報入力</a></li>
+         </ul>
+     </li>
+
+     <li class="global_navi_first">
+         <a href="#" class="global_navi_bottom">データ確認</a>
+         <ul class="global_navi_second">
+             <li><a href="#">店舗のデータを見る</a></li>
+             <li><a href="#">地域のデータを見る</a></li>
+             <li><a href="#">データダウンロード</a></li>
+         </ul>
+     </li>
+
+     <li class="global_navi_first">
+         <a href="#" class="global_navi_bottom">融資</a>
+         <ul class="global_navi_second">
+             <li><a href="#">融資を受ける</a></li>
+             <li><a href="#">返済プランを見る</a></li>
+         </ul>
+     </li>
+     <!-- 他グローバルナビメニュー入れるならここ -->
+  </nav>
+</section>
+{% block global_navi %}{% endblock %}
+
+<footer class="footer">
+   <h1 class="site_title">
+   <a href="/index">Ground Menu.com</a></h1>
+</footer>
+
+ </body>
+
+</html>

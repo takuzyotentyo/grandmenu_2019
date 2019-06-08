@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block global_navi %}
+ <div class="box">
+  <div class="container_column">
+
+  <form action="/create_menu" method="post">
+  <div class="container_column">
+  <div class="content_box">
+    <input class="form" type="text" name="name_of_dish" placeholder="料理名" required>
+  </div>
+
+  <div class="content_box">
+     <input class="form" type="number" name="price" placeholder="金額" required>
+  </div>
+
+  <div class="content_box">
+  <div class="select-wrap select-circle">
+  <select name="food_drink">
+    <option value="food">食べ物</option>
+    <option value="drink">飲み物</option>
+  </select>
+  </div>
+  </div>
+
+  <div class="content_box">
+    <button class="button" type="submit">
+      <span>確定</span>
+      <span>登録</span>
+    </button>
+  </div>
+  </div>
+
+    <a href="/menu_list">Menu一覧表示</a>
+  </form>
+
+  </div>
+ </div>
+{% endblock %}

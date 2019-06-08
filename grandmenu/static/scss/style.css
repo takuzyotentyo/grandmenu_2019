@@ -1,0 +1,493 @@
+@charset "UTF-8";
+/* 「_」抜きの名前でインポートできる
+順番は
+setting
+base
+block
+の順とする*/
+/*====================
+settingのインポート
+====================*/
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+/*====================
+サイトのglobal設定
+====================*/
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+/*リンクは基本白表示*/
+a {
+  color: #fff;
+  text-decoration: none; }
+
+body {
+  font-family: "Yu gothic", sans-serif; }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0; }
+
+select {
+  outline: none;
+  -o-text-overflow: '';
+  text-overflow: '';
+  /*テキストがオーバーフローした際に””で表示*/
+  vertical-align: auto;
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center; }
+
+/*====================
+mixinのインポート
+====================*/
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+/*====================
+blockのインポート
+====================*/
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.lightbox {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*上下中央揃え*/
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(7, 42, 36, 0.3);
+  top: 0;
+  left: 0;
+  padding: auto;
+  display: none; }
+
+/*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.header {
+  background-color: #FFA500;
+  height: 110px;
+  padding: 6px,auto,5px,auto;
+  position: fixed;
+  width: 100vw;
+  z-index: 999; }
+
+.title {
+  background-color: #FFA500;
+  font-size: 28px;
+  padding: 7px;
+  text-align: center; }
+
+/*ユーザーネームと、ログアウトボタンを同一行に表示するために必要*/
+.user-name-wrapper {
+  background-color: #FFA500;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /* 子要素を中央揃え */
+  position: relative;
+  padding: 5px; }
+  .user-name-wrapper__user-name {
+    color: #ffffff;
+    font-size: 16px; }
+  .user-name-wrapper__logout {
+    font-size: 16px;
+    position: absolute;
+    right: 10px;
+    /* 右寄せ */ }
+
+/*4つのグローバルナビのボタンの親要素*/
+.global-nav-wrapper {
+  background-color: #FFA500;
+  line-height: 40px;
+  max-width: 1000px;
+  margin: auto;
+  position: relative;
+  width: 100%;
+  /*ボタンの後につく下矢印の設定*/ }
+  .global-nav-wrapper__global-nav-1 {
+    float: left;
+    font-size: 16px;
+    list-style: none;
+    position: relative;
+    text-align: center;
+    width: 25%;
+    /* グローバルナビ4つの場合 */ }
+  .global-nav-wrapper__global-nav-button:after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-right: 1px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
+    margin: 0 0 4px 8px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg); }
+  .global-nav-wrapper__global-nav-2 {
+    background-color: #072A24;
+    display: none; }
+    .global-nav-wrapper__global-nav-2 li {
+      border-top: 1px solid #111111; }
+      .global-nav-wrapper__global-nav-2 li a {
+        color: #ffffff; }
+  .global-nav-wrapper__global-nav-1:hover {
+    background-color: #072A24;
+    -webkit-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s; }
+    .global-nav-wrapper__global-nav-1:hover .global-nav-wrapper__global-nav-2 {
+      display: block; }
+      .global-nav-wrapper__global-nav-1:hover .global-nav-wrapper__global-nav-2 .global-nav-wrapper__global-nav-content:hover {
+        background-color: #111111; }
+        .global-nav-wrapper__global-nav-1:hover .global-nav-wrapper__global-nav-2 .global-nav-wrapper__global-nav-content:hover a {
+          color: #999999; }
+
+/*ヘッダーの裏にアジャスターを入れることで、固定しながらコンテンツ表示領域の計算を簡単にしている*/
+.header-adjustment {
+  position: relative;
+  width: 100vw;
+  height: 110px; }
+
+/*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.base-picture {
+  display: block;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: url("../img/top.jpg");
+  background-size: cover;
+  padding: 0px; }
+
+/*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.single-column {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center; }
+
+.multi-column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  width: 100vw; }
+
+.menu-add {
+  background-color: #FFA500;
+  color: #ffffff;
+  font-size: 150px;
+  height: 250px;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-top: 20px;
+  opacity: 0.8;
+  padding: 50px;
+  position: relative;
+  text-align: center;
+  width: 23%; }
+
+.menu-list {
+  color: #ffffff;
+  background-color: #FFA500;
+  height: 250px;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-top: 20px;
+  opacity: 0.8;
+  position: relative;
+  width: 23%; }
+
+/*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.welcome-title {
+  display: block;
+  text-align: center;
+  position: relative;
+  margin: 0 auto 40px auto;
+  font-size: 32px;
+  color: #ffffff; }
+
+.welcome-text {
+  display: block;
+  font-size: 16px;
+  width: 300px;
+  margin-top: 40px;
+  line-height: 30px;
+  text-align: left;
+  color: #ffffff; }
+
+/*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.footer {
+  position: relative;
+  background-color: #FFA500;
+  height: 50px;
+  padding: 6px;
+  width: 100vw; }
+
+/*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.form-text {
+  width: 250px;
+  height: 50px;
+  line-height: 30px;
+  display: block;
+  position: relative;
+  margin: 10px auto 10px auto;
+  border: solid 2px #FFA500;
+  padding: 8px 0 8px 17px;
+  border-radius: 5px;
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(50%, #fff), color-stop(50%, #072A24));
+  background-image: -webkit-linear-gradient(left, #fff 50%, #072A24 50%);
+  background-image: -o-linear-gradient(left, #fff 50%, #072A24 50%);
+  background-image: linear-gradient(to right, #fff 50%, #072A24 50%);
+  background-position: 0 0;
+  background-size: 200% auto;
+  -webkit-transition: all .2s ease 0s;
+  -o-transition: all .2s ease 0s;
+  transition: all .2s ease 0s;
+  text-decoration: none; }
+  .form-text:hover {
+    background-position: -100% 0;
+    color: #fff; }
+
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.select-box > select {
+  width: 50px;
+  height: 50px;
+  margin: 10px auto 10px auto;
+  display: block;
+  padding: 8px 0 8px 17px;
+  letter-spacing: 2em;
+  color: #ffffff;
+  background: #FFA500;
+  overflow: hidden;
+  -webkit-transition: all 0.2s cubic-bezier(1, 0, 0, 1);
+  -o-transition: all 0.2s cubic-bezier(1, 0, 0, 1);
+  transition: all 0.2s cubic-bezier(1, 0, 0, 1);
+  border-style: none; }
+  .select-box > select:hover {
+    width: 250px; }
+
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.form-button {
+  display: block;
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  width: 250px;
+  height: 50px;
+  margin: 10px auto 10px auto;
+  border-radius: 5px;
+  border-style: none; }
+  .form-button > span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 50px;
+    -webkit-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+    pointer-events: none;
+    border-radius: 5px; }
+    .form-button > span:nth-child(1) {
+      background-color: #072A24;
+      color: #ffffff; }
+    .form-button > span:nth-child(2) {
+      background-color: #FFA500;
+      color: #ffffff;
+      -webkit-transform-origin: 50% 50% -30px;
+      -ms-transform-origin: 50% 50% -30px;
+      transform-origin: 50% 50% -30px; }
+  .form-button:hover span:nth-child(2) {
+    background-color: #072A24;
+    -webkit-transform: rotateX(-90deg);
+    transform: rotateX(-90deg); }
+
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.menu-box {
+  color: #ffffff;
+  background-color: #FFA500;
+  height: 250px;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-top: 20px;
+  opacity: 0.8;
+  position: relative;
+  width: 23%; }
+  .menu-box__add {
+    color: #ffffff;
+    background-color: #FFA500;
+    height: 250px;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 20px;
+    opacity: 0.8;
+    position: relative;
+    width: 23%;
+    font-size: 150px;
+    text-align: center;
+    padding: 50px; }
+  .menu-box__delete {
+    color: #ffffff;
+    background-color: #FFA500;
+    height: 250px;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 20px;
+    opacity: 0.8;
+    position: relative;
+    width: 23%;
+    font-size: 150px;
+    text-align: center;
+    padding: 50px; }
