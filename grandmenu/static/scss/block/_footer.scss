@@ -3,10 +3,11 @@
 @import "../setting/setting.scss";
 
 .footer{
-	position: relative;
+	position: fixed;
 	background-color: $color-main;
 	height: 50px;
 	padding: 6px;
 	width: $width-base;
+	bottom: 0;
 }
 

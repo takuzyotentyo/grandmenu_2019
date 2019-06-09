@@ -2,16 +2,23 @@
 @import "../mixin/mixin.scss";
 .menu-box{
 	@include menu-box;
+	font-size:$text-subtitle;
 	&__add{
 		@include menu-box;
-		font-size: 150px;
+		font-size: 75px;
 		text-align: center;
-		padding:50px;
+		margin-top:20px;
+		padding: 12.5px;
+		margin-top:20px;
+		margin-bottom:20px;
 	}
 	&__delete{
 		@include menu-box;
-		font-size: 150px;
+		font-size: 75px;
 		text-align: center;
-		padding:50px;
+		margin-top:20px;
+		padding: 12.5px;
+		margin-top:20px;
+		margin-bottom:20px;
 	}
 }
