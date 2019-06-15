@@ -1,8 +1,10 @@
 #coding:utf-8
 
+# Flaskのインポート
 from flask import Flask, render_template, session, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+# psycopg2のインポート
 import psycopg2
 
 #SQLAlchemy必要に応じて適宜導入
@@ -16,11 +18,21 @@ from sqlalchemy.orm.exc import NoResultFound
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'secret key'
+
 #DBの向き先スイッチング
+# AWSを使う場合
 #app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://efyhucxwisbkfm:65bd9fb1a4769a3eb1eb533d70bd2fd2621d339b7821350f99f8e25b85656902@ec2-184-73-169-163.compute-1.amazonaws.com:5432/dbu4difidq79a9"
+
+
+# ローカルのDBを使う場合
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://localhost/postgres"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# SQLAlchemyを使うことの宣言
 db = SQLAlchemy(app)
+
+
+
 
 # 関数エリア-Start
 #ハッシュパスワードを作成する関数
@@ -83,8 +95,19 @@ def login():
 def registration():
     return render_template('registration.html')
 
-@app.route('/add_menu')
+# メニューリスト表示
+@app.route('/add_menu' , methods = ['POST', 'GET'])
 def add_menu():
+
+        menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.SECONDARY_NAME, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).\
+            order_by(Food_Drink.SECONDARY_NAME).\
+            all()
+
+        return render_template('add_menu.html',menu_infos=menu_infos)
+
+# メニュー削除
+@app.route('/delete_menu' , methods = ['POST', 'GET'])
+def delete_menu():
         if request.method == 'POST':
             try:
                 menu_list_food = request.form.getlist("food_")
@@ -106,10 +129,13 @@ def add_menu():
                 db.session.query(Food_Drink).filter(Food_Drink.NAME_OF_DISH==menu_list_drink[j]).delete()
                 db.session.commit()
 
-        menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.SECONDARY_NAME, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).all()
-        return render_template('add_menu.html',menu_infos=menu_infos)
-    #return render_template('add_menu.html')
+        menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.SECONDARY_NAME, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).\
+            order_by(Food_Drink.SECONDARY_NAME).\
+            all()
 
+        return render_template('add_menu.html',menu_infos=menu_infos)
+
+# メニュー作成
 @app.route('/create_menu', methods = ['POST', 'GET'])
 def create_menu():
     if request.method == 'POST':
@@ -122,41 +148,17 @@ def create_menu():
             db.session.commit()
         except:#menuの重複検知
             return render_template('menu_exist.html')
-        menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.SECONDARY_NAME, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).all()
-        print(menu_infos)
+        menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.SECONDARY_NAME, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).\
+            order_by(Food_Drink.SECONDARY_NAME).\
+            all()
+
         return render_template('add_menu.html',menu_infos=menu_infos)
-    return render_template('create_menu.html')
+    return render_template('add_menu.html')
 
 @app.route('/revise_menu')
 def revise_menu():
     return "未実装"
 
-
-@app.route('/menu_list', methods = ['POST', 'GET'])
-def menu_list():
-    if request.method == 'POST':
-        try:
-            menu_list_food = request.form.getlist("food_")
-            print(menu_list_food)
-            print(len(menu_list_food))
-        except:#この処理必要ない気がする
-            menu_list_food = None
-        try:
-            menu_list_drink = request.form.getlist("drink_")
-        except:#この処理必要ない気がする
-            menu_list_drink = None
-
-        # if len(menu_list_food) != 0:
-        for i in range(len(menu_list_food)):
-            db.session.query(Food_Drink).filter(Food_Drink.NAME_OF_DISH==menu_list_food[i]).delete()
-            db.session.commit()
-
-        for j in range(len(menu_list_drink)):
-            db.session.query(Food_Drink).filter(Food_Drink.NAME_OF_DISH==menu_list_drink[j]).delete()
-            db.session.commit()
-
-    menu_infos = db.session.query(Food_Drink.KIND, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).all()
-    return render_template('create_menu_view.html',menu_infos=menu_infos)
 
 @app.route("/index", methods = ['POST', 'GET'])
 def index():

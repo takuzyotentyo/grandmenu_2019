@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% block global_navi %}
+<form method=post action="/delete_menu">
 <div class="multi-column">
 <div class="menu-box__add">＋</div>
-<div class="menu-box__delete">-</div>
+<button class="menu-box__delete" type="submit">-</button>
 
+<!-- 以下バックアップ
 <div class="column-2">
 <div class="menu-box">Food</div>
 <div class="sortable">
 {% for menu_info in menu_infos %}
 {% if menu_info[1] == "food" %}
 <div class="menu-box">
-<!-- menue_infoが、大分類、中分類、品名、値段になっているため、id,valueは、2を選択 -->
+
 <input  type="checkbox" name="food_" id={{menu_info[3]}} value={{menu_info[3]}}>
 <label for={{menu_info[3]}}>{{menu_info[2]}} / {{menu_info[3]}} / {{menu_info[4]}}円</label>
 </div>
@@ -25,7 +27,6 @@
 {% for menu_info in menu_infos %}
 {% if menu_info[1] == "drink" %}
 <div class="menu-box">
-<!-- menue_infoが、大分類、中分類、品名、値段になっているため、id,valueは、2を選択 -->
 <input type="checkbox" name="drink_" id={{menu_info[3]}} value={{menu_info[3]}}>
 <label for="{{menu_info[3]}}">{{menu_info[2]}} / {{menu_info[3]}} / {{menu_info[4]}}円</label>
 </div>
@@ -33,6 +34,39 @@
 {% endfor %}
 </div>
 </div>
+以上バックアップ -->
+
+<!-- 以下実験 -->
+<div class="column-2">
+<div class="menu-box">Food</div>
+<div class="sortable">
+{% for menu_info in menu_infos %}
+{% if menu_info[1] == "food" %}
+<div class="menu-box">
+
+<input  type="checkbox" name="food_" id={{menu_info[0]}} value={{menu_info[3]}}>
+<label for={{menu_info[3]}}>{{menu_info[2]}} {{menu_info[3]}} {{menu_info[4]}}円</label>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+
+<div class="column-2">
+<div class="menu-box">Drink</div>
+<div class="sortable">
+{% for menu_info in menu_infos %}
+{% if menu_info[1] == "drink" %}
+<div class="menu-box">
+<input type="checkbox" name="drink_" id={{menu_info[0]}} value={{menu_info[3]}}>
+<label for={{menu_info[3]}}>{{menu_info[2]}} {{menu_info[3]}} {{menu_info[4]}}円</label>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+<!-- 以上実験 -->
+</form>
 
 
 <div class="lightbox">
@@ -47,7 +81,7 @@
   	</div>
     <input class="form-text" type="text" name="secondary_name" placeholder="分類" required>
     <button class="form-button" type="submit">
-      <span>確定</span>
+      <span><a href="/add_menu">確定</a></span>
       <span>登録</span>
     </button>
 	</form>
