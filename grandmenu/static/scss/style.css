@@ -496,17 +496,17 @@ blockのインポート
 .menu-box {
   color: #ffffff;
   background-color: #FFA500;
-  height: 100px;
+  height: 50px;
   margin-left: 1vw;
   margin-right: 1vw;
   opacity: 0.8;
   position: relative;
   width: 48vw;
-  font-size: 28px; }
+  font-size: 16px; }
   .menu-box__add {
     color: #ffffff;
     background-color: #FFA500;
-    height: 100px;
+    height: 50px;
     margin-left: 1vw;
     margin-right: 1vw;
     opacity: 0.8;
@@ -521,7 +521,7 @@ blockのインポート
   .menu-box__delete {
     color: #ffffff;
     background-color: #FFA500;
-    height: 100px;
+    height: 50px;
     margin-left: 1vw;
     margin-right: 1vw;
     opacity: 0.8;
@@ -533,3 +533,83 @@ blockのインポート
     padding: 12.5px;
     margin-top: 20px;
     margin-bottom: 20px; }
+
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.button {
+  display: inline-block;
+  text-decoration: none;
+  background: #FFA500;
+  color: #FFF;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  border-radius: 50%;
+  text-align: center;
+  overflow: hidden;
+  -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
+  box-shadow: 0px 0px 0px 5px #FFA500;
+  border: dashed 2px #FFF;
+  -webkit-transition: .4s;
+  -o-transition: .4s;
+  transition: .4s;
+  font-size: 100px; }
+  .button__add {
+    display: inline-block;
+    text-decoration: none;
+    background: #FFA500;
+    color: #FFF;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
+    box-shadow: 0px 0px 0px 5px #FFA500;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    position: fixed;
+    right: 200px;
+    bottom: 100px; }
+  .button__delete {
+    display: inline-block;
+    text-decoration: none;
+    background: #FFA500;
+    color: #FFF;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
+    box-shadow: 0px 0px 0px 5px #FFA500;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    position: fixed;
+    right: 100px;
+    bottom: 100px; }
+
+.button__add:hover {
+  background: #111111;
+  -webkit-box-shadow: 0px 0px 0px 5px #111111;
+  box-shadow: 0px 0px 0px 5px #111111; }
+
+.button__delete:hover {
+  background: #111111;
+  -webkit-box-shadow: 0px 0px 0px 5px #111111;
+  box-shadow: 0px 0px 0px 5px #111111; }

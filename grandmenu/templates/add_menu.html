@@ -2,8 +2,6 @@
 {% block global_navi %}
 <form method=post action="/delete_menu">
 <div class="multi-column">
-<div class="menu-box__add">＋</div>
-<button class="menu-box__delete" type="submit">-</button>
 
 <!-- 以下バックアップ
 <div class="column-2">
@@ -13,8 +11,8 @@
 {% if menu_info[1] == "food" %}
 <div class="menu-box">
 
-<input  type="checkbox" name="food_" id={{menu_info[3]}} value={{menu_info[3]}}>
-<label for={{menu_info[3]}}>{{menu_info[2]}} / {{menu_info[3]}} / {{menu_info[4]}}円</label>
+<input  type="checkbox" name="food_" id={{menu_info[0]}} value={{menu_info[3]}}>
+<label for={{menu_info[3]}}>{{menu_info[2]}} {{menu_info[3]}} {{menu_info[4]}}円</label>
 </div>
 {% endif %}
 {% endfor %}
@@ -27,8 +25,8 @@
 {% for menu_info in menu_infos %}
 {% if menu_info[1] == "drink" %}
 <div class="menu-box">
-<input type="checkbox" name="drink_" id={{menu_info[3]}} value={{menu_info[3]}}>
-<label for="{{menu_info[3]}}">{{menu_info[2]}} / {{menu_info[3]}} / {{menu_info[4]}}円</label>
+<input type="checkbox" name="drink_" id={{menu_info[0]}} value={{menu_info[3]}}>
+<label for={{menu_info[3]}}>{{menu_info[2]}} {{menu_info[3]}} {{menu_info[4]}}円</label>
 </div>
 {% endif %}
 {% endfor %}
@@ -66,6 +64,8 @@
 </div>
 </div>
 <!-- 以上実験 -->
+<div class="button__add">＋</div>
+<button class="button__delete" type="submit">ー</button>
 </form>
 
 

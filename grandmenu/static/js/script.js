@@ -1,6 +1,6 @@
 // Lightboxの追加関数
 $(function() {
-	$(".menu-box__add").click(function(){
+	$(".button__add").click(function(){
 		$(".lightbox").css(
         "display", "flex"
     	);

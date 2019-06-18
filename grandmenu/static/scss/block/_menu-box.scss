@@ -2,7 +2,7 @@
 @import "../mixin/mixin.scss";
 .menu-box{
 	@include menu-box;
-	font-size:$text-subtitle;
+	font-size:$text-body;
 	&__add{
 		@include menu-box;
 		font-size: 75px;
