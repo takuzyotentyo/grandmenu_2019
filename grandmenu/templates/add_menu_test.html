@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block global_navi %}
+<form method=post action="/delete_menu">
+<div class="multi-column">
+
+<!-- 以下実験 -->
+<div class="column-2">
+<div class="menu-box">Food</div>
+<div class="sortable">
+  {% for class_middle in class_middles %}
+  {% if class_middle[1] == "food" %}
+<div class="menu-box">
+<input  type="checkbox" name="class_middle_food" id=# value={{class_middle[0]}}>
+<label for={{class_middle[0]}}>{{class_middle[0]}}</label>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+
+<div class="column-2">
+<div class="menu-box">Drink</div>
+<div class="sortable">
+{% for class_middle in class_middles %}
+{% if class_middle[1] == "drink" %}
+<div class="menu-box">
+<input type="checkbox" name="class_middle_drink" id=# value={{class_middle[0]}}>
+<label for={{class_middle[0]}}>{{class_middle[0]}}</label>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+<!-- 以上実験 -->
+<div class="button__add">＋</div>
+<button class="button__delete" type="submit">ー</button>
+</form>
+
+
+<div class="lightbox">
+  	<form action="/create_menu" method="post">
+    <input class="form-text" type="text" name="name_of_dish" placeholder="料理名" required>
+    <input class="form-text" type="number" name="price" placeholder="金額" required>
+  	<div class="select-box">
+  		<select class="select-box" name="food_drink">
+   			<option value="food">食べ物</option>
+    		<option value="drink">飲み物</option>
+  		</select>
+  	</div>
+    <input class="form-text" type="text" name="class_middle" placeholder="分類" required>
+    <button class="form-button" type="submit">
+      <span><a href="/add_menu">確定</a></span>
+      <span>登録</span>
+    </button>
+	</form>
+</div>
+{% endblock %}
