@@ -104,8 +104,8 @@ def add_menu():
         class_middles = db.session.query(Food_Drink.CLASS_MIDDLE, Food_Drink.KIND).\
             distinct(Food_Drink.CLASS_MIDDLE).\
             all()
-        #return render_template('add_menu.html',menu_infos=menu_infos)#froalaデバッグ
-        return render_template('froala.html', class_middles=class_middles, menu_infos=menu_infos)
+        return render_template('add_menu.html',menu_infos=menu_infos)#froalaデバッグ
+        # return render_template('froala.html', class_middles=class_middles, menu_infos=menu_infos)
 
 # メニュー削除
 @app.route('/delete_menu' , methods = ['POST', 'GET'])
@@ -156,8 +156,8 @@ def create_menu():
         class_middles = db.session.query(Food_Drink.CLASS_MIDDLE, Food_Drink.KIND).\
             distinct(Food_Drink.CLASS_MIDDLE).\
             all()
-        # return render_template('add_menu.html',menu_infos=menu_infos)#froalaデバッグ
-        return render_template('froala.html', class_middles=class_middles, menu_infos=menu_infos)
+        return render_template('add_menu.html',menu_infos=menu_infos)#froalaデバッグ
+        # return render_template('froala.html', class_middles=class_middles, menu_infos=menu_infos)
     return render_template('add_menu.html')
 
 @app.route('/revise_menu')
