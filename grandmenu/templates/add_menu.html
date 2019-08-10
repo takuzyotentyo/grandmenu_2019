@@ -6,15 +6,26 @@
 <div class="column-2">
 <div class="menu-box">Food</div>
 <div class="sortable">
-  {% for class_middle in class_middles %}
-  {% if class_middle[1] == "food" %}
+
+{% for class_middle in class_middles %}
+{% if class_middle[1] == "food" %}
 <div class="menu-box">
 <input  type="checkbox" name="class_middle_food" id=# value={{class_middle[0]}} clsss={{class_middle[0]}}>
 <label for={{class_middle[0]}}>{{class_middle[0]}}</label>
 </div>
 {% endif %}
 {% endfor %}
+
 </div>
+
+{% for menu_info in menu_infos %}
+<div class="menu-box">
+    <div class="{{menu_info[2]}} lightbox__menulist">
+    <label for={{menu_info[0]}}>{{menu_info[3]}} ¥{{menu_info[4]}}</label>
+    </div>
+</div>
+  {% endfor %}
+
 </div>
 
 <div class="column-2">

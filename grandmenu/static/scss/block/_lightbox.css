@@ -1,0 +1,45 @@
+@charset "UTF-8";
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.lightbox {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*上下中央揃え*/
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(7, 42, 36, 0.3);
+  top: 0;
+  left: 0;
+  padding: auto;
+  display: none; }
+
+.lightbox__menulist {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*上下中央揃え*/
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(7, 42, 36, 0.3);
+  top: 0;
+  left: 0;
+  padding: auto;
+  display: none; }
