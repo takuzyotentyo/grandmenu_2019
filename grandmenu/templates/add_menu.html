@@ -38,12 +38,11 @@
 <div class="column-2">
 <div class="menu-box">Food</div>
 <div class="sortable">
-{% for menu_info in menu_infos %}
-{% if menu_info[1] == "food" %}
+  {% for class_middle in class_middles %}
+  {% if class_middle[1] == "food" %}
 <div class="menu-box">
-
-<input  type="checkbox" name="food_" id={{menu_info[0]}} value={{menu_info[3]}}>
-<label for={{menu_info[3]}}>{{menu_info[2]}} {{menu_info[3]}} {{menu_info[4]}}円</label>
+<input  type="checkbox" name="class_middle_food" id=# value={{class_middle[0]}}>
+<label for={{class_middle[0]}}>{{class_middle[0]}}</label>
 </div>
 {% endif %}
 {% endfor %}
@@ -53,11 +52,11 @@
 <div class="column-2">
 <div class="menu-box">Drink</div>
 <div class="sortable">
-{% for menu_info in menu_infos %}
-{% if menu_info[1] == "drink" %}
+{% for class_middle in class_middles %}
+{% if class_middle[1] == "drink" %}
 <div class="menu-box">
-<input type="checkbox" name="drink_" id={{menu_info[0]}} value={{menu_info[3]}}>
-<label for={{menu_info[3]}}>{{menu_info[2]}} {{menu_info[3]}} {{menu_info[4]}}円</label>
+<input type="checkbox" name="class_middle_drink" id=# value={{class_middle[0]}}>
+<label for={{class_middle[0]}}>{{class_middle[0]}}</label>
 </div>
 {% endif %}
 {% endfor %}
