@@ -18,3 +18,14 @@ $(function() {
           $("form").submit();
       });
   });
+
+
+//クリックで表示非表示の切り替え
+function changeDisplay(class_middle){
+  var str = document.getElementById("name_of_dish_" + class_middle);
+  if(str.style.display == "none"){
+    str.style.display = "block";
+  }else{
+    str.style.display = "none";
+  }
+}

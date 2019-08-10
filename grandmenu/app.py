@@ -61,7 +61,7 @@ class Food_Drink(db.Model):
     USER_ID = db.Column(Integer, unique=True)#20190430
     ID = db.Column(Integer, primary_key=True)
     KIND = db.Column(String(5))
-    SECONDARY_NAME = db.Column(String(64))
+    CLASS_MIDDLE = db.Column(String(64))
     NAME_OF_DISH = db.Column(String(64), unique=True)
     PRICE = db.Column(Integer)
 
@@ -99,11 +99,13 @@ def registration():
 @app.route('/add_menu' , methods = ['POST', 'GET'])
 def add_menu():
 
-        menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.SECONDARY_NAME, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).\
-            order_by(Food_Drink.SECONDARY_NAME).\
+        menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.CLASS_MIDDLE, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).\
             all()
-
-        return render_template('add_menu.html',menu_infos=menu_infos)
+        class_middles = db.session.query(Food_Drink.CLASS_MIDDLE, Food_Drink.KIND).\
+            distinct(Food_Drink.CLASS_MIDDLE).\
+            all()
+        #return render_template('add_menu.html',menu_infos=menu_infos)#froalaデバッグ
+        return render_template('froala.html', class_middles=class_middles, menu_infos=menu_infos)
 
 # メニュー削除
 @app.route('/delete_menu' , methods = ['POST', 'GET'])
@@ -129,8 +131,8 @@ def delete_menu():
                 db.session.query(Food_Drink).filter(Food_Drink.NAME_OF_DISH==menu_list_drink[j]).delete()
                 db.session.commit()
 
-        menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.SECONDARY_NAME, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).\
-            order_by(Food_Drink.SECONDARY_NAME).\
+        menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.CLASS_MIDDLE, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).\
+            order_by(Food_Drink.CLASS_MIDDLE).\
             all()
 
         return render_template('add_menu.html',menu_infos=menu_infos)
@@ -142,17 +144,20 @@ def create_menu():
         name_of_dish = request.form['name_of_dish']
         price = request.form['price']
         food_drink = request.form["food_drink"]
-        secondary_name = request.form["secondary_name"]
+        class_middle = request.form["class_middle"]
         try:#menuの重複があればexceptへ
-            db.session.add(Food_Drink(KIND=food_drink, NAME_OF_DISH=name_of_dish, PRICE=price, SECONDARY_NAME = secondary_name))
+            db.session.add(Food_Drink(KIND=food_drink, NAME_OF_DISH=name_of_dish, PRICE=price, CLASS_MIDDLE = class_middle))
             db.session.commit()
         except:#menuの重複検知
             return render_template('menu_exist.html')
-        menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.SECONDARY_NAME, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).\
-            order_by(Food_Drink.SECONDARY_NAME).\
+        menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.CLASS_MIDDLE, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).\
+            order_by(Food_Drink.CLASS_MIDDLE).\
             all()
-
-        return render_template('add_menu.html',menu_infos=menu_infos)
+        class_middles = db.session.query(Food_Drink.CLASS_MIDDLE, Food_Drink.KIND).\
+            distinct(Food_Drink.CLASS_MIDDLE).\
+            all()
+        # return render_template('add_menu.html',menu_infos=menu_infos)#froalaデバッグ
+        return render_template('froala.html', class_middles=class_middles, menu_infos=menu_infos)
     return render_template('add_menu.html')
 
 @app.route('/revise_menu')
