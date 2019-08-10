@@ -1,3 +1,20 @@
+<!-- 以下データの定義
+menu_info{
+  menu_info[0]= Food_Drink.ID
+  menu_info[1]= Food_Drink.KIND   #food or drink
+  menu_info[2]= Food_Drink.CLASS_MIDDLE
+  menu_info[3]= Food_Drink.NAME_OF_DISH
+  menu_info[4]= Food_Drink.PRICE
+}
+
+class_middle{
+  class_middle[0]= Food_Drink.CLASS_MIDDLE
+  class_middle[1]= Food_Drink.KIND    #food or drink
+}
+-->
+
+
+
 {% extends "base.html" %}
 {% block global_navi %}
 <form method=post action="/delete_menu">

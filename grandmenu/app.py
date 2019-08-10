@@ -7,6 +7,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # psycopg2のインポート
 import psycopg2
 
+#他モジュール(.py)のインポート
+from app_qrcode import qr_code_api  #QRコード関連のモジュール
+
 #SQLAlchemy必要に応じて適宜導入
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm.exc import NoResultFound
@@ -16,6 +19,9 @@ from sqlalchemy.orm.exc import NoResultFound
 
 
 app = Flask(__name__)
+
+#他モジュール(.py)から呼び出す
+app.register_blueprint(qr_code_api)
 
 app.config['SECRET_KEY'] = 'secret key'
 
