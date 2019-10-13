@@ -1,67 +1,32 @@
 @import "../setting/setting.scss";
+@import "../mixin/mixin.scss";
 
 .button{
- 	 display: inline-block;
- 	 text-decoration: none;
- 	 background: $color-main;
- 	 color: #FFF;
- 	 width: 120px;
- 	 height: 120px;
- 	 line-height: 120px;
- 	 border-radius: 50%;
- 	 text-align: center;
- 	 overflow: hidden;
- 	 box-shadow: 0px 0px 0px 5px $color-main;
- 	 border: dashed 2px #FFF;
- 	 transition: .4s;
- 	 font-size: 100px;
- 	 &__add{
- 	 display: inline-block;
- 	 text-decoration: none;
- 	 background: $color-main;
- 	 color: #FFF;
- 	 width: 50px;
- 	 height: 50px;
- 	 line-height: 50px;
- 	 border-radius: 50%;
- 	 text-align: center;
- 	 overflow: hidden;
- 	 box-shadow: 0px 0px 0px 5px $color-main;
- 	 border: dashed 2px #FFF;
- 	 transition: .4s;
- 	 font-size: 30px;
-
- 	 	position: fixed;
- 	 	right: 200px;
- 	 	bottom: 100px;
- 	 }
- 	 &__delete{
- 	 display: inline-block;
- 	 text-decoration: none;
- 	 background: $color-main;
- 	 color: #FFF;
- 	 width: 50px;
- 	 height: 50px;
- 	 line-height: 50px;
- 	 border-radius: 50%;
- 	 text-align: center;
- 	 overflow: hidden;
- 	 box-shadow: 0px 0px 0px 5px $color-main;
- 	 border: dashed 2px #FFF;
- 	 transition: .4s;
- 	 font-size: 30px;
- 	 	position: fixed;
- 	 	right: 100px;
- 	 	bottom: 100px;
- 	 }
-}
-
-.button__add:hover {
-	  background: $color-active;
-	  box-shadow: 0px 0px 0px 5px $color-active;
+ 	@include button;
+ 	&__delete{
+	@include button;
+ 	right: 2vh;
+ 	}
+ 	&__add{
+ 	@include button;
+ 	right: calc(2vh + 75px);
+	}
+ 	&__sortable{
+ 	@include button;
+ 	right: calc(2vh + 150px);
+ 	}
 }
 
 .button__delete:hover {
-	  background: $color-active;
-	  box-shadow: 0px 0px 0px 5px $color-active;
+	background: $color-active;
+	box-shadow: 0px 0px 0px 5px $color-active;
+}
+.button__add:hover {
+	background: $color-active;
+	box-shadow: 0px 0px 0px 5px $color-active;
+}
+
+.button__sortable:hover {
+	background: $color-active;
+	box-shadow: 0px 0px 0px 5px $color-active;
 }

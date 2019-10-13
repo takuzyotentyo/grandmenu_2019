@@ -7,7 +7,10 @@
 	width:100vw;
 	flex-flow: column nowrap;
 	&__100vh{
-		height:100vh;
+	@include column;
+	width:100vw;
+	flex-flow: column nowrap;
+	height:100vh;
 	}
 }
 

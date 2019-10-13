@@ -91,9 +91,13 @@ blockのインポート
   top: 0;
   left: 0;
   padding: auto;
-  display: none; }
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
 
-.lightbox__menulist {
+.lightbox__menu-box {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -109,7 +113,11 @@ blockのインポート
   top: 0;
   left: 0;
   padding: auto;
-  display: none; }
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
 
 /*「_」抜きの名前でインポートする
  変数を定義しているsetting.scssのインポートは必須事項*/
@@ -261,6 +269,24 @@ blockのインポート
   -ms-flex-flow: column nowrap;
   flex-flow: column nowrap; }
   .column-1__100vh {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    /*上下中央揃え*/
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    /*左右中央揃え*/
+    position: relative;
+    padding: 0;
+    width: 100vw;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: column nowrap;
+    flex-flow: column nowrap;
     height: 100vh; }
 
 .column-2 {
@@ -512,46 +538,85 @@ blockのインポート
 /*色関係*/
 /*ブレイクポイント*/
 .menu-box {
+  display: inline-block;
+  vertical-align: middle;
   color: #ffffff;
   background-color: #FFA500;
-  height: 50px;
   margin-left: 1vw;
   margin-right: 1vw;
-  opacity: 0.8;
+  opacity: 0.9;
   position: relative;
   width: 48vw;
-  font-size: 16px; }
-  .menu-box__add {
+  line-height: 50px;
+  font-size: 16px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  height: 50px; }
+  .menu-box__food {
+    display: inline-block;
+    vertical-align: middle;
     color: #ffffff;
     background-color: #FFA500;
-    height: 50px;
     margin-left: 1vw;
     margin-right: 1vw;
-    opacity: 0.8;
+    opacity: 0.9;
     position: relative;
     width: 48vw;
-    font-size: 75px;
+    line-height: 50px;
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     text-align: center;
-    margin-top: 20px;
-    padding: 12.5px;
-    margin-top: 20px;
-    margin-bottom: 20px; }
-  .menu-box__delete {
+    height: 50px; }
+  .menu-box__drink {
+    display: inline-block;
+    vertical-align: middle;
     color: #ffffff;
     background-color: #FFA500;
-    height: 50px;
     margin-left: 1vw;
     margin-right: 1vw;
-    opacity: 0.8;
+    opacity: 0.9;
     position: relative;
     width: 48vw;
-    font-size: 75px;
+    line-height: 50px;
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     text-align: center;
-    margin-top: 20px;
-    padding: 12.5px;
-    margin-top: 20px;
-    margin-bottom: 20px; }
+    height: 50px; }
+  .menu-box__small {
+    display: inline-block;
+    vertical-align: middle;
+    color: #ffffff;
+    background-color: #FFA500;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    opacity: 0.9;
+    position: relative;
+    width: 48vw;
+    line-height: 50px;
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    height: 50px; }
 
+.menu-box:hover {
+  background: #111111; }
+
+.menu-box__small:hover {
+  background: #111111; }
+
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
 /*====================
 サイトの基本設定
 ====================*/
@@ -566,9 +631,9 @@ blockのインポート
   text-decoration: none;
   background: #FFA500;
   color: #FFF;
-  width: 120px;
-  height: 120px;
-  line-height: 120px;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
   border-radius: 50%;
   text-align: center;
   overflow: hidden;
@@ -578,28 +643,9 @@ blockのインポート
   -webkit-transition: .4s;
   -o-transition: .4s;
   transition: .4s;
-  font-size: 100px; }
-  .button__add {
-    display: inline-block;
-    text-decoration: none;
-    background: #FFA500;
-    color: #FFF;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    border-radius: 50%;
-    text-align: center;
-    overflow: hidden;
-    -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
-    box-shadow: 0px 0px 0px 5px #FFA500;
-    border: dashed 2px #FFF;
-    -webkit-transition: .4s;
-    -o-transition: .4s;
-    transition: .4s;
-    font-size: 30px;
-    position: fixed;
-    right: 200px;
-    bottom: 100px; }
+  font-size: 30px;
+  position: fixed;
+  bottom: 100px; }
   .button__delete {
     display: inline-block;
     text-decoration: none;
@@ -619,15 +665,62 @@ blockのインポート
     transition: .4s;
     font-size: 30px;
     position: fixed;
-    right: 100px;
-    bottom: 100px; }
+    bottom: 100px;
+    right: 2vh; }
+  .button__add {
+    display: inline-block;
+    text-decoration: none;
+    background: #FFA500;
+    color: #FFF;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
+    box-shadow: 0px 0px 0px 5px #FFA500;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    position: fixed;
+    bottom: 100px;
+    right: calc(2vh + 75px); }
+  .button__sortable {
+    display: inline-block;
+    text-decoration: none;
+    background: #FFA500;
+    color: #FFF;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
+    box-shadow: 0px 0px 0px 5px #FFA500;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    position: fixed;
+    bottom: 100px;
+    right: calc(2vh + 150px); }
+
+.button__delete:hover {
+  background: #111111;
+  -webkit-box-shadow: 0px 0px 0px 5px #111111;
+  box-shadow: 0px 0px 0px 5px #111111; }
 
 .button__add:hover {
   background: #111111;
   -webkit-box-shadow: 0px 0px 0px 5px #111111;
   box-shadow: 0px 0px 0px 5px #111111; }
 
-.button__delete:hover {
+.button__sortable:hover {
   background: #111111;
   -webkit-box-shadow: 0px 0px 0px 5px #111111;
   box-shadow: 0px 0px 0px 5px #111111; }

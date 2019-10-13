@@ -3,22 +3,40 @@
 .menu-box{
 	@include menu-box;
 	font-size:$text-body;
-	&__add{
+	margin-top:5px;
+	margin-bottom: 5px;
+	text-align: center;
+	height: 50px;
+	&__food{
 		@include menu-box;
-		font-size: 75px;
+		font-size:$text-body;
+		margin-top:5px;
+		margin-bottom: 5px;
 		text-align: center;
-		margin-top:20px;
-		padding: 12.5px;
-		margin-top:20px;
-		margin-bottom:20px;
+		height: 50px;
 	}
-	&__delete{
+	&__drink{
 		@include menu-box;
-		font-size: 75px;
+		font-size:$text-body;
+		margin-top:5px;
+		margin-bottom: 5px;
 		text-align: center;
-		margin-top:20px;
-		padding: 12.5px;
-		margin-top:20px;
-		margin-bottom:20px;
+		height: 50px;
 	}
+	&__small{
+		@include menu-box;
+		font-size:$text-body;
+		margin-top:5px;
+		margin-bottom: 5px;
+		text-align: center;
+		height: 50px;
+	}
+}
+
+.menu-box:hover {
+	  background: $color-active;
+}
+
+.menu-box__small:hover {
+	  background: $color-active;
 }

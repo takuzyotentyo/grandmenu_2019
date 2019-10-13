@@ -1,4 +1,5 @@
 @import "../setting/setting.scss";
+
 .lightbox{
 	justify-content: center; /*左右中央揃え*/
     align-items: center;     /*上下中央揃え*/
@@ -10,9 +11,10 @@
 	left: 0;
 	padding: auto;
 	display: none;
+	flex-flow: column nowrap;
 }
 
-.lightbox__menulist{
+.lightbox__menu-box{
 	justify-content: center; /*左右中央揃え*/
     align-items: center;     /*上下中央揃え*/
 	position: fixed;
@@ -23,4 +25,5 @@
 	left: 0;
 	padding: auto;
 	display: none;
+	flex-flow: column nowrap;
 }

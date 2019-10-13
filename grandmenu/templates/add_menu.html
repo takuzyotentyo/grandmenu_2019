@@ -1,64 +1,46 @@
-<!-- 以下データの定義
-menu_info{
-  menu_info[0]= Food_Drink.ID
-  menu_info[1]= Food_Drink.KIND   #food or drink
-  menu_info[2]= Food_Drink.CLASS_MIDDLE
-  menu_info[3]= Food_Drink.NAME_OF_DISH
-  menu_info[4]= Food_Drink.PRICE
-}
-
-class_middle{
-  class_middle[0]= Food_Drink.CLASS_MIDDLE
-  class_middle[1]= Food_Drink.KIND    #food or drink
-}
--->
-
-
-
 {% extends "base.html" %}
 {% block global_navi %}
 <form method=post action="/delete_menu">
 <div class="multi-column">
 
-<div class="column-2">
-<div class="menu-box">Food</div>
-<div class="sortable">
+<!-- メニュー表示部分-->
+  <div class="column-2">
+    <div class="menu-box__food">Food</div>
+      {% for class_middle in class_middles %}
+      {% if class_middle[1] == "food" %}
+      <div class="menu-box" value={{class_middle[0]}}>
+        <div name="class_middle_food" id=#>{{class_middle[0]}}
+        </div>
+     </div>
+      {% endif %}
+      {% endfor %}
+  </div>
 
-{% for class_middle in class_middles %}
-{% if class_middle[1] == "food" %}
-<div class="menu-box">
-<input  type="checkbox" name="class_middle_food" id=# value={{class_middle[0]}} clsss={{class_middle[0]}}>
-<label for={{class_middle[0]}}>{{class_middle[0]}}</label>
-</div>
-{% endif %}
-{% endfor %}
+  <div class="column-2">
+    <div class="menu-box__drink">Drink</div>
+      {% for class_middle in class_middles %}
+      {% if class_middle[1] == "drink" %}
+      <div class="menu-box" value={{class_middle[0]}}>
+        <div name="class_middle_drink" id=#>{{class_middle[0]}}
+        </div>
+      </div>
+      {% endif %}
+     {% endfor %}
+  </div>
 
-</div>
+  </div>
 
+<!-- lightbox__menu-boxの中に小分類を入れ、子要素指定のためにliをつけている -->
+<!-- jqueryのthisを使って直接要素指定のため、css直書きしている -->
+<div class="lightbox__menu-box">
 {% for menu_info in menu_infos %}
-<div class="menu-box">
-    <div class="{{menu_info[2]}} lightbox__menulist">
-    <label for={{menu_info[0]}}>{{menu_info[3]}} ¥{{menu_info[4]}}</label>
-    </div>
-</div>
-  {% endfor %}
-
-</div>
-
-<div class="column-2">
-<div class="menu-box">Drink</div>
-<div class="sortable">
-{% for class_middle in class_middles %}
-{% if class_middle[1] == "drink" %}
-<div class="menu-box">
-<input type="checkbox" name="class_middle_drink" id=# value={{class_middle[0]}} class={{class_middle[0]}}>
-<label for={{class_middle[0]}}>{{class_middle[0]}}</label>
-</div>
-{% endif %}
+    <li style= display:none; class="menu-box__small {{menu_info[2]}}">
+    <label for={{menu_info[0]}}>{{menu_info[3]}}  ¥{{menu_info[4]}}</label>
+    </li>
 {% endfor %}
 </div>
-</div>
 
+<div class="button__sortable">⇅</div>
 <div class="button__add">＋</div>
 <button class="button__delete" type="submit">ー</button>
 </form>
