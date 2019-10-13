@@ -49,7 +49,10 @@ $(document).on('click', '.button__sortable', function() {
     disabled: true
     });
     $(".menu-box").css(
-      "background-color","#FFA500"
+      "background-color",""
+      );
+    $(".menu-box__name_of_dish").css(
+      "background-color",""
       );
   }else{
     $(this).addClass("doing");
@@ -57,6 +60,9 @@ $(document).on('click', '.button__sortable', function() {
     disabled: false
     });
     $(".menu-box").css(
+      "background-color","#E2421F"
+      );
+    $(".menu-box__name_of_dish").css(
       "background-color","#E2421F"
       );
     $(".sortable").sortable();

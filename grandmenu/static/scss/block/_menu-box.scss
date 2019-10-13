@@ -23,7 +23,7 @@
 		text-align: center;
 		height: 50px;
 	}
-	&__small{
+	&__name_of_dish{
 		@include menu-box;
 		font-size:$text-body;
 		margin-top:5px;
@@ -37,6 +37,6 @@
 	  background: $color-active;
 }
 
-.menu-box__small:hover {
+.menu-box__name_of_dish:hover {
 	  background: $color-active;
 }

@@ -585,7 +585,7 @@ blockのインポート
     margin-bottom: 5px;
     text-align: center;
     height: 50px; }
-  .menu-box__small {
+  .menu-box__name_of_dish {
     display: inline-block;
     vertical-align: middle;
     color: #ffffff;
@@ -605,7 +605,7 @@ blockのインポート
 .menu-box:hover {
   background: #111111; }
 
-.menu-box__small:hover {
+.menu-box__name_of_dish:hover {
   background: #111111; }
 
 /*====================

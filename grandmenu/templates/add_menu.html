@@ -1,48 +1,49 @@
 {% extends "base.html" %}
 {% block global_navi %}
-<form method=post action="/delete_menu">
+
+<form id="sortable_array" method=post action="/delete_menu">
 <div class="multi-column">
 
 <!-- メニュー表示部分-->
   <div class="column-2">
     <div class="menu-box__food">Food</div>
-    <div class=sortable>
+    <ul class=sortable>
       {% for class_middle in class_middles %}
       {% if class_middle[1] == "food" %}
-      <div class="menu-box" value={{class_middle[0]}}>
+      <li class="menu-box" value={{class_middle[0]}} name="sortable_[]">
         <div name="class_middle_food" id=#>{{class_middle[0]}}</div>
-      </div>
+      </li>
       {% endif %}
       {% endfor %}
-    </div>
+    </ul>
   </div>
 
   <div class="column-2">
     <div class="menu-box__drink">Drink</div>
-    <div class=sortable>
+    <ul class=sortable>
       {% for class_middle in class_middles %}
       {% if class_middle[1] == "drink" %}
-      <div class="menu-box" value={{class_middle[0]}}>
+      <li class="menu-box" value={{class_middle[0]}}>
         <div name="class_middle_drink" id=#>{{class_middle[0]}}</div>
-      </div>
+      </li>
       {% endif %}
      {% endfor %}
-    </div>
+    </ul>
   </div>
 
-  </div>
+</div>
 
 <!-- lightbox__menu-boxの中に小分類を入れ、非表示にするときの子要素指定のためにliをつけている -->
 <!-- jqueryのthisを使って直接要素指定のため、css直書きしている -->
-<div class="lightbox__menu-box sortable">
+<ul class="lightbox__menu-box sortable">
 {% for menu_info in menu_infos %}
-    <li style= display:none; class="menu-box__small {{menu_info[2]}}">
+    <li style= display:none; class="menu-box__name_of_dish {{menu_info[2]}}">
     <label for={{menu_info[0]}}>{{menu_info[3]}}  ¥{{menu_info[4]}}</label>
     </li>
 {% endfor %}
-</div>
+</ul>
 
-<div class="button__sortable">⇅</div>
+<div class="button__sortable" type="" form="">⇅</div>
 <div class="button__add">＋</div>
 <button class="button__delete" type="submit">ー</button>
 </form>
