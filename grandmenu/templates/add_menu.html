@@ -6,33 +6,35 @@
 <!-- メニュー表示部分-->
   <div class="column-2">
     <div class="menu-box__food">Food</div>
+    <div class=sortable>
       {% for class_middle in class_middles %}
       {% if class_middle[1] == "food" %}
       <div class="menu-box" value={{class_middle[0]}}>
-        <div name="class_middle_food" id=#>{{class_middle[0]}}
-        </div>
-     </div>
+        <div name="class_middle_food" id=#>{{class_middle[0]}}</div>
+      </div>
       {% endif %}
       {% endfor %}
+    </div>
   </div>
 
   <div class="column-2">
     <div class="menu-box__drink">Drink</div>
+    <div class=sortable>
       {% for class_middle in class_middles %}
       {% if class_middle[1] == "drink" %}
       <div class="menu-box" value={{class_middle[0]}}>
-        <div name="class_middle_drink" id=#>{{class_middle[0]}}
-        </div>
+        <div name="class_middle_drink" id=#>{{class_middle[0]}}</div>
       </div>
       {% endif %}
      {% endfor %}
+    </div>
   </div>
 
   </div>
 
-<!-- lightbox__menu-boxの中に小分類を入れ、子要素指定のためにliをつけている -->
+<!-- lightbox__menu-boxの中に小分類を入れ、非表示にするときの子要素指定のためにliをつけている -->
 <!-- jqueryのthisを使って直接要素指定のため、css直書きしている -->
-<div class="lightbox__menu-box">
+<div class="lightbox__menu-box sortable">
 {% for menu_info in menu_infos %}
     <li style= display:none; class="menu-box__small {{menu_info[2]}}">
     <label for={{menu_info[0]}}>{{menu_info[3]}}  ¥{{menu_info[4]}}</label>
