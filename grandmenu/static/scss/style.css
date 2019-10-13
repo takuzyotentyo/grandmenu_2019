@@ -735,8 +735,8 @@ blockのインポート
 /*色関係*/
 /*ブレイクポイント*/
 .vibration {
-  -webkit-animation: vibration .25s  infinite;
-  animation: vibration .25s  infinite; }
+  -webkit-animation: vibration .3s  infinite;
+  animation: vibration .3s  infinite; }
 
 @-webkit-keyframes vibration {
   0% {
@@ -746,8 +746,8 @@ blockのインポート
     -webkit-transform: translate(1px, 0px) rotateZ(0.25deg);
     transform: translate(1px, 0px) rotateZ(0.25deg); }
   50% {
-    -webkit-transform: translate(0px, 1px) rotateZ(0deg);
-    transform: translate(0px, 1px) rotateZ(0deg); }
+    -webkit-transform: translate(1px, 1px) rotateZ(0deg);
+    transform: translate(1px, 1px) rotateZ(0deg); }
   75% {
     -webkit-transform: translate(1px, 0px) rotateZ(-0.25deg);
     transform: translate(1px, 0px) rotateZ(-0.25deg); }
@@ -763,8 +763,8 @@ blockのインポート
     -webkit-transform: translate(1px, 0px) rotateZ(0.25deg);
     transform: translate(1px, 0px) rotateZ(0.25deg); }
   50% {
-    -webkit-transform: translate(0px, 1px) rotateZ(0deg);
-    transform: translate(0px, 1px) rotateZ(0deg); }
+    -webkit-transform: translate(1px, 1px) rotateZ(0deg);
+    transform: translate(1px, 1px) rotateZ(0deg); }
   75% {
     -webkit-transform: translate(1px, 0px) rotateZ(-0.25deg);
     transform: translate(1px, 0px) rotateZ(-0.25deg); }
