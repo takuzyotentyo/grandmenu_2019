@@ -54,6 +54,8 @@ $(document).on('click', '.button__sortable', function() {
     $(".menu-box__name_of_dish").css(
       "background-color",""
       );
+    $(".menu-box").removeClass("vibration");
+    $(".menu-box__name_of_dish").removeClass("vibration");
   }else{
     $(this).addClass("doing");
     $(".sortable").sortable({
@@ -65,6 +67,8 @@ $(document).on('click', '.button__sortable', function() {
     $(".menu-box__name_of_dish").css(
       "background-color","#E2421F"
       );
+    $(".menu-box").addClass("vibration");
+    $(".menu-box__name_of_dish").addClass("vibration");
     $(".sortable").sortable();
     $(".sortable").disableSelection();
   }

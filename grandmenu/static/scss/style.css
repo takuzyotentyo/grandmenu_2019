@@ -724,3 +724,50 @@ blockのインポート
   background: #111111;
   -webkit-box-shadow: 0px 0px 0px 5px #111111;
   box-shadow: 0px 0px 0px 5px #111111; }
+
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.vibration {
+  -webkit-animation: vibration .25s  infinite;
+  animation: vibration .25s  infinite; }
+
+@-webkit-keyframes vibration {
+  0% {
+    -webkit-transform: translate(0px, 0px) rotateZ(0deg);
+    transform: translate(0px, 0px) rotateZ(0deg); }
+  25% {
+    -webkit-transform: translate(1px, 0px) rotateZ(0.25deg);
+    transform: translate(1px, 0px) rotateZ(0.25deg); }
+  50% {
+    -webkit-transform: translate(0px, 1px) rotateZ(0deg);
+    transform: translate(0px, 1px) rotateZ(0deg); }
+  75% {
+    -webkit-transform: translate(1px, 0px) rotateZ(-0.25deg);
+    transform: translate(1px, 0px) rotateZ(-0.25deg); }
+  100% {
+    -webkit-transform: translate(0px, 0px) rotateZ(0deg);
+    transform: translate(0px, 0px) rotateZ(0deg); } }
+
+@keyframes vibration {
+  0% {
+    -webkit-transform: translate(0px, 0px) rotateZ(0deg);
+    transform: translate(0px, 0px) rotateZ(0deg); }
+  25% {
+    -webkit-transform: translate(1px, 0px) rotateZ(0.25deg);
+    transform: translate(1px, 0px) rotateZ(0.25deg); }
+  50% {
+    -webkit-transform: translate(0px, 1px) rotateZ(0deg);
+    transform: translate(0px, 1px) rotateZ(0deg); }
+  75% {
+    -webkit-transform: translate(1px, 0px) rotateZ(-0.25deg);
+    transform: translate(1px, 0px) rotateZ(-0.25deg); }
+  100% {
+    -webkit-transform: translate(0px, 0px) rotateZ(0deg);
+    transform: translate(0px, 0px) rotateZ(0deg); } }
