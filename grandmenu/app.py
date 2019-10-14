@@ -140,8 +140,7 @@ def delete_menu():
         menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.CLASS_MIDDLE, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).\
             order_by(Food_Drink.CLASS_MIDDLE).\
             all()
-
-        return render_template('add_menu.html',menu_infos=menu_infos)
+        return redirect("/add_menu")
 
 # メニュー作成
 @app.route('/create_menu', methods = ['POST', 'GET'])
