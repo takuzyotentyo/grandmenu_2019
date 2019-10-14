@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block global_navi %}
 
+<!-- <form id="sortable_array" method=post action="/delete_menu"> -->
+<div id="sortable_array">
 <form id="sortable_array" method=post action="/delete_menu">
+
 <div class="multi-column">
 
 <!-- メニュー表示部分-->
@@ -11,7 +14,7 @@
       {% for class_middle in class_middles %}
       {% if class_middle[1] == "food" %}
       <li class="menu-box" value={{class_middle[0]}} name="sortable_[]">
-        <div name="class_middle_food" id=#>{{class_middle[0]}}</div>
+        <div class="delete" name="class_middle_food" id=#>{{class_middle[0]}}</div>
       </li>
       {% endif %}
       {% endfor %}
@@ -24,7 +27,7 @@
       {% for class_middle in class_middles %}
       {% if class_middle[1] == "drink" %}
       <li class="menu-box" value={{class_middle[0]}}>
-        <div name="class_middle_drink" id=#>{{class_middle[0]}}</div>
+        <div class="delete" name="class_middle_drink" id=#>{{class_middle[0]}}</div>
       </li>
       {% endif %}
      {% endfor %}
@@ -38,15 +41,15 @@
 <ul class="lightbox__menu-box sortable">
 {% for menu_info in menu_infos %}
     <li style= display:none; class="menu-box__name_of_dish {{menu_info[2]}}">
-    <label for={{menu_info[0]}}>{{menu_info[3]}}  ¥{{menu_info[4]}}</label>
+    <label class="delete" for={{menu_info[0]}}>{{menu_info[3]}}  ¥{{menu_info[4]}}</label>
     </li>
 {% endfor %}
 </ul>
 
 <div class="button__sortable" type="" form="">⇅</div>
 <div class="button__add">＋</div>
-<button class="button__delete" type="submit">ー</button>
-</form>
+<button class="button__delete" type="">ー</button>
+</form>>
 
 
 <div class="lightbox">

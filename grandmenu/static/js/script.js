@@ -79,5 +79,26 @@ $(document).on('click', '.button__sortable', function() {
     //   });
 });
 
+$(function(){
+  $(".button__delete").click(function(){
+    if($(".button__delete").hasClass("doing")){
+      $(this).removeClass("doing");
+      $(".menu-box").removeClass("vibration");
+      $(".menu-box__name_of_dish").removeClass("vibration");
+      $(".delete").children().remove();;
+    }else{
+      $(this).addClass("doing");
+      $(".menu-box").addClass("vibration");
+      $(".menu-box__name_of_dish").addClass("vibration");
+      // $(".delete").before('<input type="checkbox">');
+      $("<input>", {
+        type: "checkbox",
+        value: "コーラ",
+      }).appendTo('.delete');
+      };
+    $(".button__delete").remove();
+    $('<button class="button__delete" type="submit">ー</button>').insertAfter(".button__add");
+  });
+});
 
 
