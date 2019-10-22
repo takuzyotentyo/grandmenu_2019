@@ -1,9 +1,11 @@
-// Lightboxを表示する
+// Lightboxを表示して、user_idをform形式に設定する
 $(function() {
 	$(".button__add").click(function(){
 		$(".lightbox").css(
         "display", "flex"
     	);
+    var user_id = $(".user-name-wrapper__user-name").attr("value")
+    $("#create_menu_submit").val(user_id);
 	});
 });
 

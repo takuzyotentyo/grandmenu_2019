@@ -64,12 +64,17 @@ class User(db.Model):
 #Food_Drinkテーブル定義
 class Food_Drink(db.Model):
     __tablename__ = 'food_drink'
-    USER_ID = db.Column(Integer, unique=True)#20190430
+
     ID = db.Column(Integer, primary_key=True)
+    USER_ID = db.Column(Integer)#20190430
+    KIND_ID = db.Column(Integer)
     KIND = db.Column(String(5))
+    CLASS_MIDDLE_ID = db.Column(Integer)
     CLASS_MIDDLE = db.Column(String(64))
+    NAME_OF_DISH_ID = db.Column(Integer)
     NAME_OF_DISH = db.Column(String(64), unique=True)
     PRICE = db.Column(Integer)
+    MENU_ID = db.Column(Integer)
 
     def __repr__(self):
         return "(KIND='%s', NAME_OF_DISH='%s', PRICE='%s')" % (self.KIND, self.NAME_OF_DISH, self.PRICE)
@@ -148,12 +153,19 @@ def delete_menu():
 @app.route('/create_menu', methods = ['POST', 'GET'])
 def create_menu():
     if request.method == 'POST':
+        user_id = request.form['user_id']
         name_of_dish = request.form['name_of_dish']
         price = request.form['price']
         food_drink = request.form["food_drink"]
         class_middle = request.form["class_middle"]
+        # kind_idの設定
+        if name_of_dish == "food":
+            kind_id = 0
+        else:
+            kind_id = 1
+
         try:#menuの重複があればexceptへ
-            db.session.add(Food_Drink(KIND=food_drink, NAME_OF_DISH=name_of_dish, PRICE=price, CLASS_MIDDLE = class_middle))
+            db.session.add(Food_Drink(USER_ID=user_id, KIND_ID=kind_id, KIND=food_drink, NAME_OF_DISH=name_of_dish, PRICE=price, CLASS_MIDDLE = class_middle))
             db.session.commit()
         except:#menuの重複検知
             return render_template('menu_exist.html')

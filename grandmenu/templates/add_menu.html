@@ -68,7 +68,7 @@
 
 
 <div class="lightbox">
-  	<form action="/create_menu" method="post">
+  	<form id="create_menu" action="/create_menu" method="post">
     <input class="form-text" type="text" name="name_of_dish" placeholder="料理名" required>
     <input class="form-text" type="number" name="price" placeholder="金額" required>
   	<div class="select-box">
@@ -78,7 +78,7 @@
   		</select>
   	</div>
     <input class="form-text" type="text" name="class_middle" placeholder="分類" required>
-    <button class="form-button" type="submit">
+    <button class="form-button" type="submit" id="create_menu_submit" name="user_id" value="{{session.username}}">
       <span><a href="/add_menu">確定</a></span>
       <span>登録</span>
     </button>
