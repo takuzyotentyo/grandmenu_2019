@@ -62,10 +62,10 @@ $(document).on('click', '.button__sortable', function() {
     disabled: false
     });
     $(".menu-box").css(
-      "background-color","#E2421F"
+      "background-color","#BF7C00"
       );
     $(".menu-box__name_of_dish").css(
-      "background-color","#E2421F"
+      "background-color","#BF7C00"
       );
     $(".menu-box").addClass("vibration");
     $(".menu-box__name_of_dish").addClass("vibration");
@@ -79,6 +79,8 @@ $(document).on('click', '.button__sortable', function() {
     //   });
 });
 
+
+// deleteに関するjs
 $(function(){
   $(".button__delete").click(function(){
     if($(".button__delete").hasClass("doing")){
@@ -90,15 +92,11 @@ $(function(){
       $(this).addClass("doing");
       $(".menu-box").addClass("vibration");
       $(".menu-box__name_of_dish").addClass("vibration");
-      // $(".delete").before('<input type="checkbox">');
-      $("<input>", {
-        type: "checkbox",
-        value: "コーラ",
-      }).appendTo('.delete');
-      };
+      $(".menu-box").removeClass("menu-box");
+      $(".menu-box__name_of_dish").removeClass("menu-box__name_of_dish");
+      $(".deletemark").addClass("deletable");
     $(".button__delete").remove();
     $('<button class="button__delete" type="submit">ー</button>').insertAfter(".button__add");
-  });
+  };
 });
-
-
+});

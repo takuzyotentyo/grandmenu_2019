@@ -610,6 +610,23 @@ blockのインポート
 .menu-box__name_of_dish:hover {
   background: #111111; }
 
+.label {
+  display: inline-block;
+  vertical-align: middle;
+  color: #ffffff;
+  margin-left: 1vw;
+  margin-right: 1vw;
+  opacity: 0.9;
+  position: relative;
+  width: 48vw;
+  line-height: 50px;
+  font-size: 16px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  height: 50px;
+  background-color: #000080; }
+
 /*====================
 サイトの基本設定
 ====================*/
@@ -773,3 +790,47 @@ blockのインポート
   100% {
     -webkit-transform: translate(0px, 0px) rotateZ(0deg);
     transform: translate(0px, 0px) rotateZ(0deg); } }
+
+/*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+/*====================
+サイトの基本設定
+====================*/
+/*幅幅*/
+/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.delete {
+  display: none; }
+
+.deletable {
+  display: inline-block;
+  vertical-align: middle;
+  color: #ffffff;
+  margin-left: 1vw;
+  margin-right: 1vw;
+  opacity: 0.9;
+  position: relative;
+  width: 48vw;
+  line-height: 50px;
+  font-size: 16px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  height: 50px;
+  background-color: #DC3B00; }
+
+input[type="checkbox"]:checked + label {
+  background: #401100;
+  /* マウス選択時の背景色を指定する */ }

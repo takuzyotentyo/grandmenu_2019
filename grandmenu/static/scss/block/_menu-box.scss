@@ -46,3 +46,13 @@
 .menu-box__name_of_dish:hover {
 	  background: $color-active;
 }
+
+.label {
+		@include menu-box;
+		font-size:$text-body;
+		margin-top:5px;
+		margin-bottom: 5px;
+		text-align: center;
+		height: 50px;
+		background-color: #000080;
+	}
