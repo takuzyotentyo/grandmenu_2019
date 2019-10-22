@@ -74,15 +74,18 @@ $(document).on('click', '.button__sortable', function() {
 // ソートの順番を保存する処理
     $(".sortable").sortable();
     $(".sortable").disableSelection();
-    $("#sort_submit").click(function() {
-      var sort_result = $(".lightbox__menu-box .sortable").sortable("toArray");
-      $("#sort_result").val(sort_result);
-      // $("form").submit();
-      console.log(sort_result);
-    });
   };
 });
 
+$(function() {
+    // $("#sort_submit").click(function() {
+    $(".menu-box__food").click(function() {
+      var sort_result = $(".lightbox__menu-box .sortable").sortable("toArray");
+      $("#sort_result").val(sort_result);
+      // $("form").submit();
+      console.log(JSON.stringify(sort_result));
+    });
+});
 
 // deleteに関するjsを導入
 $(function(){
