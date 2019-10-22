@@ -14,7 +14,7 @@
       {% for class_middle in class_middles %}
       {% if class_middle[1] == "food" %}
       <li class="menu-box" value={{class_middle[0]}}>
-        <input  type="checkbox" class="delete" value={{class_middle[0]}} name="class_middle_food" id="class_middle_{{class_middle[0]}}">
+        <input  type="checkbox" disabled="true" class="delete" value="class_middle_food" name="{{class_middle[0]}}" id="class_middle_{{class_middle[0]}}">
         <label class="deletemark" value={{class_middle[0]}} name="class_middle_food" for="class_middle_{{class_middle[0]}}">{{class_middle[0]}}</label>
         </input>
       </li>
@@ -29,7 +29,7 @@
       {% for class_middle in class_middles %}
       {% if class_middle[1] == "drink" %}
       <li class="menu-box" value={{class_middle[0]}}>
-        <input type="checkbox" class="delete" value={{class_middle[0]}} name="class_middle_drink" id="class_middle_{{class_middle[0]}}">
+        <input type="checkbox" disabled="true" class="delete" value="class_middle_drink" name="{{class_middle[0]}}" id="class_middle_{{class_middle[0]}}">
           <label class="deletemark" value={{class_middle[0]}} name="class_middle_drink" for="class_middle_{{class_middle[0]}}">{{class_middle[0]}}</label>
         </input>
       </li>
@@ -45,7 +45,7 @@
 <ul class="lightbox__menu-box sortable">
 {% for menu_info in menu_infos %}
     <li style= display:none; class="menu-box__name_of_dish {{menu_info[2]}}">
-    <input type="checkbox" class="delete" value={{menu_info[3]}} name="class_middle_drink" id="name_of_dish_{{menu_info[3]}}">
+    <input type="checkbox" disabled="true" class="delete" value="name_of_dish" name="{{menu_info[3]}}" id="name_of_dish_{{menu_info[3]}}">
       <label class="deletemark" for="name_of_dish_{{menu_info[3]}}" value="{{menu_info[3]}}">{{menu_info[3]}}  ¥{{menu_info[4]}}</label>
     </input>
     </li>
@@ -54,7 +54,7 @@
 
 <div class="button__sortable" type="" form="">⇅</div>
 <div class="button__add">＋</div>
-<button class="button__delete" type="submit">ー</button>
+<button class="button__delete">ー</button>
 </form>>
 
 

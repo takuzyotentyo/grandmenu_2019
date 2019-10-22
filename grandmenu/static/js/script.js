@@ -94,6 +94,7 @@ $(function(){
       $(".menu-box__name_of_dish").addClass("vibration");
       $(".menu-box").removeClass("menu-box");
       $(".menu-box__name_of_dish").removeClass("menu-box__name_of_dish");
+      $(".delete").prop("disabled", false);
       $(".deletemark").addClass("deletable");
     $(".button__delete").remove();
     $('<button class="button__delete" type="submit">ー</button>').insertAfter(".button__add");
