@@ -42,8 +42,8 @@
 <!-- lightbox__menu-boxの中に小分類を入れ、非表示にするときの子要素指定のためにliをつけている -->
 <!-- jqueryのthisを使って直接要素指定のため、css直書きしている -->
 <!-- 小分類 -->
-<form id="sort_menu" method=post action="/sort_menu">
-<form id="delete_menu" method=post action="/delete_menu">
+
+<form id="delete_menu" method="post" action="/delete_menu">
 <ul class="lightbox__menu-box sortable">
 {% for menu_info in menu_infos %}
     <li style= display:none; class="menu-box__name_of_dish {{menu_info[2]}}" id="{{menu_info[0]}}">
@@ -53,14 +53,18 @@
     </li>
 {% endfor %}
 </ul>
+</form>
+
 <!-- ソートの順番を保存するために必要なインプット -->
- <input type="hidden" id="sort_result" name="sort_result" />
+<form id="sort_menu" method="post" action="/sort_menu">
+  <input type="hidden" id="sort_result" name="sort_result" />
+</form>
 
 <div class="button__sortable" type="" form="">⇅</div>
 <div class="button__add">＋</div>
 <button class="button__delete">ー</button>
-</form>
-</form>
+
+
 
 
 <div class="lightbox">
