@@ -648,7 +648,6 @@ blockのインポート
 .button {
   display: inline-block;
   text-decoration: none;
-  background: #FFA500;
   color: #ffffff;
   width: 50px;
   height: 50px;
@@ -656,8 +655,6 @@ blockのインポート
   border-radius: 50%;
   text-align: center;
   overflow: hidden;
-  -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
-  box-shadow: 0px 0px 0px 5px #FFA500;
   border: dashed 2px #FFF;
   -webkit-transition: .4s;
   -o-transition: .4s;
@@ -668,7 +665,6 @@ blockのインポート
   .button__delete {
     display: inline-block;
     text-decoration: none;
-    background: #FFA500;
     color: #ffffff;
     width: 50px;
     height: 50px;
@@ -676,8 +672,6 @@ blockのインポート
     border-radius: 50%;
     text-align: center;
     overflow: hidden;
-    -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
-    box-shadow: 0px 0px 0px 5px #FFA500;
     border: dashed 2px #FFF;
     -webkit-transition: .4s;
     -o-transition: .4s;
@@ -685,11 +679,34 @@ blockのインポート
     font-size: 30px;
     position: fixed;
     bottom: 100px;
-    right: 2vh; }
+    right: 2vh;
+    background: #FFA500;
+    -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
+    box-shadow: 0px 0px 0px 5px #FFA500; }
+  .button__delete--active {
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    position: fixed;
+    bottom: 100px;
+    right: 2vh;
+    background: #DC3B00;
+    -webkit-box-shadow: 0px 0px 0px 5px #DC3B00;
+    box-shadow: 0px 0px 0px 5px #DC3B00; }
   .button__add {
     display: inline-block;
     text-decoration: none;
-    background: #FFA500;
     color: #ffffff;
     width: 50px;
     height: 50px;
@@ -697,8 +714,6 @@ blockのインポート
     border-radius: 50%;
     text-align: center;
     overflow: hidden;
-    -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
-    box-shadow: 0px 0px 0px 5px #FFA500;
     border: dashed 2px #FFF;
     -webkit-transition: .4s;
     -o-transition: .4s;
@@ -706,11 +721,13 @@ blockのインポート
     font-size: 30px;
     position: fixed;
     bottom: 100px;
-    right: calc(2vh + 75px); }
+    right: calc(2vh + 75px);
+    background: #FFA500;
+    -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
+    box-shadow: 0px 0px 0px 5px #FFA500; }
   .button__sortable {
     display: inline-block;
     text-decoration: none;
-    background: #FFA500;
     color: #ffffff;
     width: 50px;
     height: 50px;
@@ -718,8 +735,6 @@ blockのインポート
     border-radius: 50%;
     text-align: center;
     overflow: hidden;
-    -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
-    box-shadow: 0px 0px 0px 5px #FFA500;
     border: dashed 2px #FFF;
     -webkit-transition: .4s;
     -o-transition: .4s;
@@ -727,7 +742,31 @@ blockのインポート
     font-size: 30px;
     position: fixed;
     bottom: 100px;
-    right: calc(2vh + 150px); }
+    right: calc(2vh + 150px);
+    background: #FFA500;
+    -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
+    box-shadow: 0px 0px 0px 5px #FFA500; }
+  .button__sortable--active {
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    position: fixed;
+    bottom: 100px;
+    right: calc(2vh + 150px);
+    background: #DC3B00;
+    -webkit-box-shadow: 0px 0px 0px 5px #DC3B00;
+    box-shadow: 0px 0px 0px 5px #DC3B00; }
 
 .button__delete:hover {
   background: #111111;

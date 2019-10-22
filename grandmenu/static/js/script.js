@@ -59,8 +59,7 @@ $(document).on('click', '.button__sortable', function() {
   }else{
     $(this).addClass("doing");
     $(".button__sortable").remove();
-    $('<button form="sort_menu" id="sort_submit" class="button__sortable" type="submit">⇅</button>').insertBefore(".button__add");
-  };
+    $('<button form="sort_menu" id="sort_submit" class="button__sortable--active" type="submit">⇅</button>').insertBefore(".button__add");
     $(".sortable").sortable({
     disabled: false
     });
@@ -80,7 +79,8 @@ $(document).on('click', '.button__sortable', function() {
       $("#sort_result").val(sort_result);
       $("form").submit();
     });
-  });
+  };
+});
 
 
 // deleteに関するjsを導入
@@ -99,8 +99,8 @@ $(function(){
       $(".menu-box__name_of_dish").removeClass("menu-box__name_of_dish");
       $(".delete").prop("disabled", false);
       $(".deletemark").addClass("deletable");
-    $(".button__delete").remove();
-    $('<button form="delete_menu" class="button__delete" type="submit">ー</button>').insertAfter(".button__add");
-  };
-});
+      $(".button__delete").remove();
+      $('<button form="delete_menu" class="button__delete--active" type="submit">ー</button>').insertAfter(".button__add");
+      };
+    });
 });
