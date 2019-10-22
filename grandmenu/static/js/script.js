@@ -75,9 +75,10 @@ $(document).on('click', '.button__sortable', function() {
     $(".sortable").sortable();
     $(".sortable").disableSelection();
     $("#sort_submit").click(function() {
-      var sort_result = $(".sortable").sortable("toArray");
+      var sort_result = $(".lightbox__menu-box .sortable").sortable("toArray");
       $("#sort_result").val(sort_result);
-      $("form").submit();
+      // $("form").submit();
+      console.log(sort_result);
     });
   };
 });
