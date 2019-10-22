@@ -80,7 +80,7 @@ $(document).on('click', '.button__sortable', function() {
 $(function() {
     // $("#sort_submit").click(function() {
     $(".menu-box__food").click(function() {
-      var sort_result = $(".sortable").sortable("toArray", { attribute: 'id','value' });
+      var sort_result = $(".sortable").sortable("toArray", { attribute: 'id'});
       $("#sort_result").val(sort_result);
       // $("form").submit();
       console.log(JSON.stringify(sort_result));
