@@ -9,7 +9,7 @@
 <!-- フード中分類 -->
   <div class="column-2">
     <div class="menu-box__food">Food</div>
-    <ul class=sortable>
+    <ul class="">
       {% for class_middle in class_middles %}
       {% if class_middle[1] == "food" %}
       <li class="menu-box" value={{class_middle[0]}}>
@@ -24,7 +24,7 @@
 <!-- ドリンク中分類 -->
   <div class="column-2">
     <div class="menu-box__drink">Drink</div>
-    <ul class=sortable>
+    <ul class="">
       {% for class_middle in class_middles %}
       {% if class_middle[1] == "drink" %}
       <li class="menu-box" value={{class_middle[0]}}>
@@ -46,7 +46,7 @@
 <form id="delete_menu" method="post" action="/delete_menu">
 <ul class="lightbox__menu-box sortable">
 {% for menu_info in menu_infos %}
-    <li style= display:none; class="menu-box__name_of_dish {{menu_info[2]}}" id="{{menu_info[0]}}">
+    <li style= display:none; class="menu-box__name_of_dish {{menu_info[2]}}" id="{{menu_info[0]}}" value="{{menu_info[3]}}">
     <input type="checkbox" disabled="true" class="delete" value="{{menu_info[3]}}" name="name_of_dish" id="name_of_dish_{{menu_info[3]}}">
       <label class="deletemark" for="name_of_dish_{{menu_info[3]}}" value="{{menu_info[3]}}">{{menu_info[3]}}  ¥{{menu_info[4]}}</label>
     </input>

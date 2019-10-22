@@ -69,7 +69,7 @@ $(document).on('click', '.button__sortable', function() {
     $(".menu-box__name_of_dish").css(
       "background-color","#BF7C00"
       );
-    $(".menu-box").addClass("vibration");
+    // $(".menu-box").addClass("vibration");
     $(".menu-box__name_of_dish").addClass("vibration");
 // ソートの順番を保存する処理
     $(".sortable").sortable();
@@ -80,7 +80,7 @@ $(document).on('click', '.button__sortable', function() {
 $(function() {
     // $("#sort_submit").click(function() {
     $(".menu-box__food").click(function() {
-      var sort_result = $(".lightbox__menu-box .sortable").sortable("toArray");
+      var sort_result = $(".sortable").sortable("toArray", { attribute: 'id','value' });
       $("#sort_result").val(sort_result);
       // $("form").submit();
       console.log(JSON.stringify(sort_result));
