@@ -14,7 +14,7 @@
       {% for class_middle in class_middles %}
       {% if class_middle[1] == "food" %}
       <li class="menu-box" value={{class_middle[0]}}>
-        <input  type="checkbox" disabled="true" class="delete" value="class_middle_food" name="{{class_middle[0]}}" id="class_middle_{{class_middle[0]}}">
+        <input disabled="true" class="delete" value="class_middle_food" name="{{class_middle[0]}}" id="class_middle_{{class_middle[0]}}">
         <label class="deletemark" value={{class_middle[0]}} name="class_middle_food" for="class_middle_{{class_middle[0]}}">{{class_middle[0]}}</label>
         </input>
       </li>
@@ -29,7 +29,7 @@
       {% for class_middle in class_middles %}
       {% if class_middle[1] == "drink" %}
       <li class="menu-box" value={{class_middle[0]}}>
-        <input type="checkbox" disabled="true" class="delete" value="class_middle_drink" name="{{class_middle[0]}}" id="class_middle_{{class_middle[0]}}">
+        <input disabled="true" class="delete" value="class_middle_drink" name="{{class_middle[0]}}" id="class_middle_{{class_middle[0]}}">
           <label class="deletemark" value={{class_middle[0]}} name="class_middle_drink" for="class_middle_{{class_middle[0]}}">{{class_middle[0]}}</label>
         </input>
       </li>

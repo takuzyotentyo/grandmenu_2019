@@ -80,7 +80,7 @@ $(document).on('click', '.button__sortable', function() {
 });
 
 
-// deleteに関するjs
+// deleteに関するjsを導入
 $(function(){
   $(".button__delete").click(function(){
     if($(".button__delete").hasClass("doing")){
