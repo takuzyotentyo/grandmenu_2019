@@ -118,24 +118,26 @@ def add_menu():
 def delete_menu():
         if request.method == 'POST':
             try:
-                menu_list_food = request.form.getlist("food_")
-                print(menu_list_food)
-                print(len(menu_list_food))
+                menu_list = request.form.getlist("name_of_dish")
+                print(menu_list)
+                print(len(menu_list))
             except:#この処理必要ない気がする
                 menu_list_food = None
-            try:
-                menu_list_drink = request.form.getlist("drink_")
-            except:#この処理必要ない気がする
-                menu_list_drink = None
+            #とりあえず以下ドリンクは削除処理はいらない(menuで一元管理しているため)
+            # try:
+            #     menu_list_drink = request.form.getlist("drink_")
+            # except:#この処理必要ない気がする
+            #     menu_list_drink = None
 
             # if len(menu_list_food) != 0:
-            for i in range(len(menu_list_food)):
-                db.session.query(Food_Drink).filter(Food_Drink.NAME_OF_DISH==menu_list_food[i]).delete()
+            for i in range(len(menu_list)):
+                db.session.query(Food_Drink).filter(Food_Drink.NAME_OF_DISH==menu_list[i]).delete()
                 db.session.commit()
-
-            for j in range(len(menu_list_drink)):
-                db.session.query(Food_Drink).filter(Food_Drink.NAME_OF_DISH==menu_list_drink[j]).delete()
-                db.session.commit()
+                db.session.close()
+            #とりあえず以下ドリンクは削除処理はいらない(menuで一元管理しているため)
+            # for j in range(len(menu_list_drink)):
+            #     db.session.query(Food_Drink).filter(Food_Drink.NAME_OF_DISH==menu_list_drink[j]).delete()
+            #     db.session.commit()
 
         menu_infos = db.session.query(Food_Drink.ID, Food_Drink.KIND, Food_Drink.CLASS_MIDDLE, Food_Drink.NAME_OF_DISH, Food_Drink.PRICE).\
             order_by(Food_Drink.CLASS_MIDDLE).\

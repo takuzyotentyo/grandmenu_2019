@@ -3,11 +3,10 @@
 
 <!-- <form id="sortable_array" method=post action="/delete_menu"> -->
 <div id="sortable_array">
-<form id="sortable_array" method=post action="/delete_menu">
-
 <div class="multi-column">
 
 <!-- メニュー表示部分-->
+<!-- フード中分類 -->
   <div class="column-2">
     <div class="menu-box__food">Food</div>
     <ul class=sortable>
@@ -22,7 +21,7 @@
       {% endfor %}
     </ul>
   </div>
-
+<!-- ドリンク中分類 -->
   <div class="column-2">
     <div class="menu-box__drink">Drink</div>
     <ul class=sortable>
@@ -42,10 +41,12 @@
 
 <!-- lightbox__menu-boxの中に小分類を入れ、非表示にするときの子要素指定のためにliをつけている -->
 <!-- jqueryのthisを使って直接要素指定のため、css直書きしている -->
+<!-- 小分類 -->
+<form id="delete_menu" method=post action="/delete_menu">
 <ul class="lightbox__menu-box sortable">
 {% for menu_info in menu_infos %}
     <li style= display:none; class="menu-box__name_of_dish {{menu_info[2]}}">
-    <input type="checkbox" disabled="true" class="delete" value="name_of_dish" name="{{menu_info[3]}}" id="name_of_dish_{{menu_info[3]}}">
+    <input type="checkbox" disabled="true" class="delete" value="{{menu_info[3]}}" name="name_of_dish" id="name_of_dish_{{menu_info[3]}}">
       <label class="deletemark" for="name_of_dish_{{menu_info[3]}}" value="{{menu_info[3]}}">{{menu_info[3]}}  ¥{{menu_info[4]}}</label>
     </input>
     </li>
