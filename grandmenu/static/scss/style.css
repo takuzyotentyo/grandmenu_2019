@@ -865,7 +865,7 @@ blockのインポート
 input[type="radio"] + label {
   line-height: 30px;
   color: #ffffff;
-  background: #FFA500;
+  background: #072A24;
   /* マウス選択時の背景色を指定する */
   width: 125px;
   text-align: center;
@@ -876,7 +876,7 @@ input[type="radio"] + label {
 
 input[type="radio"]:checked + label {
   color: #ffffff;
-  background: #072A24;
+  background: #FFA500;
   /* マウス選択時の背景色を指定する */ }
 
 /*「_」抜きの名前でインポートする
