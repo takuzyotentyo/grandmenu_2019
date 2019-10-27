@@ -55,13 +55,12 @@ class Store(db.Model):
     __tablename__ = 'stores'
 
     STORE_ID = db.Column(Integer, primary_key=True)
-    USER_NAME = db.Column(String(255))
+    STORE_NAME = db.Column(String(255))
     E_MAIL = db.Column(String(255), unique=True)
     PASSWORD = db.Column(String(255))
-    STORE_NAME = db.Column(String(255))
 
     def __repr__(self):
-        return "(STORE_ID='%s', E_MAIL='%s', PASSWORD='%s', STORE_NAME='%s')" % (self.STORE_ID, self.E_MAIL, self.PASSWORD, self.STORE_NAME)
+        return "(STORE_ID='%s', STORE_NAME='%s', E_MAIL='%s', PASSWORD='%s')" % (self.STORE_ID, self.STORE_NAME, self.E_MAIL, self.PASSWORD)
 
 #Food_Drinkテーブル定義
 class Food_Drink(db.Model):
