@@ -111,9 +111,9 @@ def store_information_registration():
         store_name = request.form['store_name']
         print(store_name)
         try:
-            store_update = db.session.query(User).filter(User.ID==1).one() #UserのIDとSTORE_NAMEをクエリに追加
+            store_update = db.session.query(User).filter(User.ID==2).one() #UserのIDとSTORE_NAMEをクエリに追加
             print(store_update)
-            db.session.add(User(STORE_ID=1, STORE_NAME=store_name))
+            store_update.STORE_NAME = store_name
             db.session.commit()
             db.session.close()
             return render_template('index.html')
