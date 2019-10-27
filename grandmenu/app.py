@@ -62,7 +62,7 @@ class User(db.Model):
     STORE_NAME = db.Column(String(255))
 
     def __repr__(self):
-        return "(ID='%s', E_MAIL='%s', PASSWORD='%s')" % (self.ID, self.E_MAIL, self.PASSWORD)
+        return "(ID='%s', E_MAIL='%s', PASSWORD='%s', STORE_ID='%s', STORE_NAME='%s')" % (self.ID, self.E_MAIL, self.PASSWORD, self.STORE_ID, self.STORE_NAME)
 
 #Food_Drinkテーブル定義
 class Food_Drink(db.Model):
@@ -100,7 +100,7 @@ def login():
             print(ex)
             db.session.add(User(E_MAIL=e_mail, PASSWORD=password))
             db.session.commit()
-            # db.session.close()
+            db.session.close()
             return render_template('regicomp.html')
 
     return render_template('login.html')
@@ -111,10 +111,11 @@ def store_information_registration():
         store_name = request.form['store_name']
         print(store_name)
         try:
-            store_update = db.session.query(User.ID, User.STORE_NAME).filter(User.ID==3).one() #UserのIDとSTORE_NAMEをクエリに追加
+            store_update = db.session.query(User).filter(User.ID==1).one() #UserのIDとSTORE_NAMEをクエリに追加
             print(store_update)
-            store_update(STORE_NAME = store_name)
+            db.session.add(User(STORE_ID=1, STORE_NAME=store_name))
             db.session.commit()
+            db.session.close()
             return render_template('index.html')
         except:
             store_name = None
