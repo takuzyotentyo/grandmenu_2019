@@ -1,0 +1,17 @@
+@charset "UTF-8";
+/*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.base-picture {
+  display: block;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: url("../img/top.jpg");
+  background-size: cover; }

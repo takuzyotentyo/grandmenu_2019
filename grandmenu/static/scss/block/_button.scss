@@ -1,5 +1,4 @@
 @import "../setting/setting.scss";
-@import "../mixin/mixin.scss";
 
 .button{
  	@include button;
@@ -8,43 +7,43 @@
 		right: 2vh;
 		background: $color-main;
 		box-shadow: 0px 0px 0px 5px $color-main;
- 	}
- 	&__delete--active{
+		&--active{
  		@include button;
  		right: 2vh;
- 		background: $color-active2;
- 		box-shadow: 0px 0px 0px 5px $color-active2;
+ 		background: $color-alart;
+ 		box-shadow: 0px 0px 0px 5px $color-alart;
+ 		}
+		&:hover {
+			background: $color-active;
+			box-shadow: 0px 0px 0px 5px $color-active;
+		}
  	}
+
  	&__add{
  		@include button;
  		right: calc(2vh + 75px);
  		background: $color-main;
  		box-shadow: 0px 0px 0px 5px $color-main;
+ 		&:hover {
+			background: $color-active;
+			box-shadow: 0px 0px 0px 5px $color-active;
+		}
 	}
+
  	&__sortable{
  		@include button;
  		right: calc(2vh + 150px);
  		background: $color-main;
  		box-shadow: 0px 0px 0px 5px $color-main;
+ 		&--active{
+ 			@include button;
+ 			right: calc(2vh + 150px);
+ 			background: $color-alart;
+ 			box-shadow: 0px 0px 0px 5px $color-alart;
+ 		}
+ 		&:hover {
+			background: $color-active;
+			box-shadow: 0px 0px 0px 5px $color-active;
+		}
  	}
- 	&__sortable--active{
- 		@include button;
- 		right: calc(2vh + 150px);
- 		background: $color-active2;
- 		box-shadow: 0px 0px 0px 5px $color-active2;
- 	}
-}
-
-.button__delete:hover {
-	background: $color-active;
-	box-shadow: 0px 0px 0px 5px $color-active;
-}
-.button__add:hover {
-	background: $color-active;
-	box-shadow: 0px 0px 0px 5px $color-active;
-}
-
-.button__sortable:hover {
-	background: $color-active;
-	box-shadow: 0px 0px 0px 5px $color-active;
 }

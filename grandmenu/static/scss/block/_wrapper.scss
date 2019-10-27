@@ -1,0 +1,120 @@
+@import "../setting/setting.scss";
+
+.wrapper{
+	// 中身を中央揃えしたくないので、@include column;は行わない
+	&__header{
+		align-items: center;
+		background-color: $color-main;
+		display: flex;
+		height: 50px;
+		position: absolute;
+		width:100vw;
+		z-index:1000;
+	}
+	&__side{
+		padding-left: 0;
+	    display: block;
+	    position: absolute;
+	    width: 25vw;
+	    height: calc(100vh - 50px);
+	    max-width: 450px;
+	    background: $color-main;
+	    box-shadow: rgba(100,100,100,0.5) 10px 0px 10px;
+	    z-index: 999;
+	    overflow-y: scroll;
+	    overflow-x: hidden;
+	    left: -25vw;
+	    top: 50px;
+	}
+
+	&__100vw{
+		@include wrapper;
+		width: 100vw;
+		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+	}
+	&__100vw--height{
+		@include wrapper;
+		width: 100vw;
+		height: calc(100vh - 50px);
+		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+		margin-top: 50px;
+		position: relative;
+	}
+	&__75vw{
+		@include wrapper;
+		width: 75vw;
+		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+	}
+	&__50vw{
+		@include wrapper;
+		width: 50vw;
+		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+	}
+	&__33vw{
+		@include wrapper;
+		width: 33.33vw;
+		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+	}
+	&__25vw{
+		@include wrapper;
+		width: 25vw;
+		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+	}
+
+	&__100percent{
+		@include wrapper;
+		width: 100%;
+		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+	}
+
+	&__75percent{
+		@include wrapper;
+		width: 75%;
+		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+	}
+
+	&__50percent{
+		@include wrapper;
+		width: 50%;
+		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+	}
+
+	&__33percent{
+		@include wrapper;
+		width: 33.33%;
+		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+	}
+
+	&__25percent{
+		@include wrapper;
+		width: 25%;
+		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+	}
+}
+
+.multi_wrap{
+	&--flex_start{
+		display: flex;
+    	flex-wrap: wrap;
+    	justify-content: flex-start;
+    	align-items: flex-start;
+    	width: 100vw;
+	}
+	&--center{
+		display: flex;
+    	flex-flow: wrap;
+    	justify-content: center;
+    	align-items: flex-start;
+    	width: 100vw;
+	}
+	&--center_vhcenter{
+		display: flex;
+    	flex-flow: column nowrap;
+    	justify-content: center;
+    	align-items: center;
+    	width: 100vw;
+    	height: calc(100vh - 50px);
+    	top: 50px;
+    	position: absolute;
+	}
+}

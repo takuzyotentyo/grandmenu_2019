@@ -1,101 +1,14 @@
- /*「_」抜きの名前でインポートする
- 変数を定義しているsetting.scssのインポートは必須事項*/
 @import "../setting/setting.scss";
-
-.header{
-	background-color: $color-main;
-	height: 110px;
-	padding: 6px,auto,5px,auto;
-	position: fixed;
-	width: $width-base;
-	z-index: 999;
-}
-
-
-.title{
-	background-color: $color-main;
-	font-size: $text-subtitle;
-	padding: 7px;
-	text-align: center;
-}
-
-/*ユーザーネームと、ログアウトボタンを同一行に表示するために必要*/
-.user-name-wrapper{
-	background-color: $color-main;
-	display: flex;
-	justify-content: center; /* 子要素を中央揃え */
+.header_menu{
     position: relative;
-    padding: 5px;
-	&__user-name{
-		color: $text-color-main;
-		font-size: $text-body;
-	}
-	&__logout{
-		font-size: $text-body;
-		position: absolute;
-    	right: 10px; /* 右寄せ */
-	}
+    width: 20px;
+    height: 20px;
+    margin: 2vw;
 }
 
- /*4つのグローバルナビのボタンの親要素*/
-.global-nav-wrapper{
-	background-color: $color-main;
-	line-height: 40px;
-    max-width: 1000px;
-    margin: auto;
-    position: relative;
-    width: 100%;
-	&__global-nav-1 {
-    	float: left;
-    	font-size: $text-body;
-    	list-style: none;
-    	position: relative;
-    	text-align: center;
-    	width: 25%; /* グローバルナビ4つの場合 */
-    }
-    /*ボタンの後につく下矢印の設定*/
-	&__global-nav-button:after{
-		content: '';
-    	display: inline-block;
-    	width: $text-decoration;
-		height: $text-decoration;
-    	border-right: 1px solid $text-color-main;
-    	border-bottom: 1px solid $text-color-main;
-    	margin: 0 0 4px 8px;
-        transform: rotate(45deg);
-	}
-    &__global-nav-2{
-    	background-color: $color-sub;
-	    // visibility: hidden;
-	    display: none;
-	    li{
-	    	border-top: 1px solid $color-active;
-	    	a{
-				color: $text-color-main;
-			}
-		}
-	}
-	&__global-nav-1:hover {
-    	background-color: $color-sub;
-        -webkit-transition: all .5s;
-    	transition: all .5s;
-    	.global-nav-wrapper__global-nav-2{
-    		// visibility: visible;
-    		display: block;
-    		.global-nav-wrapper__global-nav-content:hover{
-    			background-color: $color-active;
-				a{
-					color: $text-color-sub;
-				}
-			}
-		}
-	}
+.header__title{
+	position: absolute;
+	font-size: $text-icon;
+	left: 50%;
+  	transform: translateX(-50%);
 }
-/*ヘッダーの裏にアジャスターを入れることで、固定しながらコンテンツ表示領域の計算を簡単にしている*/
-.header-adjustment {
-	position: relative;
-    width: $width-base;
-    height: 110px;
-}
-
-

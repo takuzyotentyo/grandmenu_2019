@@ -1,0 +1,23 @@
+ /*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+@import "../setting/setting.scss";
+
+.radio_button{
+    display: none;
+}
+
+input[type="radio"] + label {
+    line-height: 30px;
+    color: $text-color-main;
+    background: $color-main;/* マウス選択時の背景色を指定する */
+    width: 125px;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+    transition: .4s;
+}
+
+input[type="radio"]:checked + label {
+    color: $text-color-main;
+    background: $color-sub;/* マウス選択時の背景色を指定する */
+    // transform  : scale(1.1, 1.1);
+}

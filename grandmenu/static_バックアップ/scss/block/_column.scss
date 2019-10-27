@@ -1,0 +1,41 @@
+ /*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+@import "../setting/setting.scss";
+
+.column-1{
+	@include column;
+	width:100vw;
+	flex-flow: column nowrap;
+	&__100vh{
+		@include column;
+		width:100vw;
+		flex-flow: column nowrap;
+		height:100vh;
+	}
+}
+
+.column-2{
+	@include column;
+	width:50vw;
+	flex-flow: column nowrap;
+}
+
+.column-3{
+	@include column;
+	width:33.33vw;
+	flex-flow: column nowrap;
+}
+
+.column-4{
+	@include column;
+	width:25vw;
+	flex-flow: column nowrap;
+}
+
+.multi-column{
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100vw;
+}

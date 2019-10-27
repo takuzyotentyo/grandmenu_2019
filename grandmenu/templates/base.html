@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Ground menu.com</title>
+  <title>Ground Menu.com</title>
   <link rel="stylesheet" href="../static/css/normalize.css">
   <link rel="stylesheet" href="../static/css/reset.css">
   <link rel="stylesheet" href="../static/scss/style.css">
@@ -13,65 +13,59 @@
 </head>
 
 <body>
-  <header class="header">
-    <div class="title">
-      <a href="/index" class="site_title">Ground Menu.com</a>
+  <div class="back_box" >
+  <div class="wrapper__header">
+    <div class="header_menu three_line_menu">
+        <!-- メニューの三本線に使う -->
+      <span></span><span></span><span></span>
     </div>
-    <div class="user-name-wrapper">
-    <div class="user-name-wrapper__user-name" value="{{session.username}}">{{session.username}}</div>
-    <div class="user-name-wrapper__logout"><a href="/logout">ログアウト</a></div>
-    </div>
-
-    <nav class="global-nav-wrapper">
-
-     <li class="global-nav-wrapper__global-nav-1">
-         <a href="" class="global-nav-wrapper__global-nav-button">店舗・メニュー</a>
-         <ul class="global-nav-wrapper__global-nav-2">
-             <li class="global-nav-wrapper__global-nav-content"><a href="/add_menu">メニュー表登録・修正</a></li>
-             <li class="global-nav-wrapper__global-nav-content"><a href="">アップロード確認</a></li>
-             <li class="global-nav-wrapper__global-nav-content"><a href="">QRコード発行</a></li>
-             <li class="global-nav-wrapper__global-nav-content"><a href="/store_information">店舗情報登録・修正</a></li>
-         </ul>
-     </li>
-
-     <li class="global-nav-wrapper__global-nav-1">
-         <a href="" class="global-nav-wrapper__global-nav-button">採用・広告</a>
-         <ul class="global-nav-wrapper__global-nav-2">
-             <li class="global-nav-wrapper__global-nav-content"><a href="">採用広告を出す</a></li>
-             <li class="global-nav-wrapper__global-nav-content"><a href="">採用基礎情報入力</a></li>
-         </ul>
-     </li>
-
-     <li class="global-nav-wrapper__global-nav-1">
-         <a href="" class="global-nav-wrapper__global-nav-button">データ確認</a>
-         <ul class="global-nav-wrapper__global-nav-2">
-             <li class="global-nav-wrapper__global-nav-content"><a href="">店舗のデータを見る</a></li>
-             <li class="global-nav-wrapper__global-nav-content"><a href="">地域のデータを見る</a></li>
-             <li class="global-nav-wrapper__global-nav-content"><a href="">データダウンロード</a></li>
-         </ul>
-     </li>
-
-     <li class="global-nav-wrapper__global-nav-1">
-         <a href="" class="global-nav-wrapper__global-nav-button">融資</a>
-         <ul class="global-nav-wrapper__global-nav-2">
-             <li class="global-nav-wrapper__global-nav-content"><a href="">融資を受ける</a></li>
-             <li class="global-nav-wrapper__global-nav-content"><a href="">返済プランを見る</a></li>
-         </ul>
-     </li>
-     <!-- 他グローバルナビメニュー入れるならここ -->
-    </nav>
-  </header>
-<!-- ヘッダーの後ろにスペースを埋めるアジャスターを入れる -->
-  <div class="header-adjustment"></div>
-
-  <div class="base-picture">
-  {% block global_navi %}{% endblock %}
+    <a href="/index" class="text__subtitle header__title">Ground Menu.com</a>
   </div>
 
-  <footer class="footer">
-    <div class="title">
-      <a href="/index">Ground Menu.com</a></div>
-  </footer>
+<!-- 2カラムレイアウトにするために必要 -->
+  <div class="multi-wrap--flex-start">
+
+  <!-- サイドメニュー -->
+    <ul class="wrapper__side">
+
+      <li class="global_navi__1">
+        <div class="global_navi__content--1">オーダーシステム</div>
+        <div class="global_navi__1_opener icon_pulus">
+          <span></span>
+          <span></span>
+        </div>
+      </li>
+      <!-- accordion-toggle -->
+      <ul class="global_navi__2">
+        <li><a class="global_navi__content--2" href="/add_menu">メニュー表登録・修正</a></li>
+        <li><a class="global_navi__content--2" href="#">QRコード発行</a></li>
+      </ul>
+
+      <!-- menu-submenu accordon-content-->
+      <li class="global_navi__1">
+        <div class="global_navi__content--1">設定</div>
+        <div class="global_navi__1_opener icon_pulus">
+          <span></span>
+          <span></span>
+        </div>
+      </li>
+      <!-- accordion-toggle -->
+      <ul class="global_navi__2">
+        <li><a class="global_navi__content--2" href="#">店舗情報</a></li>
+        <li><a class="global_navi__content--2" href="#">従業員情報</a></li>
+      </ul>
+      <!-- menu-submenu accordon-content-->
+      <a class="global-navi__logout" href="/logout">ログアウト</a>
+    </ul>
+    <!-- menu-list accordion-->
+
+    <div class="wrapper__100vw--height">
+      <div class="picture__base"></div>
+
+  {% block global_navi %}{% endblock %}
+    </div>
+  </div>
+
 </body>
 
 </html>

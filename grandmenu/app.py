@@ -52,14 +52,17 @@ def verify_password(hash_pass, original_pass):
 
 #Userテーブル定義
 class User(db.Model):
-    __tablename__ = 'login_user'
+    __tablename__ = 'users'
 
     ID = db.Column(Integer, primary_key=True)
+    USER_NAME = db.Column(String(255))
     E_MAIL = db.Column(String(255), unique=True)
-    PASS_WORD = db.Column(String(255))
+    PASSWORD = db.Column(String(255))
+    STORE_ID = db.Column(Integer)
+    STORE_NAME = db.Column(String(255))
 
     def __repr__(self):
-        return "(ID='%s', E_MAIL='%s', PASS_WORD='%s')" % (self.ID, self.E_MAIL, self.PASS_WORD)
+        return "(ID='%s', E_MAIL='%s', PASSWORD='%s')" % (self.ID, self.E_MAIL, self.PASSWORD)
 
 #Food_Drinkテーブル定義
 class Food_Drink(db.Model):
@@ -87,24 +90,39 @@ def login():
     #DBに会員情報を登録する
     if request.method == 'POST':
         e_mail = request.form['e_mail']
-        pass_word = hash_password(request.form['pass_word'])
+        password = hash_password(request.form['password'])
 
         try:
-            dupli_user = db.session.query(User).filter_by(E_MAIL=e_mail).one()
-            print(dupli_user.E_MAIL + " is exist")
-            return render_template('regierror.html')
+            dupli_users = db.session.query(User).filter_by(E_MAIL=e_mail).one()
+            print(dupli_users.E_MAIL + " is exist")
+            return render_template('login.html')
         except NoResultFound as ex:
             print(ex)
-            db.session.add(User(E_MAIL=e_mail, PASS_WORD=pass_word))
+            db.session.add(User(E_MAIL=e_mail, PASSWORD=password))
             db.session.commit()
             # db.session.close()
             return render_template('regicomp.html')
 
     return render_template('login.html')
 
-@app.route('/registration')
-def registration():
-    return render_template('registration.html')
+@app.route('/store_information_registration', methods = ['POST', 'GET'])
+def store_information_registration():
+    if request.method == 'POST':
+        store_name = request.form['store_name']
+        print(store_name)
+        try:
+            store_update = db.session.query(User.ID, User.STORE_NAME).filter(User.ID==3).one() #UserのIDとSTORE_NAMEをクエリに追加
+            print(store_update)
+            store_update(STORE_NAME = store_name)
+            db.session.commit()
+            return render_template('index.html')
+        except:
+            store_name = None
+            return render_template('add_menu.html')
+
+    # return render_template('index.html')
+
+
 
 # メニューリスト表示
 @app.route('/add_menu' , methods = ['POST', 'GET'])
@@ -195,14 +213,14 @@ def index():
     if request.method == 'POST':
 
         e_mail = request.form['e_mail']
-        pass_word = request.form['pass_word']
+        password = request.form['password']
 
         try:
             login_user = db.session.query(User).filter_by(E_MAIL=e_mail).one()
-            session['username'] = login_user.ID
+            session['user_name'] = login_user.ID
             username_session = login_user.ID#デバック用
             print(username_session)#デバック用
-            login_check = verify_password(login_user.PASS_WORD, pass_word)
+            login_check = verify_password(login_user.PASSWORD, password)
             print(login_user)
             if login_check == True:
                 #パスワードOKの処理

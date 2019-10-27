@@ -2,7 +2,7 @@
 /* 「_」抜きの名前でインポートできる
 順番は
 setting
-base
+mixin
 block
 の順とする*/
 /*====================
@@ -11,8 +11,6 @@ settingのインポート
 /*====================
 サイトの基本設定
 ====================*/
-/*幅幅*/
-/*縦幅*/
 /*フォント関係*/
 /*テキストの大きさ*/
 /*色関係*/
@@ -28,6 +26,9 @@ settingのインポート
 a {
   color: #fff;
   text-decoration: none; }
+
+ul {
+  list-style: none; }
 
 body {
   font-family: "Yu gothic", sans-serif; }
@@ -57,8 +58,6 @@ mixinのインポート
 /*====================
 サイトの基本設定
 ====================*/
-/*幅幅*/
-/*縦幅*/
 /*フォント関係*/
 /*テキストの大きさ*/
 /*色関係*/
@@ -66,362 +65,16 @@ mixinのインポート
 /*====================
 blockのインポート
 ====================*/
-/*====================
-サイトの基本設定
-====================*/
-/*幅幅*/
-/*縦幅*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-.lightbox {
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  /*左右中央揃え*/
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  /*上下中央揃え*/
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: rgba(7, 42, 36, 0.3);
-  top: 0;
-  left: 0;
-  padding: auto;
-  display: none;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap; }
-
-.lightbox__menu-box {
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  /*左右中央揃え*/
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  /*上下中央揃え*/
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: rgba(7, 42, 36, 0.3);
-  top: 0;
-  left: 0;
-  padding: auto;
-  display: none;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap; }
-
 /*「_」抜きの名前でインポートする
  変数を定義しているsetting.scssのインポートは必須事項*/
 /*====================
 サイトの基本設定
 ====================*/
-/*幅幅*/
-/*縦幅*/
 /*フォント関係*/
 /*テキストの大きさ*/
 /*色関係*/
 /*ブレイクポイント*/
-.header {
-  background-color: #FFA500;
-  height: 110px;
-  padding: 6px,auto,5px,auto;
-  position: fixed;
-  width: 100vw;
-  z-index: 999; }
-
-.title {
-  background-color: #FFA500;
-  font-size: 28px;
-  padding: 7px;
-  text-align: center; }
-
-/*ユーザーネームと、ログアウトボタンを同一行に表示するために必要*/
-.user-name-wrapper {
-  background-color: #FFA500;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  /* 子要素を中央揃え */
-  position: relative;
-  padding: 5px; }
-  .user-name-wrapper__user-name {
-    color: #ffffff;
-    font-size: 16px; }
-  .user-name-wrapper__logout {
-    font-size: 16px;
-    position: absolute;
-    right: 10px;
-    /* 右寄せ */ }
-
-/*4つのグローバルナビのボタンの親要素*/
-.global-nav-wrapper {
-  background-color: #FFA500;
-  line-height: 40px;
-  max-width: 1000px;
-  margin: auto;
-  position: relative;
-  width: 100%;
-  /*ボタンの後につく下矢印の設定*/ }
-  .global-nav-wrapper__global-nav-1 {
-    float: left;
-    font-size: 16px;
-    list-style: none;
-    position: relative;
-    text-align: center;
-    width: 25%;
-    /* グローバルナビ4つの場合 */ }
-  .global-nav-wrapper__global-nav-button:after {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-right: 1px solid #ffffff;
-    border-bottom: 1px solid #ffffff;
-    margin: 0 0 4px 8px;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg); }
-  .global-nav-wrapper__global-nav-2 {
-    background-color: #072A24;
-    display: none; }
-    .global-nav-wrapper__global-nav-2 li {
-      border-top: 1px solid #111111; }
-      .global-nav-wrapper__global-nav-2 li a {
-        color: #ffffff; }
-  .global-nav-wrapper__global-nav-1:hover {
-    background-color: #072A24;
-    -webkit-transition: all .5s;
-    -o-transition: all .5s;
-    transition: all .5s; }
-    .global-nav-wrapper__global-nav-1:hover .global-nav-wrapper__global-nav-2 {
-      display: block; }
-      .global-nav-wrapper__global-nav-1:hover .global-nav-wrapper__global-nav-2 .global-nav-wrapper__global-nav-content:hover {
-        background-color: #111111; }
-        .global-nav-wrapper__global-nav-1:hover .global-nav-wrapper__global-nav-2 .global-nav-wrapper__global-nav-content:hover a {
-          color: #999999; }
-
-/*ヘッダーの裏にアジャスターを入れることで、固定しながらコンテンツ表示領域の計算を簡単にしている*/
-.header-adjustment {
-  position: relative;
-  width: 100vw;
-  height: 110px; }
-
-/*「_」抜きの名前でインポートする
- 変数を定義しているsetting.scssのインポートは必須事項*/
-/*====================
-サイトの基本設定
-====================*/
-/*幅幅*/
-/*縦幅*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-.base-picture {
-  display: block;
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  background: url("../img/top.jpg");
-  background-size: cover;
-  padding: 0px; }
-
-/*「_」抜きの名前でインポートする
- 変数を定義しているsetting.scssのインポートは必須事項*/
-/*====================
-サイトの基本設定
-====================*/
-/*幅幅*/
-/*縦幅*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-.column-1 {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  /*上下中央揃え*/
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  /*左右中央揃え*/
-  position: relative;
-  padding: 0;
-  width: 100vw;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap; }
-  .column-1__100vh {
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    /*上下中央揃え*/
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    /*左右中央揃え*/
-    position: relative;
-    padding: 0;
-    width: 100vw;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: column nowrap;
-    flex-flow: column nowrap;
-    height: 100vh; }
-
-.column-2 {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  /*上下中央揃え*/
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  /*左右中央揃え*/
-  position: relative;
-  padding: 0;
-  width: 50vw;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap; }
-
-.column-3 {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  /*上下中央揃え*/
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  /*左右中央揃え*/
-  position: relative;
-  padding: 0;
-  width: 33.33vw;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap; }
-
-.column-4 {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  /*上下中央揃え*/
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  /*左右中央揃え*/
-  position: relative;
-  padding: 0;
-  width: 25vw;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap; }
-
-.multi-column {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  width: 100vw; }
-
-/*「_」抜きの名前でインポートする
- 変数を定義しているsetting.scssのインポートは必須事項*/
-/*====================
-サイトの基本設定
-====================*/
-/*幅幅*/
-/*縦幅*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-.welcome-title {
-  display: block;
-  text-align: center;
-  position: relative;
-  margin: 0 auto 40px auto;
-  font-size: 32px;
-  color: #ffffff; }
-
-.welcome-text {
-  display: block;
-  font-size: 16px;
-  width: 300px;
-  margin-top: 40px;
-  line-height: 30px;
-  text-align: left;
-  color: #ffffff; }
-
-/*「_」抜きの名前でインポートする
- 変数を定義しているsetting.scssのインポートは必須事項*/
-/*====================
-サイトの基本設定
-====================*/
-/*幅幅*/
-/*縦幅*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-.footer {
-  position: fixed;
-  background-color: #FFA500;
-  height: 50px;
-  padding: 6px;
-  width: 100vw;
-  bottom: 0; }
-
-/*「_」抜きの名前でインポートする
- 変数を定義しているsetting.scssのインポートは必須事項*/
-/*====================
-サイトの基本設定
-====================*/
-/*幅幅*/
-/*縦幅*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-.form-text {
+.form_text--small {
   width: 250px;
   height: 50px;
   line-height: 30px;
@@ -441,46 +94,18 @@ blockのインポート
   -o-transition: all .2s ease 0s;
   transition: all .2s ease 0s;
   text-decoration: none; }
-  .form-text:hover {
+  .form_text--small:hover {
     background-position: -100% 0;
     color: #fff; }
 
 /*====================
 サイトの基本設定
 ====================*/
-/*幅幅*/
-/*縦幅*/
 /*フォント関係*/
 /*テキストの大きさ*/
 /*色関係*/
 /*ブレイクポイント*/
-.select-box > select {
-  width: 50px;
-  height: 50px;
-  margin: 10px auto 10px auto;
-  display: block;
-  padding: 8px 0 8px 17px;
-  letter-spacing: 2em;
-  color: #ffffff;
-  background: #FFA500;
-  overflow: hidden;
-  -webkit-transition: all 0.2s cubic-bezier(1, 0, 0, 1);
-  -o-transition: all 0.2s cubic-bezier(1, 0, 0, 1);
-  transition: all 0.2s cubic-bezier(1, 0, 0, 1);
-  border-style: none; }
-  .select-box > select:hover {
-    width: 250px; }
-
-/*====================
-サイトの基本設定
-====================*/
-/*幅幅*/
-/*縦幅*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-.form-button {
+.form_button {
   display: block;
   position: relative;
   -webkit-appearance: none;
@@ -492,7 +117,7 @@ blockのインポート
   margin: 10px auto 10px auto;
   border-radius: 5px;
   border-style: none; }
-  .form-button > span {
+  .form_button > span {
     position: absolute;
     top: 0;
     left: 0;
@@ -505,16 +130,16 @@ blockのインポート
     transition: all .2s;
     pointer-events: none;
     border-radius: 5px; }
-    .form-button > span:nth-child(1) {
+    .form_button > span:nth-child(1) {
       background-color: #072A24;
       color: #ffffff; }
-    .form-button > span:nth-child(2) {
+    .form_button > span:nth-child(2) {
       background-color: #FFA500;
       color: #ffffff;
       -webkit-transform-origin: 50% 50% -30px;
       -ms-transform-origin: 50% 50% -30px;
       transform-origin: 50% 50% -30px; }
-  .form-button:hover span:nth-child(2) {
+  .form_button:hover span:nth-child(2) {
     background-color: #072A24;
     -webkit-transform: rotateX(-90deg);
     transform: rotateX(-90deg); }
@@ -522,108 +147,6 @@ blockのインポート
 /*====================
 サイトの基本設定
 ====================*/
-/*幅幅*/
-/*縦幅*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-/*====================
-サイトの基本設定
-====================*/
-/*幅幅*/
-/*縦幅*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-.menu-box {
-  display: inline-block;
-  vertical-align: middle;
-  color: #ffffff;
-  margin-left: 1vw;
-  margin-right: 1vw;
-  opacity: 0.9;
-  position: relative;
-  width: 48vw;
-  line-height: 50px;
-  font-size: 16px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  text-align: center;
-  height: 50px;
-  background-color: #FFA500; }
-  .menu-box__food {
-    display: inline-block;
-    vertical-align: middle;
-    color: #ffffff;
-    margin-left: 1vw;
-    margin-right: 1vw;
-    opacity: 0.9;
-    position: relative;
-    width: 48vw;
-    line-height: 50px;
-    font-size: 16px;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    text-align: center;
-    height: 50px;
-    background-color: #111111;
-    font-weight: bold; }
-  .menu-box__drink {
-    display: inline-block;
-    vertical-align: middle;
-    color: #ffffff;
-    margin-left: 1vw;
-    margin-right: 1vw;
-    opacity: 0.9;
-    position: relative;
-    width: 48vw;
-    line-height: 50px;
-    font-size: 16px;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    text-align: center;
-    height: 50px;
-    background-color: #111111;
-    font-weight: bold; }
-  .menu-box__name_of_dish {
-    display: inline-block;
-    vertical-align: middle;
-    color: #ffffff;
-    margin-left: 1vw;
-    margin-right: 1vw;
-    opacity: 0.9;
-    position: relative;
-    width: 48vw;
-    line-height: 50px;
-    font-size: 16px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    text-align: center;
-    height: 50px;
-    background-color: #FFA500; }
-
-.menu-box:hover {
-  background: #111111; }
-
-.menu-box__name_of_dish:hover {
-  background: #111111; }
-
-/*====================
-サイトの基本設定
-====================*/
-/*幅幅*/
-/*縦幅*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-/*====================
-サイトの基本設定
-====================*/
-/*幅幅*/
-/*縦幅*/
 /*フォント関係*/
 /*テキストの大きさ*/
 /*色関係*/
@@ -666,27 +189,31 @@ blockのインポート
     background: #FFA500;
     -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
     box-shadow: 0px 0px 0px 5px #FFA500; }
-  .button__delete--active {
-    display: inline-block;
-    text-decoration: none;
-    color: #ffffff;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    border-radius: 50%;
-    text-align: center;
-    overflow: hidden;
-    border: dashed 2px #FFF;
-    -webkit-transition: .4s;
-    -o-transition: .4s;
-    transition: .4s;
-    font-size: 30px;
-    position: fixed;
-    bottom: 100px;
-    right: 2vh;
-    background: #DC3B00;
-    -webkit-box-shadow: 0px 0px 0px 5px #DC3B00;
-    box-shadow: 0px 0px 0px 5px #DC3B00; }
+    .button__delete--active {
+      display: inline-block;
+      text-decoration: none;
+      color: #ffffff;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 50%;
+      text-align: center;
+      overflow: hidden;
+      border: dashed 2px #FFF;
+      -webkit-transition: .4s;
+      -o-transition: .4s;
+      transition: .4s;
+      font-size: 30px;
+      position: fixed;
+      bottom: 100px;
+      right: 2vh;
+      background: #DC3B00;
+      -webkit-box-shadow: 0px 0px 0px 5px #DC3B00;
+      box-shadow: 0px 0px 0px 5px #DC3B00; }
+    .button__delete:hover {
+      background: #111111;
+      -webkit-box-shadow: 0px 0px 0px 5px #111111;
+      box-shadow: 0px 0px 0px 5px #111111; }
   .button__add {
     display: inline-block;
     text-decoration: none;
@@ -708,6 +235,10 @@ blockのインポート
     background: #FFA500;
     -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
     box-shadow: 0px 0px 0px 5px #FFA500; }
+    .button__add:hover {
+      background: #111111;
+      -webkit-box-shadow: 0px 0px 0px 5px #111111;
+      box-shadow: 0px 0px 0px 5px #111111; }
   .button__sortable {
     display: inline-block;
     text-decoration: none;
@@ -729,48 +260,554 @@ blockのインポート
     background: #FFA500;
     -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
     box-shadow: 0px 0px 0px 5px #FFA500; }
-  .button__sortable--active {
-    display: inline-block;
-    text-decoration: none;
-    color: #ffffff;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    border-radius: 50%;
-    text-align: center;
-    overflow: hidden;
-    border: dashed 2px #FFF;
-    -webkit-transition: .4s;
-    -o-transition: .4s;
-    transition: .4s;
-    font-size: 30px;
-    position: fixed;
-    bottom: 100px;
-    right: calc(2vh + 150px);
-    background: #DC3B00;
-    -webkit-box-shadow: 0px 0px 0px 5px #DC3B00;
-    box-shadow: 0px 0px 0px 5px #DC3B00; }
-
-.button__delete:hover {
-  background: #111111;
-  -webkit-box-shadow: 0px 0px 0px 5px #111111;
-  box-shadow: 0px 0px 0px 5px #111111; }
-
-.button__add:hover {
-  background: #111111;
-  -webkit-box-shadow: 0px 0px 0px 5px #111111;
-  box-shadow: 0px 0px 0px 5px #111111; }
-
-.button__sortable:hover {
-  background: #111111;
-  -webkit-box-shadow: 0px 0px 0px 5px #111111;
-  box-shadow: 0px 0px 0px 5px #111111; }
+    .button__sortable--active {
+      display: inline-block;
+      text-decoration: none;
+      color: #ffffff;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 50%;
+      text-align: center;
+      overflow: hidden;
+      border: dashed 2px #FFF;
+      -webkit-transition: .4s;
+      -o-transition: .4s;
+      transition: .4s;
+      font-size: 30px;
+      position: fixed;
+      bottom: 100px;
+      right: calc(2vh + 150px);
+      background: #DC3B00;
+      -webkit-box-shadow: 0px 0px 0px 5px #DC3B00;
+      box-shadow: 0px 0px 0px 5px #DC3B00; }
+    .button__sortable:hover {
+      background: #111111;
+      -webkit-box-shadow: 0px 0px 0px 5px #111111;
+      box-shadow: 0px 0px 0px 5px #111111; }
 
 /*====================
 サイトの基本設定
 ====================*/
-/*幅幅*/
-/*縦幅*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.wrapper__header {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #FFA500;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 50px;
+  position: absolute;
+  width: 100vw;
+  z-index: 1000; }
+
+.wrapper__side {
+  padding-left: 0;
+  display: block;
+  position: absolute;
+  width: 25vw;
+  height: calc(100vh - 50px);
+  max-width: 450px;
+  background: #FFA500;
+  -webkit-box-shadow: rgba(100, 100, 100, 0.5) 10px 0px 10px;
+  box-shadow: rgba(100, 100, 100, 0.5) 10px 0px 10px;
+  z-index: 999;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  left: -25vw;
+  top: 50px; }
+
+.wrapper__100vw {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*コンテンツの上下中央揃え*/
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  position: relative;
+  width: 100vw;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
+
+.wrapper__100vw--height {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*コンテンツの上下中央揃え*/
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - 50px);
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  margin-top: 50px;
+  position: relative; }
+
+.wrapper__75vw {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*コンテンツの上下中央揃え*/
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  position: relative;
+  width: 75vw;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
+
+.wrapper__50vw {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*コンテンツの上下中央揃え*/
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  position: relative;
+  width: 50vw;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
+
+.wrapper__33vw {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*コンテンツの上下中央揃え*/
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  position: relative;
+  width: 33.33vw;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
+
+.wrapper__25vw {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*コンテンツの上下中央揃え*/
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  position: relative;
+  width: 25vw;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
+
+.wrapper__100percent {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*コンテンツの上下中央揃え*/
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  position: relative;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
+
+.wrapper__75percent {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*コンテンツの上下中央揃え*/
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  position: relative;
+  width: 75%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
+
+.wrapper__50percent {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*コンテンツの上下中央揃え*/
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  position: relative;
+  width: 50%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
+
+.wrapper__33percent {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*コンテンツの上下中央揃え*/
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  position: relative;
+  width: 33.33%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
+
+.wrapper__25percent {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*コンテンツの上下中央揃え*/
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/
+  position: relative;
+  width: 25%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
+
+.multi_wrap--flex_start {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  width: 100vw; }
+
+.multi_wrap--center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: wrap;
+  flex-flow: wrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  width: 100vw; }
+
+.multi_wrap--center_vhcenter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100vw;
+  height: calc(100vh - 50px);
+  top: 50px;
+  position: absolute; }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.header_menu {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin: 2vw; }
+
+.header__title {
+  position: absolute;
+  font-size: 30px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%); }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.text__icon {
+  font-size: 30px;
+  color: #ffffff; }
+
+.text__title {
+  font-size: 28px;
+  color: #ffffff; }
+
+.text__subtitle {
+  font-size: 24px;
+  color: #ffffff; }
+
+.text__body {
+  font-size: 16px;
+  color: #ffffff; }
+
+.text__copyright {
+  font-size: 12px;
+  color: #ffffff; }
+
+.text__text-decoration {
+  font-size: 6px;
+  color: #ffffff; }
+
+/*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.picture__base {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("../img/top.jpg");
+  background-size: cover;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: -1000; }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.global_navi__1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 25vw;
+  -webkit-box-shadow: 1px 0px 3px rgba(25, 25, 25, 0.15);
+  box-shadow: 1px 0px 3px rgba(25, 25, 25, 0.15); }
+
+.global_navi__content--1 {
+  font-size: 16px;
+  color: #ffffff;
+  padding-left: 2vw;
+  height: calc(16pt + 20px);
+  padding-top: 10px; }
+
+.global_navi__1_opener {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  right: 2vw;
+  margin-top: 10px; }
+
+.global_navi__2 {
+  display: none;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*コンテンツの上下中央揃え*/
+  width: 25vw; }
+
+.global_navi__content--2 {
+  display: block;
+  position: relative;
+  font-size: 16px;
+  color: #ffffff;
+  padding-left: 2vw;
+  height: calc(16pt + 20px);
+  padding-top: 10px;
+  width: 25vw;
+  -webkit-box-shadow: 1px 0px 3px rgba(25, 25, 25, 0.3);
+  box-shadow: 1px 0px 3px rgba(25, 25, 25, 0.3); }
+  .global_navi__content--2:hover {
+    background-color: #BF7900;
+    -webkit-box-shadow: 3px 0px 3px rgba(25, 25, 25, 0.8);
+    box-shadow: 3px 0px 3px rgba(25, 25, 25, 0.8);
+    -webkit-transition: .3s;
+    -o-transition: .3s;
+    transition: .3s; }
+
+.global-navi__logout {
+  display: block;
+  font-size: 16px;
+  color: #ffffff;
+  padding-left: 2vw;
+  height: calc(16pt + 20px);
+  padding-top: 10px;
+  width: 25vw;
+  -webkit-box-shadow: 1px 0px 3px rgba(25, 25, 25, 0.3);
+  box-shadow: 1px 0px 3px rgba(25, 25, 25, 0.3); }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.three_line_menu span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  position: absolute;
+  -webkit-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .4s ease-in-out;
+  -o-transition: .4s ease-in-out;
+  transition: .4s ease-in-out; }
+
+.three_line_menu span:nth-child(1) {
+  top: 0; }
+
+.three_line_menu span:nth-child(2) {
+  top: 9px; }
+
+.three_line_menu span:nth-child(3) {
+  top: 18px; }
+
+.js-three_line_menu--doing span:nth-child(1) {
+  -webkit-transform: translateY(9px) rotate(135deg);
+  -ms-transform: translateY(9px) rotate(135deg);
+  transform: translateY(9px) rotate(135deg); }
+
+.js-three_line_menu--doing span:nth-child(2) {
+  opacity: 0;
+  -webkit-transform: translateX(calc(-2vw - 12.5px));
+  -ms-transform: translateX(calc(-2vw - 12.5px));
+  transform: translateX(calc(-2vw - 12.5px)); }
+
+.js-three_line_menu--doing span:nth-child(3) {
+  -webkit-transform: translateY(-9px) rotate(-135deg);
+  -ms-transform: translateY(-9px) rotate(-135deg);
+  transform: translateY(-9px) rotate(-135deg); }
+
+.icon_pulus span {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  -webkit-transition: .3s ease-in-out;
+  -o-transition: .3s ease-in-out;
+  transition: .3s ease-in-out;
+  top: 50%; }
+
+.icon_pulus span:nth-child(1) {
+  -webkit-transform: translateY(-1px) rotate(90deg);
+  -ms-transform: translateY(-1px) rotate(90deg);
+  transform: translateY(-1px) rotate(90deg); }
+
+.icon_pulus span:nth-child(2) {
+  -webkit-transform: translateY(-1px);
+  -ms-transform: translateY(-1px);
+  transform: translateY(-1px); }
+
+.js-icon_pulus--doing span:nth-child(1) {
+  -webkit-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg); }
+
+.js-icon_pulus--doing span:nth-child(2) {
+  opacity: 0;
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg); }
+
+/*====================
+サイトの基本設定
+====================*/
 /*フォント関係*/
 /*テキストの大きさ*/
 /*色関係*/
@@ -818,41 +855,54 @@ blockのインポート
 /*====================
 サイトの基本設定
 ====================*/
-/*幅幅*/
-/*縦幅*/
 /*フォント関係*/
 /*テキストの大きさ*/
 /*色関係*/
 /*ブレイクポイント*/
+.radio_button {
+  display: none; }
+
+input[type="radio"] + label {
+  line-height: 30px;
+  color: #ffffff;
+  background: #FFA500;
+  /* マウス選択時の背景色を指定する */
+  width: 125px;
+  text-align: center;
+  border-radius: 5px 5px 0 0;
+  -webkit-transition: .4s;
+  -o-transition: .4s;
+  transition: .4s; }
+
+input[type="radio"]:checked + label {
+  color: #ffffff;
+  background: #072A24;
+  /* マウス選択時の背景色を指定する */ }
+
+/*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
 /*====================
 サイトの基本設定
 ====================*/
-/*幅幅*/
-/*縦幅*/
 /*フォント関係*/
 /*テキストの大きさ*/
 /*色関係*/
 /*ブレイクポイント*/
-.delete {
+.form_registration {
   display: none; }
 
-.deletable {
-  display: inline-block;
-  vertical-align: middle;
-  color: #ffffff;
-  margin-left: 1vw;
-  margin-right: 1vw;
-  opacity: 0.9;
-  position: relative;
-  width: 48vw;
-  line-height: 50px;
-  font-size: 16px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  text-align: center;
-  height: 50px;
-  background-color: #DC3B00; }
-
-input[type="checkbox"]:checked + label {
-  background: #401100;
-  /* マウス選択時の背景色を指定する */ }
+/*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.back_box {
+  position: fixed;
+  z-index: -10000;
+  width: 100vw;
+  height: 100vh;
+  background-color: #FFA500; }

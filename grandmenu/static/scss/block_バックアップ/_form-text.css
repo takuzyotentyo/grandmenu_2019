@@ -1,0 +1,33 @@
+@charset "UTF-8";
+/*「_」抜きの名前でインポートする
+ 変数を定義しているsetting.scssのインポートは必須事項*/
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.form-text {
+  width: 250px;
+  height: 50px;
+  line-height: 30px;
+  display: block;
+  position: relative;
+  margin: 10px auto 10px auto;
+  border: solid 2px #FFA500;
+  padding: 8px 0 8px 17px;
+  border-radius: 5px;
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(50%, #fff), color-stop(50%, #072A24));
+  background-image: -webkit-linear-gradient(left, #fff 50%, #072A24 50%);
+  background-image: -o-linear-gradient(left, #fff 50%, #072A24 50%);
+  background-image: linear-gradient(to right, #fff 50%, #072A24 50%);
+  background-position: 0 0;
+  background-size: 200% auto;
+  -webkit-transition: all .2s ease 0s;
+  -o-transition: all .2s ease 0s;
+  transition: all .2s ease 0s;
+  text-decoration: none; }
+  .form-text:hover {
+    background-position: -100% 0;
+    color: #fff; }

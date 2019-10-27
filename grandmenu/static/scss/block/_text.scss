@@ -1,0 +1,28 @@
+@import "../setting/setting.scss";
+
+.text{
+    &__icon{
+    font-size: $text-icon;
+    color: #ffffff;
+    }
+	&__title{
+    font-size: $text-title;
+    color: #ffffff;
+	}
+    &__subtitle{
+    font-size: $text-subtitle;
+    color: #ffffff;
+    }
+    &__body{
+    font-size: $text-body;
+    color: #ffffff;
+    }
+    &__copyright{
+    font-size: $text-copyright;
+    color: #ffffff;
+    }
+    &__text-decoration{
+    font-size: $text-decoration;
+    color: #ffffff;
+    }
+}

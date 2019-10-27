@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block global_navi %}
-<div class="column-1 column-1__100vh">
-  <div class="welcome-title">Ground Menu.com<br>For Pro</div>
-  <div class="welcome-text">
-    お客様とお店、双方のユーザビリティーを高める。そんな方法は掃いて捨てるほどあります。私達が目指したのは、今まで以上に簡潔なオペレーションと、コストの削減につながる、そんな解答です。
-  </div>
-</div>
+<form id="form_store_information" class="form_store_information" action="/store_information_registration" method="post">
+  <input class="form_text--small" type="text" name="store_name" placeholder="店舗名" required>
+  <button class="form_button" type="submit">
+      <span>確定</span>
+      <span>登録</span>
+  </button>
+  </form>
 {% endblock %}
