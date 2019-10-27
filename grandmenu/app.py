@@ -51,18 +51,17 @@ def verify_password(hash_pass, original_pass):
 # 関数エリア-End
 
 #Userテーブル定義
-class User(db.Model):
-    __tablename__ = 'users'
+class Store(db.Model):
+    __tablename__ = 'stores'
 
-    ID = db.Column(Integer, primary_key=True)
+    STORE_ID = db.Column(Integer, primary_key=True)
     USER_NAME = db.Column(String(255))
     E_MAIL = db.Column(String(255), unique=True)
     PASSWORD = db.Column(String(255))
-    STORE_ID = db.Column(Integer)
     STORE_NAME = db.Column(String(255))
 
     def __repr__(self):
-        return "(ID='%s', E_MAIL='%s', PASSWORD='%s', STORE_ID='%s', STORE_NAME='%s')" % (self.ID, self.E_MAIL, self.PASSWORD, self.STORE_ID, self.STORE_NAME)
+        return "(STORE_ID='%s', E_MAIL='%s', PASSWORD='%s', STORE_NAME='%s')" % (self.STORE_ID, self.E_MAIL, self.PASSWORD, self.STORE_NAME)
 
 #Food_Drinkテーブル定義
 class Food_Drink(db.Model):
@@ -93,12 +92,12 @@ def login():
         password = hash_password(request.form['password'])
 
         try:
-            dupli_users = db.session.query(User).filter_by(E_MAIL=e_mail).one()
+            dupli_stores = db.session.query(Store).filter_by(E_MAIL=e_mail).one()
             print(dupli_users.E_MAIL + " is exist")
             return render_template('login.html')
         except NoResultFound as ex:
             print(ex)
-            db.session.add(User(E_MAIL=e_mail, PASSWORD=password))
+            db.session.add(Store(E_MAIL=e_mail, PASSWORD=password))
             db.session.commit()
             db.session.close()
             return render_template('regicomp.html')
@@ -108,10 +107,12 @@ def login():
 @app.route('/store_information_registration', methods = ['POST', 'GET'])
 def store_information_registration():
     if request.method == 'POST':
+        store_id = request.form['store_id']
         store_name = request.form['store_name']
         print(store_name)
+        print(store_id)
         try:
-            store_update = db.session.query(User).filter(User.ID==2).one() #UserのIDとSTORE_NAMEをクエリに追加
+            store_update = db.session.query(Store).filter(Store.STORE_ID==store_id).one() #STORE_IDとSTORE_NAMEをクエリに追加
             print(store_update)
             store_update.STORE_NAME = store_name
             db.session.commit()
@@ -217,12 +218,13 @@ def index():
         password = request.form['password']
 
         try:
-            login_user = db.session.query(User).filter_by(E_MAIL=e_mail).one()
-            session['user_name'] = login_user.ID
-            username_session = login_user.ID#デバック用
+            login_user = db.session.query(Store).filter_by(E_MAIL=e_mail).one()
+            print(login_user)
+            session['store_id'] = login_user.STORE_ID
+            username_session = login_user.STORE_ID#デバック用
             print(username_session)#デバック用
             login_check = verify_password(login_user.PASSWORD, password)
-            print(login_user)
+            # print(login_user)
             if login_check == True:
                 #パスワードOKの処理
                 session['logged_in'] = True
