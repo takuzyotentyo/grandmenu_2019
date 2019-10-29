@@ -1,4 +1,4 @@
-//ログイン時のフォームに関するJS
+//ログイン時のフォームに関するjs
 $(function(){
   $("#radio_button--registration").click(function(){
     $.when($("#form_login").slideUp()
@@ -16,6 +16,7 @@ $(function(){
     });
   });
 });
+
 
 //グローバルナビの大メニューに関するjs
 $(document).on('click', '.header_menu', function(){
