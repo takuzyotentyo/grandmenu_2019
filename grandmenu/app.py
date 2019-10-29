@@ -104,11 +104,13 @@ def create_account():
     if request.method == 'POST':
         e_mail = request.form['e_mail']
         password = hash_password(request.form['password'])
+        # session.clear()
 
         try:
             double_create_check = db.session.query(Staff).filter_by(E_MAIL=e_mail).one()
             print(double_create_check.E_MAIL + " is exist")
-            return render_template('regierror_1.html')
+            session['error'] = "そのメールアドレスは使用できません"
+            return render_template('login.html')
         except NoResultFound as ex:
             print(ex)
             #ユーザー新規登録部分
@@ -117,7 +119,7 @@ def create_account():
                 db.session.add(Staff(E_MAIL=e_mail, PASSWORD=password))
                 db.session.commit()
                 db.session.close()
-                return render_template('regierror_2.html')
+                return render_template('error_1.html')
             except:
                 db.session.add(Staff(E_MAIL=e_mail, PASSWORD=password, STAFF_CLASS_ID=1, STAFF_CLASS="Representative")) #代表者として登録
                 store_create=db.session.query(Staff).filter_by(STAFF_CLASS_ID=1, E_MAIL=e_mail).one() #登録した代表者のレコードを抽出
@@ -127,35 +129,38 @@ def create_account():
                 db.session.add(Store(STORE_ID=store_id))    #代表者が登録された場合、新しいお店としてstoresテーブルに登録
                 db.session.commit()
                 db.session.close()
-            return render_template('regicomp.html')
+                session['logged_in'] = True
+                session['store_id'] = store_id
+            return redirect("/login")
 
-    return render_template('login.html')
+    return redirect("/login")
 
 @app.route("/login", methods = ['POST', 'GET'])
 def login():
     #DB情報を元にログイン
-    # session['logged_in'] = False
 
     if request.method == 'POST':
 
         e_mail = request.form['e_mail']
         password = request.form['password']
+        # session.clear()
 
         try:
             login_user = db.session.query(Staff).filter_by(E_MAIL=e_mail).one()
             print(login_user)
-            session['store_id'] = login_user.STORE_ID
-            username_session = login_user.STORE_ID#デバック用
-            print(username_session)#デバック用
             login_check = verify_password(login_user.PASSWORD, password)
-            # print(login_user)
             if login_check == True:
                 #パスワードOKの処理
+                session.clear()
                 session['logged_in'] = True
+                session['store_id'] = login_user.STORE_ID
+                username_session = login_user.STORE_ID#デバック用
+                print(username_session)#デバック用
                 return render_template('index.html')
             else:
                 #パスワードNGの処理
-                return render_template('login_error.html')
+                session['error'] = "メールアドレスもしくはパスワードが間違っています"
+                return render_template('login.html')
         except:
             return render_template('login_error.html')
 
@@ -164,10 +169,10 @@ def login():
     else:
         return render_template('login.html')
 
-@app.route('/store_information_registration', methods = ['POST', 'GET'])
-def store_information_registration():
+@app.route('/store_information_add', methods = ['POST', 'GET'])
+def store_information_add():
     if request.method == 'POST':
-        store_id = request.form['store_id']
+        store_id = int(session['store_id']) #セッションで登録する店舗を確認する
         store_name = request.form['store_name']
         print(store_name)
         print(store_id)
@@ -179,20 +184,21 @@ def store_information_registration():
             db.session.close()
             return render_template('index.html')
         except:
-            store_name = None
-            return render_template('add_menu.html')
+            return render_template('error_1.html')
 
 # メニューリスト表示
-@app.route('/show_menu' , methods = ['POST', 'GET'])
-def add_menu():
-
-        menu_list = db.session.query(Menu).filter_by(MENU_ID=menu_id, CLASS_1_ID=class_1_ID, CLASS_1=class_1, CLASS_2_ID=class_1_in, CLASS_2=class_2, CLASS_3_ID=class_3, CLASS_3=class_1).\
-            all()
-        class_middles = db.session.query(Food_Drink.CLASS_MIDDLE, Food_Drink.KIND).\
-            distinct(Food_Drink.CLASS_MIDDLE).\
-            all()
-        return render_template('add_menu.html',class_middles=class_middles, menu_infos=menu_infos)
-        # return render_template('froala.html', class_middles=class_middles, menu_infos=menu_infos)#froalaデバッグ
+# @app.route('/show_menu' , methods = ['POST', 'GET'])
+# def add_menu():
+#     if 'store_id' not in session: #このif文はなんのためにあるんだろう。
+#         return render_template("index.html")
+#     return render_template("todo.html")
+#         menu_list = db.session.query(Menu).filter_by(MENU_ID=menu_id, CLASS_1_ID=class_1_ID, CLASS_1=class_1, CLASS_2_ID=class_1_in, CLASS_2=class_2, CLASS_3_ID=class_3, CLASS_3=class_1).\
+#             all()
+#         class_middles = db.session.query(Food_Drink.CLASS_MIDDLE, Food_Drink.KIND).\
+#             distinct(Food_Drink.CLASS_MIDDLE).\
+#             all()
+#         return render_template('add_menu.html',class_middles=class_middles, menu_infos=menu_infos)
+#         # return render_template('froala.html', class_middles=class_middles, menu_infos=menu_infos)#froalaデバッグ
 
 # メニュー削除
 @app.route('/delete_menu' , methods = ['POST', 'GET'])
