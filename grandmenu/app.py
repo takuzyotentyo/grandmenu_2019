@@ -104,7 +104,7 @@ def create_account():
     if request.method == 'POST':
         e_mail = request.form['e_mail']
         password = hash_password(request.form['password'])
-        # session.clear()
+        session.clear()
 
         try:
             double_create_check = db.session.query(Staff).filter_by(E_MAIL=e_mail).one()
@@ -143,7 +143,7 @@ def login():
 
         e_mail = request.form['e_mail']
         password = request.form['password']
-        # session.clear()
+        session.clear()
 
         try:
             login_user = db.session.query(Staff).filter_by(E_MAIL=e_mail).one()
@@ -151,7 +151,6 @@ def login():
             login_check = verify_password(login_user.PASSWORD, password)
             if login_check == True:
                 #パスワードOKの処理
-                session.clear()
                 session['logged_in'] = True
                 session['store_id'] = login_user.STORE_ID
                 username_session = login_user.STORE_ID#デバック用
