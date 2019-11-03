@@ -1,21 +1,17 @@
- /*「_」抜きの名前でインポートする
- 変数を定義しているsetting.scssのインポートは必須事項*/
 @import "../setting/setting.scss";
-@import "../mixin/mixin.scss";
 
 .delete{
 	display: none;
 }
 
 .deletable {
-		@include menu_box;
+		@include menu-box;
 		font-size:$text-body;
 		margin-top:5px;
 		margin-bottom: 5px;
 		text-align: center;
 		height: 50px;
 		background-color: #DC3B00;
-		width:100%;
 	}
 
 input[type="checkbox"]:checked + label {

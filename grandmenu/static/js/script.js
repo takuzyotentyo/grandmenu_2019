@@ -24,14 +24,14 @@ $(document).on('click', '.header_menu', function(){
       $(this).removeClass("js-three_line_menu--doing");
       $("body").removeClass("overflow-hidden"); //サイドメニューが表示されることで起こるレイアウトの崩れのhiddenを解除
       $(".wrapper__side").animate({left:"-25vw", queue: false}, 250)
-      $(".wrapper__100vw--height").animate({width:"100vw"},250)
-      $(".wrapper__100vw--height").animate({left:"0vw", queue: false}, 250);
+      $(".wrapper__main").animate({width:"100vw"},250)
+      $(".wrapper__main").animate({left:"0vw", queue: false}, 250);
     }else{
       $(this).addClass("js-three_line_menu--doing");
       $("body").addClass("overflow-hidden"); //サイドメニューが表示されることで起こるレイアウトの崩れをhiddenで回避
       $(".wrapper__side").animate({left:"0vw", queue: false}, 250)
-      $(".wrapper__100vw--height").animate({width:"75vw"},250)
-      $(".wrapper__100vw--height").animate({left:"25vw", queue: false}, 250);
+      $(".wrapper__main").animate({width:"75vw"},250)
+      $(".wrapper__main").animate({left:"25vw", queue: false}, 250);
     };
 });
 //グローバルナビの小メニュー表示に関するjs
@@ -52,18 +52,16 @@ $(document).on('click', '.global_navi__1_opener', function(){
 
 
 
-// Lightboxを表示して、user_idをform形式に設定する
+// メニュー追加のためのLightboxを表示
 $(function() {
 	$(".button__add").click(function(){
 		$(".lightbox").css(
         "display", "flex"
     	);
-    var user_id = $(".user-name-wrapper__user-name").attr("value")
-    $("#create_menu_submit").val(user_id);
 	});
 });
 
-// Lightboxを隠す
+// メニュー追加のためのLightboxを消す
 $(function() {
   $(".lightbox").dblclick(function(){
     $(".lightbox").css(
@@ -74,9 +72,9 @@ $(function() {
 
 // 小分類メニュー表示
 $(function() {
-  $(".menu-box").click(function(){
+  $(".menu_box").click(function(){
     var selector = $(this).attr('value')
-      $(".lightbox__menu-box").css(
+      $(".lightbox__menu_box").css(
         "display", "flex"
       );
       $("." + selector).css(
@@ -87,11 +85,11 @@ $(function() {
 
 // 小分類のメニュー消す
 $(function() {
-  $(".lightbox__menu-box").dblclick(function(){
-    $(".lightbox__menu-box li").css(
+  $(".lightbox__menu_box").dblclick(function(){
+    $(".lightbox__menu_box li").css(
         "display", "none"
       );
-    $(".lightbox__menu-box").css(
+    $(".lightbox__menu_box").css(
         "display", "none"
       );
   });
@@ -99,68 +97,47 @@ $(function() {
 
 // ドラック&ドロップでメニューの順番を並べ替える関数
 $(document).on('click', '.button__sortable', function() {
-  if($(".button__sortable").hasClass("doing")){
-    $(this).removeClass("doing");
-    $(".sortable").sortable({
-    disabled: true
-    });
-    $(".menu-box").css(
-      "background-color",""
-      );
-    $(".menu-box__name_of_dish").css(
-      "background-color",""
-      );
-    $(".menu-box").removeClass("vibration");
-    $(".menu-box__name_of_dish").removeClass("vibration");
-  }else{
-    $(this).addClass("doing");
-    $(".button__sortable").remove();
-    $('<button form="sort_menu" id="sort_submit" class="button__sortable--active" type="submit">⇅</button>').insertBefore(".button__add");
+    $(this).remove();
+    $('<button form="sort_menu" id="sort_submit" class="button__sortable--active" type="button">⇅</button>').insertBefore(".button__add");
     $(".sortable").sortable({
     disabled: false
     });
-    $(".menu-box").css(
+    $(".menu_box").css(
       "background-color","#BF7C00"
       );
-    $(".menu-box__name_of_dish").css(
+    $(".menu_box__class_3").css(
       "background-color","#BF7C00"
       );
-    // $(".menu-box").addClass("vibration");
-    $(".menu-box__name_of_dish").addClass("vibration");
+    $(".menu_box").addClass("vibration");
+    $(".menu_box__class_3").addClass("vibration");
 // ソートの順番を保存する処理
-    $(".sortable").sortable();
+    $(".sortable_class_2_food").sortable();
+    $(".sortable_class_2_drink").sortable();
+    $(".sortable_class_3").sortable();
     $(".sortable").disableSelection();
-  };
 });
 
-$(function() {
-    // $("#sort_submit").click(function() {
-    $(".menu-box__food").click(function() {
-      var sort_result = $(".sortable").sortable("toArray", { attribute: 'id'});
-      $("#sort_result").val(sort_result);
-      // $("form").submit();
-      console.log(JSON.stringify(sort_result));
+$(document).on("click", "#sort_submit", function () {
+      var class_2_sort_result_food = $(".sortable_class_2_food").sortable("toArray", { attribute: 'id'});
+      $("#class_2_sort_result_food").val(class_2_sort_result_food);
+      var class_2_sort_result_drink = $(".sortable_class_2_drink").sortable("toArray", { attribute: 'id'});
+      $("#class_2_sort_result_drink").val(class_2_sort_result_drink);
+      var class_3_sort_result = $(".sortable_class_3").sortable("toArray", { attribute: 'id'});
+      $("#class_3_sort_result").val(class_3_sort_result);
+      $("#sort_menu").submit();
     });
-});
 
-// deleteに関するjsを導入
+// button_deleteを押した後の挙動
 $(function(){
   $(".button__delete").click(function(){
-    if($(".button__delete").hasClass("doing")){
-      $(this).removeClass("doing");
-      $(".menu-box").removeClass("vibration");
-      $(".menu-box__name_of_dish").removeClass("vibration");
-      $(".delete").children().remove();;
-    }else{
-      $(this).addClass("doing");
-      $(".menu-box").addClass("vibration");
-      $(".menu-box__name_of_dish").addClass("vibration");
-      $(".menu-box").removeClass("menu-box");
-      $(".menu-box__name_of_dish").removeClass("menu-box__name_of_dish");
-      $(".delete").prop("disabled", false);
-      $(".deletemark").addClass("deletable");
-      $(".button__delete").remove();
-      $('<button form="delete_menu" class="button__delete--active" type="submit">ー</button>').insertAfter(".button__add");
-      };
-    });
+  $(this).remove();
+  $('<button form="delete_menu" class="button__delete--active" type="submit">ー</button>').insertAfter(".button__add");
+  $(".menu_box").addClass("vibration");
+  $(".menu_box__class_3").addClass("vibration menu_box__class_3--delete");
+  $(".menu_box").removeClass("menu_box");
+  $(".menu_box__class_3").removeClass("menu_box__class_3");
+  $(".delete").prop("disabled", false);
+  $(".deletemark").addClass("deletable");
+  $(".button__delete");
+  });
 });

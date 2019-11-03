@@ -22,10 +22,7 @@
     <a href="/index" class="text__subtitle header__title">Ground Menu.com</a>
   </div>
 
-<!-- 2カラムレイアウトにするために必要 -->
-  <div class="multi-wrap--flex-start">
-
-  <!-- サイドメニュー -->
+<!-- サイドメニュー -->
     <ul class="wrapper__side">
 
       <li class="global_navi__1">
@@ -37,7 +34,7 @@
       </li>
 
       <ul class="global_navi__2">
-        <li><a class="global_navi__content--2" href="/add_menu">メニュー表登録・修正</a></li>
+        <li><a class="global_navi__content--2" href="/show_menu">メニュー表登録・修正</a></li>
         <li><a class="global_navi__content--2" href="#">QRコード発行</a></li>
       </ul>
 
@@ -56,8 +53,8 @@
 
       <a class="global-navi__logout" href="/logout">ログアウト</a>
     </ul>
-
-    <div class="wrapper__100vw--height">
+<!-- メインメニュー -->
+    <div class="wrapper__main">
       <div class="picture__base"></div>
 
   {% block global_navi %}{% endblock %}

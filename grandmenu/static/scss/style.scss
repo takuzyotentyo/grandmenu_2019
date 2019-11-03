@@ -18,16 +18,16 @@ mixinのインポート
 /*====================
 blockのインポート
 ====================*/
-// @import "./block/lightbox.scss";
+@import "./block/lightbox.scss";
 // @import "./block/header.scss";
 // @import "./block/base-picture.scss";
 // @import "./block/welcome_text.scss";
 // @import "./block/footer.scss";
 @import "./block/form_text.scss";
-// @import "./block/select-box.scss";
+@import "./block/selectbox.scss";
 @import "./block/form_button.scss";
-// @import "./block/menu-box.scss";
-// @import "./block/delete.scss";
+@import "./block/menu_box.scss";
+@import "./block/delete.scss";
 @import "./block/button.scss";
 @import "./block/wrapper.scss";
 @import "./block/header.scss";

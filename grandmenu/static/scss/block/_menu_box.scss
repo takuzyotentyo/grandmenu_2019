@@ -1,0 +1,58 @@
+@import "../setting/setting.scss";
+.menu_box{
+	@include menu-box;
+	font-size:$text-body;
+	margin-top:5px;
+	margin-bottom: 5px;
+	text-align: center;
+	height: 50px;
+	background-color: $color-main;
+	width: 96%;
+	&__food{
+		@include menu-box;
+		font-size:$text-body;
+		margin-top:10px;
+		margin-bottom: 5px;
+		text-align: center;
+		height: 50px;
+		background-color: $color-active;
+		font-weight: bold;
+		width: 96%;
+	}
+	&__drink{
+		@include menu-box;
+		font-size:$text-body;
+		margin-top:10px;
+		margin-bottom: 5px;
+		text-align: center;
+		height: 50px;
+		background-color: $color-active;
+		font-weight: bold;
+		width: 96%;
+	}
+	&__class_3{
+		@include menu-box;
+		font-size:$text-body;
+		margin-top:5px;
+		margin-bottom: 5px;
+		text-align: center;
+		height: 50px;
+		background-color: $color-main;
+		width: 48%;
+	}
+	&__class_3--delete{
+		width: 48%;
+	}
+}
+
+.menu_box__array{
+	width:100%;
+}
+
+.menu_box:hover {
+	  background: $color-active;
+}
+
+.menu_box__class_3:hover {
+	  background: $color-active;
+}

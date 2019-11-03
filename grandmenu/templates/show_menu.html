@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block global_navi %}
+
+<!-- <form id="sortable_array" method=post action="/delete_menu"> -->
+<!-- <div id="sortable_array"> -->
+<div class="multi_wrap--flex_start_v100persent">
+
+<!-- メニュー表示部分-->
+<!-- フード中分類 -->
+  <div class="wrapper__50percent">
+    <div class="menu_box__food">Food</div>
+    <ul class="menu_box__array sortable_class_2_food">
+      {% for class_2 in class_2 %}
+      {% if class_2[0] == 0 %}
+      <li class="menu_box" value="{{class_2[0]}}_{{class_2[1]}}" id="{{class_2[0]}},{{class_2[1]}},{{class_2[2]}}">
+        <input disabled="true" class="delete" value="{{class_2[1]}}" name="class_2_{{class_2[0]}}" id="class_2_{{class_2[1]}}">
+        <label class="deletemark" value={{class_2[1]}} name="class_2_{{class_2[0]}}" for="class_{{class_2[1]}}">{{class_2[2]}}</label>
+        </input>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+<!-- ドリンク中分類 -->
+  <div class="wrapper__50percent">
+    <div class="menu_box__drink">Drink</div>
+    <ul class="menu_box__array sortable_class_2_drink">
+      {% for class_2 in class_2 %}
+      {% if class_2[0] == 1 %}
+      <li class="menu_box" value="{{class_2[0]}}_{{class_2[1]}}" id="{{class_2[0]}},{{class_2[1]}},{{class_2[2]}}">
+        <input disabled="true" class="delete" value="{{class_2[1]}}" name="class_2_{{class_2[0]}}" id="class_2_{{class_2[1]}}">
+        <label class="deletemark" value={{class_2[1]}} name="class_2_{{class_2[0]}}" for="class_{{class_2[1]}}">{{class_2[2]}}</label>
+        </input>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+</div>
+
+<!-- lightbox__menu_boxの中に小分類を入れ、非表示にするときの子要素指定のためにliをつけている -->
+<!-- jqueryのthisを使って直接要素指定のため、display:noneを直書きしている -->
+<!-- 小分類 -->
+<form id="delete_menu" method="post" action="/delete_menu">
+<ul class="lightbox__menu_box sortable_class_3">
+{% for class_3 in class_3 %}
+    <li style= display:none; class="menu_box__class_3 {{class_3[1]}}_{{class_3[2]}}" id="{{class_3[0]}},{{class_3[1]}},{{class_3[2]}},{{class_3[3]}}">
+    <input type="checkbox" disabled="true" class="delete" value="{{class_3[0]}}" name="menu_id" id="menu_id_{{class_3[0]}}">
+      <label class="deletemark" for="menu_id_{{class_3[0]}}" value="menu_id_{{class_3[0]}}">{{class_3[4]}}  ¥{{class_3[5]}}</label>
+    </input>
+    </li>
+{% endfor %}
+</ul>
+</form>
+
+<!-- ソートの順番を保存するために必要なインプット -->
+<form id="sort_menu" method="post" action="/sort_menu">
+<!--   <input type="hidden" id="class_3_sort_result" name="class_1=0_class_2_sort_result">
+  <input type="hidden" id="class_3_sort_result" name="class_1=1_class_2_sort_result"> -->
+  <input type="none" id="class_2_sort_result_food" name="class_2_sort_result_food">
+  <input type="none" id="class_2_sort_result_drink" name="class_2_sort_result_drink">
+  <input type="none" id="class_3_sort_result" name="class_3_sort_result">
+</form>
+
+<div class="button__sortable" type="" form="">⇅</div>
+<div class="button__add">＋</div>
+<button class="button__delete">ー</button>
+
+
+
+
+<div class="lightbox">
+  	<form id="create_menu" action="/create_menu" method="post">
+    <input class="form_text--small" type="text" name="class_3" placeholder="料理名" required>
+    <input class="form_text--small" type="number" name="price" placeholder="金額" required>
+  	<div class="selectbox">
+  		<select class="selectbox" name="class_1">
+   			<option value="food">食べ物</option>
+    		<option value="drink">飲み物</option>
+  		</select>
+  	</div>
+    <input class="form_text--small" type="text" name="class_2" placeholder="分類" required>
+    <button class="form_button" type="submit" id="create_menu_submit">
+      <span><a href="/add_menu">確定</a></span>
+      <span>登録</span>
+    </button>
+	</form>
+</div>
+{% endblock %}

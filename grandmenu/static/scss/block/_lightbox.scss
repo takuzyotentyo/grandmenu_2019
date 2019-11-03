@@ -1,0 +1,27 @@
+@import "../setting/setting.scss";
+
+.lightbox{
+	justify-content: center; /*左右中央揃え*/
+    align-items: center;     /*上下中央揃え*/
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgba($color-sub,0.3);
+	top: 0;
+	left: 0;
+	display: none;
+	flex-flow: column nowrap;
+}
+
+.lightbox__menu_box{
+	justify-content: center; /*左右中央揃え*/
+    align-items: center;     /*上下中央揃え*/
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgba($color-sub,0.3);
+	top: 0;
+	left: 0;
+	display: none;
+	flex-flow: column nowrap;
+}

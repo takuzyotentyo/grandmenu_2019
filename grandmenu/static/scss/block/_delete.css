@@ -33,8 +33,7 @@
   margin-bottom: 5px;
   text-align: center;
   height: 50px;
-  background-color: #DC3B00;
-  width: 100%; }
+  background-color: #DC3B00; }
 
 input[type="checkbox"]:checked + label {
   background: #401100;
