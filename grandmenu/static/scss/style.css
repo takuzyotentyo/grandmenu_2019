@@ -232,8 +232,9 @@ blockのインポート
   margin-right: 1vw;
   opacity: 0.9;
   position: relative;
-  width: 96%;
   line-height: 50px;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
   font-size: 16px;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -249,8 +250,9 @@ blockのインポート
     margin-right: 1vw;
     opacity: 0.9;
     position: relative;
-    width: 96%;
     line-height: 50px;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
     font-size: 16px;
     margin-top: 10px;
     margin-bottom: 5px;
@@ -267,8 +269,9 @@ blockのインポート
     margin-right: 1vw;
     opacity: 0.9;
     position: relative;
-    width: 96%;
     line-height: 50px;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
     font-size: 16px;
     margin-top: 10px;
     margin-bottom: 5px;
@@ -285,8 +288,9 @@ blockのインポート
     margin-right: 1vw;
     opacity: 0.9;
     position: relative;
-    width: 96%;
     line-height: 50px;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
     font-size: 16px;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -295,7 +299,7 @@ blockのインポート
     background-color: #FFA500;
     width: 48%; }
   .menu_box__class_3--delete {
-    width: 48%; }
+    width: 50%; }
 
 .menu_box__array {
   width: 100%; }
@@ -314,7 +318,8 @@ blockのインポート
 /*色関係*/
 /*ブレイクポイント*/
 .delete {
-  display: none; }
+  display: none;
+  margin: none; }
 
 .deletable {
   display: inline-block;
@@ -324,14 +329,35 @@ blockのインポート
   margin-right: 1vw;
   opacity: 0.9;
   position: relative;
-  width: 96%;
   line-height: 50px;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
   font-size: 16px;
   margin-top: 5px;
   margin-bottom: 5px;
   text-align: center;
   height: 50px;
   background-color: #DC3B00; }
+
+.deletemark--class_2 {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  width: 96%; }
+
+.deletemark--class_3 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  width: 100%;
+  padding-left: 2%;
+  padding-right: 2%; }
 
 input[type="checkbox"]:checked + label {
   background: #401100;
@@ -972,3 +998,53 @@ input[type="radio"]:checked + label {
   color: #ffffff;
   text-align: center;
   line-height: 30px; }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.class_3__name {
+  display: inline-block;
+  width: 70%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  margin-left: 0;
+  margin-right: 0; }
+
+.class_3__price {
+  display: inline-block;
+  width: 30%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  margin-left: 0;
+  margin-right: 0; }
+
+input[type="checkbox"]:checked + label {
+  background: #401100;
+  /* マウス選択時の背景色を指定する */ }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.sortable_class_2--food {
+  width: 100%; }
+
+.sortable_class_2_--drink {
+  width: 100%; }
+
+input[type="checkbox"]:checked + label {
+  background: #401100;
+  /* マウス選択時の背景色を指定する */ }

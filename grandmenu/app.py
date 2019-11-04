@@ -353,7 +353,6 @@ def sort_menu():
             return redirect("/logout")
 
 
-        
 
     return redirect("/show_menu")
 

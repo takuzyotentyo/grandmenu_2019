@@ -1,15 +1,15 @@
 @import "../setting/setting.scss";
 
-@mixin menu-box{
-	display:inline-block;
+@mixin menu_box{
+	display: inline-block;
   	vertical-align: middle;
 	color: $text-color-main;
 	margin-left: 1vw;
 	margin-right: 1vw;
 	opacity: 0.9;
 	position: relative;
-	width: 96%;
 	line-height:50px;
+	flex-wrap: nowrap;
 }
 
 @mixin wrapper{

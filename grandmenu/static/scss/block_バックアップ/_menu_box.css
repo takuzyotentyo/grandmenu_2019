@@ -14,15 +14,18 @@
 /*色関係*/
 /*ブレイクポイント*/
 .menu-box {
-  display: inline-block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   vertical-align: middle;
   color: #ffffff;
   margin-left: 1vw;
   margin-right: 1vw;
   opacity: 0.9;
   position: relative;
-  width: 96%;
   line-height: 50px;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
   font-size: 16px;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -30,15 +33,18 @@
   height: 50px;
   background-color: #FFA500; }
   .menu-box__food {
-    display: inline-block;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     vertical-align: middle;
     color: #ffffff;
     margin-left: 1vw;
     margin-right: 1vw;
     opacity: 0.9;
     position: relative;
-    width: 96%;
     line-height: 50px;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
     font-size: 16px;
     margin-top: 10px;
     margin-bottom: 5px;
@@ -47,15 +53,18 @@
     background-color: #111111;
     font-weight: bold; }
   .menu-box__drink {
-    display: inline-block;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     vertical-align: middle;
     color: #ffffff;
     margin-left: 1vw;
     margin-right: 1vw;
     opacity: 0.9;
     position: relative;
-    width: 96%;
     line-height: 50px;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
     font-size: 16px;
     margin-top: 10px;
     margin-bottom: 5px;
@@ -64,15 +73,18 @@
     background-color: #111111;
     font-weight: bold; }
   .menu-box__name_of_dish {
-    display: inline-block;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     vertical-align: middle;
     color: #ffffff;
     margin-left: 1vw;
     margin-right: 1vw;
     opacity: 0.9;
     position: relative;
-    width: 96%;
     line-height: 50px;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
     font-size: 16px;
     margin-top: 5px;
     margin-bottom: 5px;

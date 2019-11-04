@@ -1,6 +1,6 @@
 @import "../setting/setting.scss";
 .menu_box{
-	@include menu-box;
+	@include menu_box;
 	font-size:$text-body;
 	margin-top:5px;
 	margin-bottom: 5px;
@@ -9,7 +9,7 @@
 	background-color: $color-main;
 	width: 96%;
 	&__food{
-		@include menu-box;
+		@include menu_box;
 		font-size:$text-body;
 		margin-top:10px;
 		margin-bottom: 5px;
@@ -20,7 +20,7 @@
 		width: 96%;
 	}
 	&__drink{
-		@include menu-box;
+		@include menu_box;
 		font-size:$text-body;
 		margin-top:10px;
 		margin-bottom: 5px;
@@ -31,7 +31,7 @@
 		width: 96%;
 	}
 	&__class_3{
-		@include menu-box;
+		@include menu_box;
 		font-size:$text-body;
 		margin-top:5px;
 		margin-bottom: 5px;
@@ -41,7 +41,7 @@
 		width: 48%;
 	}
 	&__class_3--delete{
-		width: 48%;
+		width: 50%;
 	}
 }
 

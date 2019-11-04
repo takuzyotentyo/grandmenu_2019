@@ -1,21 +1,18 @@
 {% extends "base.html" %}
 {% block global_navi %}
-
-<!-- <form id="sortable_array" method=post action="/delete_menu"> -->
-<!-- <div id="sortable_array"> -->
+<!-- class_2 = db.session.query(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2) -->
+<!-- class_3 = db.session.query(Menu.MENU_ID, Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_3_ID, Menu.CLASS_3, Menu.PRICE) -->
 <div class="multi_wrap--flex_start_v100persent">
 
 <!-- メニュー表示部分-->
 <!-- フード中分類 -->
   <div class="wrapper__50percent">
     <div class="menu_box__food">Food</div>
-    <ul class="menu_box__array sortable_class_2_food">
+    <ul class="sortable_class_2--food">
       {% for class_2 in class_2 %}
       {% if class_2[0] == 0 %}
       <li class="menu_box" value="{{class_2[0]}}_{{class_2[1]}}" id="{{class_2[0]}},{{class_2[1]}},{{class_2[2]}}">
-        <input disabled="true" class="delete" value="{{class_2[1]}}" name="class_2_{{class_2[0]}}" id="class_2_{{class_2[1]}}">
-        <label class="deletemark" value={{class_2[1]}} name="class_2_{{class_2[0]}}" for="class_{{class_2[1]}}">{{class_2[2]}}</label>
-        </input>
+        <label class="deletemark--class_2">{{class_2[2]}}</label>
       </li>
       {% endif %}
       {% endfor %}
@@ -24,13 +21,11 @@
 <!-- ドリンク中分類 -->
   <div class="wrapper__50percent">
     <div class="menu_box__drink">Drink</div>
-    <ul class="menu_box__array sortable_class_2_drink">
+    <ul class="sortable_class_2--drink">
       {% for class_2 in class_2 %}
       {% if class_2[0] == 1 %}
       <li class="menu_box" value="{{class_2[0]}}_{{class_2[1]}}" id="{{class_2[0]}},{{class_2[1]}},{{class_2[2]}}">
-        <input disabled="true" class="delete" value="{{class_2[1]}}" name="class_2_{{class_2[0]}}" id="class_2_{{class_2[1]}}">
-        <label class="deletemark" value={{class_2[1]}} name="class_2_{{class_2[0]}}" for="class_{{class_2[1]}}">{{class_2[2]}}</label>
-        </input>
+        <label class="deletemark--class_2">{{class_2[2]}}</label>
       </li>
       {% endif %}
       {% endfor %}
@@ -47,7 +42,10 @@
 {% for class_3 in class_3 %}
     <li style= display:none; class="menu_box__class_3 {{class_3[1]}}_{{class_3[2]}}" id="{{class_3[0]}},{{class_3[1]}},{{class_3[2]}},{{class_3[3]}}">
     <input type="checkbox" disabled="true" class="delete" value="{{class_3[0]}}" name="menu_id" id="menu_id_{{class_3[0]}}">
-      <label class="deletemark" for="menu_id_{{class_3[0]}}" value="menu_id_{{class_3[0]}}">{{class_3[4]}}  ¥{{class_3[5]}}</label>
+      <label class="deletemark--class_3" for="menu_id_{{class_3[0]}}" value="menu_id_{{class_3[0]}}">
+        <span class="class_3__name">{{class_3[4]}}</span>
+        <span class="class_3__price">¥{{class_3[5]}}</span>
+      </label>
     </input>
     </li>
 {% endfor %}

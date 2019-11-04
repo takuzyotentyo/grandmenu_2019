@@ -1,0 +1,29 @@
+@import "../setting/setting.scss";
+
+.class_3{
+	&__name{
+		display: inline-block;
+		width: 70%;
+		text-align:center;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		margin-left:0;
+		margin-right:0;
+	}
+
+	&__price{
+		display: inline-block;
+		width: 30%;
+		text-align:center;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		margin-left:0;
+		margin-right:0;
+	}
+}
+
+input[type="checkbox"]:checked + label {
+background: #401100;/* マウス選択時の背景色を指定する */
+}

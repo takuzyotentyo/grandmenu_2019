@@ -2,6 +2,7 @@
 
 .delete{
 	display: none;
+	margin: none;
 }
 
 .deletable {
@@ -13,6 +14,24 @@
 		height: 50px;
 		background-color: #DC3B00;
 	}
+.deletemark{
+	&--class_2{
+		display: inline-block;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		width: 96%;
+	}
+	&--class_3{
+		display: flex;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		width: 100%;
+		padding-left: 2%;
+		padding-right: 2%;
+	}
+}
 
 input[type="checkbox"]:checked + label {
 background: #401100;/* マウス選択時の背景色を指定する */

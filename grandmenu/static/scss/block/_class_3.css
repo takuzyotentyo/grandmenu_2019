@@ -1,0 +1,29 @@
+@charset "UTF-8";
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.class_3__price {
+  display: inline-block;
+  width: 70%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis; }
+
+.class_3__price {
+  display: inline-block;
+  width: 30%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis; }
+
+input[type="checkbox"]:checked + label {
+  background: #401100;
+  /* マウス選択時の背景色を指定する */ }

@@ -78,7 +78,7 @@ $(function() {
         "display", "flex"
       );
       $("." + selector).css(
-          "display", "inline-block"
+          "display", "flex"
         );
       });
     });
@@ -97,35 +97,35 @@ $(function() {
 
 // ドラック&ドロップでメニューの順番を並べ替える関数
 $(document).on('click', '.button__sortable', function() {
-    $(this).remove();
-    $('<button form="sort_menu" id="sort_submit" class="button__sortable--active" type="button">⇅</button>').insertBefore(".button__add");
-    $(".sortable").sortable({
-    disabled: false
-    });
-    $(".menu_box").css(
-      "background-color","#BF7C00"
-      );
-    $(".menu_box__class_3").css(
-      "background-color","#BF7C00"
-      );
-    $(".menu_box").addClass("vibration");
-    $(".menu_box__class_3").addClass("vibration");
+  $(this).remove();
+  $('<button form="sort_menu" id="sort_submit" class="button__sortable--active" type="button">⇅</button>').insertBefore(".button__add");
+  $(".sortable").sortable({
+  disabled: false
+  });
+  $(".menu_box").css(
+    "background-color","#BF7C00"
+    );
+  $(".menu_box__class_3").css(
+    "background-color","#BF7C00"
+    );
+  $(".menu_box").addClass("vibration");
+  $(".menu_box__class_3").addClass("vibration");
 // ソートの順番を保存する処理
-    $(".sortable_class_2_food").sortable();
-    $(".sortable_class_2_drink").sortable();
-    $(".sortable_class_3").sortable();
-    $(".sortable").disableSelection();
+  $(".sortable_class_2--food").sortable();
+  $(".sortable_class_2--drink").sortable();
+  $(".sortable_class_3").sortable();
+  $(".sortable").disableSelection();
 });
 
 $(document).on("click", "#sort_submit", function () {
-      var class_2_sort_result_food = $(".sortable_class_2_food").sortable("toArray", { attribute: 'id'});
-      $("#class_2_sort_result_food").val(class_2_sort_result_food);
-      var class_2_sort_result_drink = $(".sortable_class_2_drink").sortable("toArray", { attribute: 'id'});
-      $("#class_2_sort_result_drink").val(class_2_sort_result_drink);
-      var class_3_sort_result = $(".sortable_class_3").sortable("toArray", { attribute: 'id'});
-      $("#class_3_sort_result").val(class_3_sort_result);
-      $("#sort_menu").submit();
-    });
+  var class_2_sort_result_food = $(".sortable_class_2--food").sortable("toArray", { attribute: 'id'});
+  $("#class_2_sort_result_food").val(class_2_sort_result_food);
+  var class_2_sort_result_drink = $(".sortable_class_2--drink").sortable("toArray", { attribute: 'id'});
+  $("#class_2_sort_result_drink").val(class_2_sort_result_drink);
+  var class_3_sort_result = $(".sortable_class_3").sortable("toArray", { attribute: 'id'});
+  $("#class_3_sort_result").val(class_3_sort_result);
+  $("#sort_menu").submit();
+});
 
 // button_deleteを押した後の挙動
 $(function(){
@@ -137,7 +137,16 @@ $(function(){
   $(".menu_box").removeClass("menu_box");
   $(".menu_box__class_3").removeClass("menu_box__class_3");
   $(".delete").prop("disabled", false);
-  $(".deletemark").addClass("deletable");
-  $(".button__delete");
+  $(".deletemark--class_2").addClass("deletable");
+  $(".deletemark--class_3").addClass("deletable");
   });
 });
+
+
+
+
+
+
+
+
+
