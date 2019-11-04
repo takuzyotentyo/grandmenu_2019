@@ -559,42 +559,38 @@ input[type="checkbox"]:checked + label {
   top: 50px; }
 
 .wrapper__100percent {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  /*コンテンツの上下中央揃え*/
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  /*左右中央揃え*/
   position: relative;
   width: 100%;
+  height: 100%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap; }
-
-.wrapper__50percent {
+  flex-flow: column nowrap;
+  overflow: scroll;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
   /*コンテンツの上下中央揃え*/
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  /*左右中央揃え*/
+  /*左右中央揃え*/ }
+
+.wrapper__50percent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   position: relative;
   width: 50%;
+  height: 100%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap; }
+  flex-flow: column nowrap;
+  overflow: scroll; }
 
 .multi_wrap--flex_start {
   display: -webkit-box;
@@ -688,27 +684,33 @@ input[type="checkbox"]:checked + label {
 /*ブレイクポイント*/
 .text__icon {
   font-size: 30px;
-  color: #ffffff; }
+  color: #ffffff;
+  line-height: 150%; }
 
 .text__title {
   font-size: 28px;
-  color: #ffffff; }
+  color: #ffffff;
+  line-height: 150%; }
 
 .text__subtitle {
   font-size: 24px;
-  color: #ffffff; }
+  color: #ffffff;
+  line-height: 150%; }
 
 .text__body {
   font-size: 16px;
-  color: #ffffff; }
+  color: #ffffff;
+  line-height: 150%; }
 
 .text__copyright {
   font-size: 12px;
-  color: #ffffff; }
+  color: #ffffff;
+  line-height: 150%; }
 
 .text__text-decoration {
   font-size: 6px;
-  color: #ffffff; }
+  color: #ffffff;
+  line-height: 150%; }
 
 /*「_」抜きの名前でインポートする
  変数を定義しているsetting.scssのインポートは必須事項*/
@@ -956,6 +958,59 @@ input[type="radio"]:checked + label {
   background: #FFA500;
   /* マウス選択時の背景色を指定する */ }
 
+/* === ボタンを表示するエリア ============================== */
+.radio_button__table {
+  margin: auto;
+  /* 中央寄せ           */
+  width: 100px;
+  /* ボタンの横幅       */ }
+
+/* === チェックボックス ==================================== */
+.radio_button__table input[type="checkbox"] {
+  display: none;
+  /* チェックボックス非表示 */ }
+
+/* === チェックボックスのラベル（標準） ==================== */
+.radio_button__table label {
+  display: block;
+  /* ボックス要素に変更 */
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  /* 枠線を含んだサイズ */
+  text-align: left;
+  /* 文字位置は中央     */
+  border: 2px solid #78bd78;
+  /* 枠線               */
+  border-radius: 3px;
+  /* 角丸               */
+  line-height: 1;
+  /* 1行の高さ          */
+  height: 50px;
+  /* ボタンの高さ       */ }
+
+/* === 移動BOX（標準） ===================================== */
+.radio_button__checkbox {
+  display: inline-block;
+  height: 46px;
+  /* ボタンの高さ       */
+  width: 50%;
+  /* ボタンの高さ       */
+  background: #ddd;
+  /* 背景色             */
+  -webkit-transition: .3s;
+  -o-transition: .3s;
+  transition: .3s;
+  /* ゆっくり変化       */ }
+
+/* === ON側のチェックボックスの移動BOX（ONのとき） ========= */
+.radio_button__checkbox:checked + .radio_button__label {
+  -webkit-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  transform: translateX(100%);
+  /* BOXを右に移動      */
+  background: #78bd78;
+  /* 背景色             */ }
+
 /*「_」抜きの名前でインポートする
  変数を定義しているsetting.scssのインポートは必須事項*/
 /*====================
@@ -1048,3 +1103,42 @@ input[type="checkbox"]:checked + label {
 input[type="checkbox"]:checked + label {
   background: #401100;
   /* マウス選択時の背景色を指定する */ }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.overlay {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background: rgba(7, 42, 36, 0.3);
+  -webkit-animation: fadeIn 2s ease 0s 1 normal;
+  animation: fadeIn 2s ease 0s 1 normal; }
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }

@@ -13,9 +13,7 @@
 }
 
 @mixin wrapper{
-	align-items: center;     /*コンテンツの上下中央揃え*/
 	display: flex;
-	justify-content: center; /*左右中央揃え*/
 	position: relative;
 }
 

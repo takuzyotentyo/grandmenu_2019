@@ -56,9 +56,10 @@ class Store(db.Model):
 
     STORE_ID = db.Column(Integer, primary_key=True) # ≒代表者のSTAFF_ID
     STORE_NAME = db.Column(String(255))
+    TABLE_NUMBER = db.Column(Integer)
 
     def __repr__(self):
-        return "(STORE_ID='%s', STORE_NAME='%s')" % (self.STORE_ID, self.STORE_NAME)
+        return "(STORE_ID='%s', STORE_NAME='%s', TABLE_NUMBER='%s')" % (self.STORE_ID, self.STORE_NAME, self.TABLE_NUMBER)
 
 class Staff(db.Model):
     __tablename__ = 'staffs'
@@ -101,9 +102,14 @@ def index():
     if 'store_id' not in session:
         return redirect('/logout')
     else:
-        return render_template('index.html')
+        try:
+            store_id = session['store_id']
+            store_name = db.session.query(Store.STORE_NAME).filter(Store.STORE_ID==store_id, Store.STORE_NAME != "", Store.TABLE_NUMBER != None).one()
+            return render_template('index.html',store_name=store_name)
+        except:
+            return redirect('/store_setting')
 
-    return render_template('index.html')
+    # return redirect('/store_setting')
 
 #会員情報を登録
 @app.route('/create_account', methods = ['POST', 'GET'])
@@ -132,6 +138,7 @@ def create_account():
             except:
                 db.session.add(Staff(E_MAIL=e_mail, PASSWORD=password, STAFF_CLASS_ID=1, STAFF_CLASS="Representative")) #代表者として登録。その際のIDは1とする。
                 store_create=db.session.query(Staff).filter(Staff.E_MAIL==e_mail).one() #登録した代表者のレコードを抽出
+                store_create.STORE_ID = store_create.STAFF_ID
                 store_id=store_create.STAFF_ID  #登録した代表者のSTAFF_IDを取得
                 db.session.add(Store(STORE_ID=store_id))    #代表者が登録された場合、新しいお店としてstoresテーブルに登録
                 db.session.commit()
@@ -153,6 +160,7 @@ def login():
 # メールアドレスが合致しているかで、アカウントがあるかを確認
         try:
             login_user = db.session.query(Staff).filter(Staff.E_MAIL==e_mail).one()
+            print(login_user)
             login_check = verify_password(login_user.PASSWORD, password)
             if login_check == True:
                 #パスワードOKの処理
@@ -160,7 +168,6 @@ def login():
                 session['store_id'] = login_user.STORE_ID
                 session['staff_id'] = login_user.STAFF_ID
                 username_session = login_user.STORE_ID#デバック用
-                print(username_session)#デバック用
                 return redirect('/index')
             else:
                 #パスワードNGの処理
@@ -178,17 +185,22 @@ def login():
 @app.route('/store_information_add', methods = ['POST', 'GET'])
 def store_information_add():
     if request.method == 'POST':
-        store_id = int(session['store_id']) #セッションで登録する店舗を確認する
+        store_id = session['store_id'] #セッションで登録する店舗を確認する
         store_name = request.form['store_name']
+        table_number = request.form['table_number']
         print(store_name)
+        print(table_number)
         print(store_id)
         try:
             store_information = db.session.query(Store).filter(Store.STORE_ID==store_id).one() #STORE_IDとSTORE_NAMEで検出。存在しない場合はログアウトの処理
+            print("デバック開始")
             print(store_information)
             store_information.STORE_NAME = store_name
+            store_information.TABLE_NUMBER = table_number
             db.session.commit()
             db.session.close()
-            return render_template('index.html')
+            print("index.htmlへ")
+            return redirect('/index')
         except:
             return redirect('/logout')
 
@@ -351,14 +363,33 @@ def sort_menu():
 
         except:
             return redirect("/logout")
-
-
-
     return redirect("/show_menu")
 
 
-    return redirect("/show_menu")
+# テーブルのアクティベートと、注文メニューの表示
+@app.route('/activate')
+def activate():
+    store_id = session['store_id']
+    table_number = db.session.query(Store.TABLE_NUMBER).filter(Store.STORE_ID == store_id).one()
+    table_number_int = int(table_number[0])
+    table_number_list = list(range(1,table_number_int+1))
+    print(table_number_list)
+    return render_template('activate.html', table_number_list=table_number_list)
 
+
+
+
+@app.route('/store_setting')
+def store_setting():
+    if 'store_id' not in session:
+        return redirect('/logout')
+    else:
+        try:
+            store_id = session['store_id']
+            store_name = db.session.query(Store.STORE_NAME, Store.TABLE_NUMBER).filter(Store.STORE_ID==store_id, Store.STORE_NAME !="").one()
+            return render_template('store_setting.html',store_name=store_name)
+        except:
+            return render_template('store_setting.html', store_name="")
 
 @app.route('/revise_menu')
 def revise_menu():

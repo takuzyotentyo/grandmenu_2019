@@ -39,12 +39,18 @@
 	&__100percent{
 		@include wrapper;
 		width: 100%;
+		height: 100%;
 		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+		overflow:scroll;
+		align-items: center;     /*コンテンツの上下中央揃え*/
+		justify-content: center; /*左右中央揃え*/
 	}
 	&__50percent{
 		@include wrapper;
 		width: 50%;
+		height: 100%;
 		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+		overflow:scroll;
 	}
 }
 

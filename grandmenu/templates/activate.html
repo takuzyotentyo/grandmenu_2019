@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% block global_navi %}
-<form id="form_store_information" class="form_store_information" action="/store_information_add" method="post">
-  <input class="form_text--small" type="text" name="store_name" placeholder="店舗名" required>
-  <button class="form_button" type="submit" name="store_id">
-      <span>確定</span>
-      <span>登録</span>
-  </button>
-  </form>
+<div class="multi_wrap--flex_start_v100persent">
+	<div class="wrapper__50percent">
+		{% for table_number_list in table_number_list %}
+		<div class="radio_button__table">
+			<input type="checkbox" id="table_{{table_number_list}}" class="radio_button__checkbox" checked="">
+    			<label for="table_{{table_number_list}}" class="radio_button__label">
+      				<div id="sample2box"></div>
+      			</label>
+		</div>
+		{% endfor %}
+	</div>
+</div>
 {% endblock %}
