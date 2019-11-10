@@ -39,11 +39,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # SQLAlchemyを使うことの宣言
 db = SQLAlchemy(app)
 
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 80e0c083b4bfc4952b3d4c0d53303aec19195e7c
 # 関数エリア-Start
 #ハッシュパスワードを作成する関数
 def hash_password(original_pass):
@@ -226,7 +221,7 @@ def show_menu():
     if 'store_id' not in session:
         return redirect("/logtout")
     else:
-        store_id = int(session['store_id'])
+        store_id = session['store_id']
         class_2 = db.session.query(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).filter(Menu.STORE_ID==store_id).\
             group_by(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).\
             order_by(Menu.CLASS_2_ID).\
@@ -244,8 +239,8 @@ def show_menu():
 @app.route('/create_menu', methods = ['POST', 'GET'])
 def create_menu():
     if request.method == 'POST':
-        store_id = int(session['store_id'])
-        staff_id = int(session['staff_id'])
+        store_id = session['store_id']
+        staff_id = session['staff_id']
         class_1 = request.form['class_1']
         class_2 = request.form['class_2']
         class_3 = request.form['class_3']
@@ -304,7 +299,7 @@ def create_menu():
 @app.route('/delete_menu' , methods = ['POST', 'GET'])
 def delete_menu():
     if request.method == 'POST':
-        store_id = int(session['store_id'])
+        store_id = session['store_id']
         menu_ids = request.form.getlist("menu_id")
         print("消すmenu_idsは")
         print(menu_ids)
@@ -324,23 +319,24 @@ def delete_menu():
 @app.route('/sort_menu' , methods = ['POST', 'GET'])
 def sort_menu():
     if request.method == 'POST':
-        store_id = int(session['store_id'])
-        staff_id = int(session['staff_id'])
+        store_id = session['store_id']
+        staff_id = session['staff_id']
         class_2_sort_result_food = request.form.getlist("class_2_sort_result_food")     #CLASS_1_ID,CLASS_2_ID,CLASS_2の順番で並んだ文字列を受け取る
         class_2_sort_result_drink = request.form.getlist("class_2_sort_result_drink")   #CLASS_1_ID,CLASS_2_ID,CLASS_2の順番で並んだ文字列を受け取る
         class_3_sort_result = request.form.getlist("class_3_sort_result")               #MENU_ID,CLASS_1_ID,CLASS_2_ID,CLASS_3_IDの順番で並んだ文字列を受け取る
 
         #受け取った文字列からリストを作成
-        class_2_sort_result_food_list = str(class_2_sort_result_food[0]).split(",")
-        class_2_sort_result_drink_list = str(class_2_sort_result_drink[0]).split(",")
-        class_3_sort_result_list = str(class_3_sort_result[0]).split(",")
+        class_2_sort_result_food_list = class_2_sort_result_food[0].split(",")
+        class_2_sort_result_drink_list = class_2_sort_result_drink[0].split(",")
+        class_3_sort_result_list = class_3_sort_result[0].split(",")
+        print(class_3_sort_result_list)
 
         #CLASS_3から書き換え。理由は、クラス2を先に書き換えるとメニューの追跡が煩雑になるから
         #CLASS_3_IDを一旦全て0にする
         class_3_ids = db.session.query(Menu)
         class_3_ids = db.session.query(Menu).filter(Menu.STORE_ID==store_id).update({Menu.CLASS_3_ID: 0})
         try:
-            for i in range(0, int(len(class_3_sort_result_list)), 4):
+            for i in range(0, len(class_3_sort_result_list), 4):
                 class_3_change_menu_id = class_3_sort_result_list[i]
                 class_3_change_class_1_id = class_3_sort_result_list[i+1]
                 class_3_change_class_2_id = class_3_sort_result_list[i+2]
@@ -350,12 +346,11 @@ def sort_menu():
                 class_3_change_record.CLASS_3_ID = class_3_change_class_3_id[0] + 1
                 class_3_change_record.STAFF_ID = staff_id
 
-
             # 一旦foodのCLASS_2_IDを0にする
             class_2_food_ids = db.session.query(Menu)
             class_2_food_ids = db.session.query(Menu).filter(Menu.STORE_ID==store_id, Menu.CLASS_1_ID==0).update({Menu.CLASS_2_ID: 0})
             #foodのCLASS_2_IDを書き換え(forが0から始まるのはlistが0から始まるから)
-            for i in range(0, int(len(class_2_sort_result_food_list)), 3):
+            for i in range(0, len(class_2_sort_result_food_list), 3):
                 class_2_id_change = db.session.query(Menu)
                 class_2_id_change = db.session.query(Menu).filter(Menu.STORE_ID==store_id, Menu.CLASS_1_ID==class_2_sort_result_food_list[i], Menu.CLASS_2==class_2_sort_result_food_list[i+2]).update({Menu.CLASS_2_ID: i/3+1})
 
@@ -363,9 +358,10 @@ def sort_menu():
             class_2_drink_ids = db.session.query(Menu)
             class_2_drink_ids = db.session.query(Menu).filter(Menu.STORE_ID==store_id, Menu.CLASS_1_ID==1).update({Menu.CLASS_2_ID: 0})
             #drinkのCLASS_2_IDを書き換え(forが0から始まるのはlistが0から始まるから)
-            for i in range(0, int(len(class_2_sort_result_drink_list)), 3):
+            for i in range(0, len(class_2_sort_result_drink_list), 3):
                 class_2_id_change = db.session.query(Menu)
                 class_2_id_change = db.session.query(Menu).filter(Menu.STORE_ID==store_id, Menu.CLASS_1_ID==class_2_sort_result_drink_list[i], Menu.CLASS_2==class_2_sort_result_drink_list[i+2]).update({Menu.CLASS_2_ID: i/3+1})
+
             db.session.commit()
             db.session.close()
 
