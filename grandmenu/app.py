@@ -39,10 +39,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # SQLAlchemyを使うことの宣言
 db = SQLAlchemy(app)
 
-<<<<<<< HEAD
-=======
-
->>>>>>> db80937e380a8658b559bef1f91de33128a8db19
 # 関数エリア-Start
 #ハッシュパスワードを作成する関数
 def hash_password(original_pass):
