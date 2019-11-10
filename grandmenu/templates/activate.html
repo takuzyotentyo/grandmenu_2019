@@ -1,15 +1,26 @@
 {% extends "base.html" %}
 {% block global_navi %}
-<div class="multi_wrap--flex_start_v100persent">
-	<div class="wrapper__50percent">
-		{% for table_number_list in table_number_list %}
-		<div class="radio_button__table">
-			<input type="checkbox" id="table_{{table_number_list}}" class="radio_button__checkbox" checked="">
-    			<label for="table_{{table_number_list}}" class="radio_button__label">
-      				<div id="sample2box"></div>
-      			</label>
-		</div>
+<div class="wrapper__main--multi overlay">
+	<div class="wrapper__50p">
+		<div class="text__subtitle">Tables</div>
+		{% for tables in tables %}
+		<div class="wrapper--content__100p">
+		<div class="text__subtitle w--50p">Table {{tables[0]}}</div>
+		<div class="checkbox--activate__aera">
+			<!-- アクティベートされているかをチェック -->
+			{% if tables[1] == 0 %}
+  			<input type="checkbox" id="table_{{tables[0]}}" class="checkbox--activate__checkbox">
+  			{% else %}
+  			<input type="checkbox" id="table_{{tables[0]}}" class="checkbox--activate__checkbox" checked>
+  			{% endif %}
+    		<label for="table_{{tables[0]}}" class="checkbox--activate__label">
+      				<div class="checkbox--activate__decoration">
+      				</div>
+   			</label>
+   		</div>
+   	</div>
 		{% endfor %}
 	</div>
+	<div class="wrapper__50p"></div>
 </div>
 {% endblock %}

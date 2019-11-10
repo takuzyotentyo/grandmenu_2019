@@ -1,0 +1,37 @@
+@import "../setting/setting.scss";
+
+ /* === ボタンを表示するエリア ============================== */
+.checkbox--activate__aera {
+  // margin: auto;
+  width: 25%; /*ボタンの横幅*/
+}
+
+ /* === チェックボックス ==================================== */
+.checkbox--activate__checkbox {
+  display: none;            /* チェックボックス非表示 */
+}
+
+ /* === チェックボックスのラベル（標準） ==================== */
+.checkbox--activate__label {
+  display: block;/* ボックス要素に変更 */
+  box-sizing: border-box;/* 枠線を含んだサイズ */
+  border: 2.5px solid $color-sub;/* 枠線*/
+  border-radius: 3px;/* 角丸*/
+  line-height: 1;/* 1行の高さ*/
+  height: 50px;/* ボタンの高さ*/
+}
+
+ /* === 移動BOX（標準） ===================================== */
+.checkbox--activate__decoration {
+  display        :inline-block;
+  height         : 45px;                /* ボタンの高さ       */
+  width          : 50%;                 /* ボタンの高さ       */
+  background     : $color-alart;                /* 背景色             */
+  transition     : .3s;                 /* ゆっくり変化       */
+}
+
+ /* === ON側のチェックボックスの移動BOX（ONのとき） ========= */
+.checkbox--activate__checkbox:checked + label > .checkbox--activate__decoration {
+  transform      : translateX(100%);    /* BOXを右に移動      */
+  background     : #78bd78;             /* 背景色             */
+}

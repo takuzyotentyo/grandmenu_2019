@@ -28,63 +28,62 @@
 	}
 	&__main{
 		display: flex;
-		position: relative;
+		position: absolute;
 		width: 100vw;
 		height: calc(100vh - 50px);
-		flex-wrap: wrap;
+		flex-flow: column nowrap;
     	justify-content: center;
     	align-items: center;
     	top: 50px;
+    	&--multi{	//main要素は基本的に1カラムだが、マルチカラムにする場合に掛けるwrapper
+    		display: flex;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			flex-flow: wrap;
+    		align-items: center;
+    	}
 	}
-	&__100percent{
+	&__100p{
 		@include wrapper;
 		width: 100%;
 		height: 100%;
 		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
 		overflow:scroll;
-		align-items: center;     /*コンテンツの上下中央揃え*/
-		justify-content: center; /*左右中央揃え*/
+		&--v_h_center{
+			@include wrapper;
+			width: 100%;
+			height: 100%;
+			flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+			overflow:scroll;
+			align-items: center;     /*コンテンツの上下中央揃え*/
+			justify-content: center; /*左右中央揃え*/
+		}
 	}
-	&__50percent{
+	&__50p{
 		@include wrapper;
 		width: 50%;
 		height: 100%;
-		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+		flex-flow: column nowrap;
 		overflow:scroll;
+		&--v_h_center{
+			@include wrapper;
+			width: 50%;
+			height: 100%;
+			flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
+			overflow:scroll;
+			align-items: center;     /*コンテンツの上下中央揃え*/
+			justify-content: center; /*左右中央揃え*/
+		}
 	}
-}
-
-.multi_wrap{
-	&--flex_start{
-		display: flex;
-    	flex-wrap: wrap;
-    	justify-content: flex-start;
-    	align-items: flex-start;
-    	width: 100%;
-	}
-	&--flex_start_v100persent{
-		display: flex;
-    	flex-wrap: wrap;
-    	justify-content: flex-start;
-    	align-items: flex-start;
-    	width: 100%;
-    	height: 100%;
-	}
-	&--center{
-		display: flex;
-    	flex-flow: wrap;
-    	justify-content: center;
-    	align-items: flex-start;
-    	width: 100%;
-	}
-	&--center_vhcenter{
-		display: flex;
-    	flex-flow: column nowrap;
-    	justify-content: center;
-    	align-items: center;
-    	width: 100vw;
-    	height: calc(100vh - 50px);
-    	top: 50px;
-    	position: absolute;
+	&--content{
+		&__100p{
+			@include wrapper;
+			width: 100%;
+			flex-flow: row wrap;	//カラム内のコンテンツを1列で表示
+			overflow:scroll;
+			margin-top: 1%;
+			margin-bottom: 1%;
+		}
 	}
 }

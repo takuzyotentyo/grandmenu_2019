@@ -1,25 +1,25 @@
 //ログイン時のフォームに関するjs
 $(function(){
-  $("#radio_button--registration").click(function(){
-    $.when($("#form_login").slideUp()
+  $(".js-registration").click(function(){
+    $.when($(".js-form--login").slideUp()
       ).done(function() {
-    $("#form_registration").slideDown();
+    $(".js-form--registration").slideDown();
     });
   });
 });
 
 $(function(){
-  $("#radio_button--login").click(function(){
-    $.when($("#form_registration").slideUp()
+  $(".js-login").click(function(){
+    $.when($(".js-form--registration").slideUp()
       ).done(function() {
-    $("#form_login").slideDown();
+    $(".js-form--login").slideDown();
     });
   });
 });
 
 
 //グローバルナビの大メニューに関するjs
-$(document).on('click', '.header_menu', function(){
+$(document).on('click', '.header__menu', function(){
     if($(this).hasClass("js-three_line_menu--doing")){
       $(this).removeClass("js-three_line_menu--doing");
       $("body").removeClass("overflow-hidden"); //サイドメニューが表示されることで起こるレイアウトの崩れのhiddenを解除
@@ -142,6 +142,43 @@ $(function(){
   });
 });
 
+$(document).on("click", ".checkbox--activate__checkbox", function () {
+  table_number = $(this).attr("id").replace("table_", "");
+  if($(this).prop("checked") == true) {
+    var data = {
+    "table_number": table_number,
+    "activate_status": 1
+    }
+    console.log("チェック項目がチェックされています。");
+    console.log(data);
+    $.ajax({
+      url: "/activate_json",
+      type: 'post',
+      data: JSON.stringify(data),
+      dataType: 'json',
+      contentType: 'application/json',
+    });
+    // .done(function(data, textStatus, jqXHR){
+    // });
+  }else {
+    var data = {
+    "table_number": table_number,
+    "activate_status": 0
+    }
+    console.log("チェック項目がチェックされていません。");
+    console.log(data);
+    $.ajax({
+      url: "/activate_json",
+      type: 'post',
+      data: JSON.stringify(data),
+      dataType: 'json',
+      contentType: 'application/json',
+    });
+    // .done(function(data, textStatus, jqXHR){
+    //   console.log(status_change)
+    // });
+  };
+  });
 
 
 

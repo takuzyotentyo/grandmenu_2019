@@ -123,29 +123,8 @@ blockのインポート
 /*テキストの大きさ*/
 /*色関係*/
 /*ブレイクポイント*/
-.form_text--small {
-  width: 250px;
-  height: 50px;
-  line-height: 30px;
-  display: block;
-  position: relative;
-  margin: 10px auto 10px auto;
-  border: solid 2px #FFA500;
-  padding: 8px 0 8px 17px;
-  border-radius: 5px;
-  background-image: -webkit-gradient(linear, left top, right top, color-stop(50%, #fff), color-stop(50%, #072A24));
-  background-image: -webkit-linear-gradient(left, #fff 50%, #072A24 50%);
-  background-image: -o-linear-gradient(left, #fff 50%, #072A24 50%);
-  background-image: linear-gradient(to right, #fff 50%, #072A24 50%);
-  background-position: 0 0;
-  background-size: 200% auto;
-  -webkit-transition: all .2s ease 0s;
-  -o-transition: all .2s ease 0s;
-  transition: all .2s ease 0s;
-  text-decoration: none; }
-  .form_text--small:hover {
-    background-position: -100% 0;
-    color: #fff; }
+.array {
+  display: none; }
 
 /*====================
 サイトの基本設定
@@ -170,52 +149,6 @@ blockのインポート
   border-style: none; }
   .selectbox > select:hover {
     width: 250px; }
-
-/*====================
-サイトの基本設定
-====================*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-.form_button {
-  display: block;
-  position: relative;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
-  width: 250px;
-  height: 50px;
-  margin: 10px auto 10px auto;
-  border-radius: 5px;
-  border-style: none; }
-  .form_button > span {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    line-height: 50px;
-    -webkit-transition: all .2s;
-    -o-transition: all .2s;
-    transition: all .2s;
-    pointer-events: none;
-    border-radius: 5px; }
-    .form_button > span:nth-child(1) {
-      background-color: #072A24;
-      color: #ffffff; }
-    .form_button > span:nth-child(2) {
-      background-color: #FFA500;
-      color: #ffffff;
-      -webkit-transform-origin: 50% 50% -30px;
-      -ms-transform-origin: 50% 50% -30px;
-      transform-origin: 50% 50% -30px; }
-  .form_button:hover span:nth-child(2) {
-    background-color: #072A24;
-    -webkit-transform: rotateX(-90deg);
-    transform: rotateX(-90deg); }
 
 /*====================
 サイトの基本設定
@@ -545,11 +478,13 @@ input[type="checkbox"]:checked + label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  position: relative;
+  position: absolute;
   width: 100vw;
   height: calc(100vh - 50px);
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -557,8 +492,20 @@ input[type="checkbox"]:checked + label {
   -ms-flex-align: center;
   align-items: center;
   top: 50px; }
+  .wrapper__main--multi {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -ms-flex-flow: wrap;
+    flex-flow: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; }
 
-.wrapper__100percent {
+.wrapper__100p {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -569,17 +516,29 @@ input[type="checkbox"]:checked + label {
   -webkit-box-direction: normal;
   -ms-flex-flow: column nowrap;
   flex-flow: column nowrap;
-  overflow: scroll;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  /*コンテンツの上下中央揃え*/
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  /*左右中央揃え*/ }
+  overflow: scroll; }
+  .wrapper__100p--v_h_center {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: column nowrap;
+    flex-flow: column nowrap;
+    overflow: scroll;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    /*コンテンツの上下中央揃え*/
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    /*左右中央揃え*/ }
 
-.wrapper__50percent {
+.wrapper__50p {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -591,68 +550,40 @@ input[type="checkbox"]:checked + label {
   -ms-flex-flow: column nowrap;
   flex-flow: column nowrap;
   overflow: scroll; }
+  .wrapper__50p--v_h_center {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    width: 50%;
+    height: 100%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: column nowrap;
+    flex-flow: column nowrap;
+    overflow: scroll;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    /*コンテンツの上下中央揃え*/
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    /*左右中央揃え*/ }
 
-.multi_wrap--flex_start {
+.wrapper--content__100p {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  width: 100%; }
-
-.multi_wrap--flex_start_v100persent {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start;
+  position: relative;
   width: 100%;
-  height: 100%; }
-
-.multi_wrap--center {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-flow: wrap;
-  flex-flow: wrap;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  width: 100%; }
-
-.multi_wrap--center_vhcenter {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  width: 100vw;
-  height: calc(100vh - 50px);
-  top: 50px;
-  position: absolute; }
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  overflow: scroll;
+  margin-top: 1%;
+  margin-bottom: 1%; }
 
 /*====================
 サイトの基本設定
@@ -661,7 +592,7 @@ input[type="checkbox"]:checked + label {
 /*テキストの大きさ*/
 /*色関係*/
 /*ブレイクポイント*/
-.header_menu {
+.header__menu {
   position: relative;
   width: 20px;
   height: 20px;
@@ -669,7 +600,6 @@ input[type="checkbox"]:checked + label {
 
 .header__title {
   position: absolute;
-  font-size: 30px;
   left: 50%;
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
@@ -685,32 +615,44 @@ input[type="checkbox"]:checked + label {
 .text__icon {
   font-size: 30px;
   color: #ffffff;
-  line-height: 150%; }
+  line-height: 150%;
+  text-align: center;
+  padding: auto; }
 
 .text__title {
   font-size: 28px;
   color: #ffffff;
-  line-height: 150%; }
+  line-height: 150%;
+  text-align: center;
+  padding: auto; }
 
 .text__subtitle {
   font-size: 24px;
   color: #ffffff;
-  line-height: 150%; }
+  line-height: 150%;
+  text-align: center;
+  padding: auto; }
 
 .text__body {
   font-size: 16px;
   color: #ffffff;
-  line-height: 150%; }
+  line-height: 150%;
+  text-align: center;
+  padding: auto; }
 
 .text__copyright {
   font-size: 12px;
   color: #ffffff;
-  line-height: 150%; }
+  line-height: 150%;
+  text-align: center;
+  padding: auto; }
 
 .text__text-decoration {
   font-size: 6px;
   color: #ffffff;
-  line-height: 150%; }
+  line-height: 150%;
+  text-align: center;
+  padding: auto; }
 
 /*「_」抜きの名前でインポートする
  変数を定義しているsetting.scssのインポートは必須事項*/
@@ -721,7 +663,7 @@ input[type="checkbox"]:checked + label {
 /*テキストの大きさ*/
 /*色関係*/
 /*ブレイクポイント*/
-.picture__base {
+.picture--base {
   display: block;
   position: absolute;
   width: 100%;
@@ -938,8 +880,17 @@ input[type="checkbox"]:checked + label {
 /*テキストの大きさ*/
 /*色関係*/
 /*ブレイクポイント*/
-.radio_button {
-  display: none; }
+.radio_button--login {
+  width: 250px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  /*左右中央揃え*/ }
+  .radio_button--login__radio {
+    display: none; }
 
 input[type="radio"] + label {
   line-height: 30px;
@@ -958,61 +909,6 @@ input[type="radio"]:checked + label {
   background: #FFA500;
   /* マウス選択時の背景色を指定する */ }
 
-/* === ボタンを表示するエリア ============================== */
-.radio_button__table {
-  margin: auto;
-  /* 中央寄せ           */
-  width: 100px;
-  /* ボタンの横幅       */ }
-
-/* === チェックボックス ==================================== */
-.radio_button__table input[type="checkbox"] {
-  display: none;
-  /* チェックボックス非表示 */ }
-
-/* === チェックボックスのラベル（標準） ==================== */
-.radio_button__table label {
-  display: block;
-  /* ボックス要素に変更 */
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  /* 枠線を含んだサイズ */
-  text-align: left;
-  /* 文字位置は中央     */
-  border: 2px solid #78bd78;
-  /* 枠線               */
-  border-radius: 3px;
-  /* 角丸               */
-  line-height: 1;
-  /* 1行の高さ          */
-  height: 50px;
-  /* ボタンの高さ       */ }
-
-/* === 移動BOX（標準） ===================================== */
-.radio_button__checkbox {
-  display: inline-block;
-  height: 46px;
-  /* ボタンの高さ       */
-  width: 50%;
-  /* ボタンの高さ       */
-  background: #ddd;
-  /* 背景色             */
-  -webkit-transition: .3s;
-  -o-transition: .3s;
-  transition: .3s;
-  /* ゆっくり変化       */ }
-
-/* === ON側のチェックボックスの移動BOX（ONのとき） ========= */
-.radio_button__checkbox:checked + .radio_button__label {
-  -webkit-transform: translateX(100%);
-  -ms-transform: translateX(100%);
-  transform: translateX(100%);
-  /* BOXを右に移動      */
-  background: #78bd78;
-  /* 背景色             */ }
-
-/*「_」抜きの名前でインポートする
- 変数を定義しているsetting.scssのインポートは必須事項*/
 /*====================
 サイトの基本設定
 ====================*/
@@ -1020,24 +916,47 @@ input[type="radio"]:checked + label {
 /*テキストの大きさ*/
 /*色関係*/
 /*ブレイクポイント*/
-.form_registration {
+.form--registration {
   display: none; }
 
-/*「_」抜きの名前でインポートする
- 変数を定義しているsetting.scssのインポートは必須事項*/
-/*====================
-サイトの基本設定
-====================*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-.back_box {
-  position: fixed;
-  z-index: -10000;
-  width: 100vw;
-  height: 100vh;
-  background-color: #FFA500; }
+.form__button {
+  display: block;
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  width: 250px;
+  height: 50px;
+  margin: 10px auto 10px auto;
+  border-radius: 5px;
+  border-style: none; }
+  .form__button > span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 50px;
+    -webkit-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+    pointer-events: none;
+    border-radius: 5px; }
+    .form__button > span:nth-child(1) {
+      background-color: #072A24;
+      color: #ffffff; }
+    .form__button > span:nth-child(2) {
+      background-color: #FFA500;
+      color: #ffffff;
+      -webkit-transform-origin: 50% 50% -30px;
+      -ms-transform-origin: 50% 50% -30px;
+      transform-origin: 50% 50% -30px; }
+  .form__button:hover span:nth-child(2) {
+    background-color: #072A24;
+    -webkit-transform: rotateX(-90deg);
+    transform: rotateX(-90deg); }
 
 /*====================
 サイトの基本設定
@@ -1112,21 +1031,6 @@ input[type="checkbox"]:checked + label {
 /*色関係*/
 /*ブレイクポイント*/
 .overlay {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
   background: rgba(7, 42, 36, 0.3);
   -webkit-animation: fadeIn 2s ease 0s 1 normal;
   animation: fadeIn 2s ease 0s 1 normal; }
@@ -1142,3 +1046,121 @@ input[type="checkbox"]:checked + label {
     opacity: 0; }
   100% {
     opacity: 1; } }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.background_color {
+  background-color: #FFA500;
+  position: fixed;
+  height: 100vh;
+  width: 100vw; }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+/* === ボタンを表示するエリア ============================== */
+.checkbox--activate__aera {
+  width: 25%;
+  /*ボタンの横幅*/ }
+
+/* === チェックボックス ==================================== */
+.checkbox--activate__checkbox {
+  display: none;
+  /* チェックボックス非表示 */ }
+
+/* === チェックボックスのラベル（標準） ==================== */
+.checkbox--activate__label {
+  display: block;
+  /* ボックス要素に変更 */
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  /* 枠線を含んだサイズ */
+  border: 2.5px solid #072A24;
+  /* 枠線*/
+  border-radius: 3px;
+  /* 角丸*/
+  line-height: 1;
+  /* 1行の高さ*/
+  height: 50px;
+  /* ボタンの高さ*/ }
+
+/* === 移動BOX（標準） ===================================== */
+.checkbox--activate__decoration {
+  display: inline-block;
+  height: 45px;
+  /* ボタンの高さ       */
+  width: 50%;
+  /* ボタンの高さ       */
+  background: #DC3B00;
+  /* 背景色             */
+  -webkit-transition: .3s;
+  -o-transition: .3s;
+  transition: .3s;
+  /* ゆっくり変化       */ }
+
+/* === ON側のチェックボックスの移動BOX（ONのとき） ========= */
+.checkbox--activate__checkbox:checked + label > .checkbox--activate__decoration {
+  -webkit-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  transform: translateX(100%);
+  /* BOXを右に移動      */
+  background: #78bd78;
+  /* 背景色             */ }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.w--100p {
+  width: 100%; }
+
+.w--50p {
+  width: 50%; }
+
+.w--25p {
+  width: 25%; }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.text_box--small {
+  width: 250px;
+  height: 50px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  line-height: 30px;
+  display: block;
+  position: relative;
+  margin: 10px auto 10px auto;
+  border: solid 2px #FFA500;
+  padding: 8px 0 8px 17px;
+  border-radius: 5px;
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(50%, #fff), color-stop(50%, #072A24));
+  background-image: -webkit-linear-gradient(left, #fff 50%, #072A24 50%);
+  background-image: -o-linear-gradient(left, #fff 50%, #072A24 50%);
+  background-image: linear-gradient(to right, #fff 50%, #072A24 50%);
+  background-position: 0 0;
+  background-size: 200% auto;
+  -webkit-transition: all .2s ease 0s;
+  -o-transition: all .2s ease 0s;
+  transition: all .2s ease 0s;
+  text-decoration: none; }
+  .text_box--small:hover {
+    background-position: -100% 0;
+    color: #fff; }

@@ -2,7 +2,7 @@
  変数を定義しているsetting.scssのインポートは必須事項*/
 @import "../setting/setting.scss";
 
-.picture__base{
+.picture--base{
 	display: block;
     position: absolute;
     width: 100%;

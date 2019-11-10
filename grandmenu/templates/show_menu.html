@@ -2,36 +2,36 @@
 {% block global_navi %}
 <!-- class_2 = db.session.query(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2) -->
 <!-- class_3 = db.session.query(Menu.MENU_ID, Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_3_ID, Menu.CLASS_3, Menu.PRICE) -->
-<div class="multi_wrap--flex_start_v100persent">
 
 <!-- メニュー表示部分-->
 <!-- フード中分類 -->
-  <div class="wrapper__50percent">
+<div class="wrapper__main--multi">
+  <div class="wrapper__50p">
     <div class="menu_box__food">Food</div>
-    <ul class="sortable_class_2--food">
-      {% for class_2 in class_2 %}
-      {% if class_2[0] == 0 %}
-      <li class="menu_box" value="{{class_2[0]}}_{{class_2[1]}}" id="{{class_2[0]}},{{class_2[1]}},{{class_2[2]}}">
-        <label class="deletemark--class_2">{{class_2[2]}}</label>
-      </li>
-      {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
+      <ul class="sortable_class_2--food wrapper__100p">
+        {% for class_2 in class_2 %}
+        {% if class_2[0] == 0 %}
+        <li class="menu_box" value="{{class_2[0]}}_{{class_2[1]}}" id="{{class_2[0]}},{{class_2[1]}},{{class_2[2]}}">
+          <label class="deletemark--class_2">{{class_2[2]}}</label>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
 <!-- ドリンク中分類 -->
-  <div class="wrapper__50percent">
-    <div class="menu_box__drink">Drink</div>
-    <ul class="sortable_class_2--drink">
-      {% for class_2 in class_2 %}
-      {% if class_2[0] == 1 %}
-      <li class="menu_box" value="{{class_2[0]}}_{{class_2[1]}}" id="{{class_2[0]}},{{class_2[1]}},{{class_2[2]}}">
-        <label class="deletemark--class_2">{{class_2[2]}}</label>
-      </li>
-      {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
-
+   <div class="wrapper__50p">
+      <div class="menu_box__drink">Drink</div>
+      <ul class="sortable_class_2--drink wrapper__100p">
+        {% for class_2 in class_2 %}
+        {% if class_2[0] == 1 %}
+        <li class="menu_box" value="{{class_2[0]}}_{{class_2[1]}}" id="{{class_2[0]}},{{class_2[1]}},{{class_2[2]}}">
+          <label class="deletemark--class_2">{{class_2[2]}}</label>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+      </div>
+</div>
 </div>
 
 <!-- lightbox__menu_boxの中に小分類を入れ、非表示にするときの子要素指定のためにliをつけている -->
@@ -54,11 +54,9 @@
 
 <!-- ソートの順番を保存するために必要なインプット -->
 <form id="sort_menu" method="post" action="/sort_menu">
-<!--   <input type="hidden" id="class_3_sort_result" name="class_1=0_class_2_sort_result">
-  <input type="hidden" id="class_3_sort_result" name="class_1=1_class_2_sort_result"> -->
-  <input type="none" id="class_2_sort_result_food" name="class_2_sort_result_food">
-  <input type="none" id="class_2_sort_result_drink" name="class_2_sort_result_drink">
-  <input type="none" id="class_3_sort_result" name="class_3_sort_result">
+  <input id="class_2_sort_result_food" name="class_2_sort_result_food" class="array">
+  <input id="class_2_sort_result_drink" name="class_2_sort_result_drink" class="array">
+  <input id="class_3_sort_result" name="class_3_sort_result" class="array">
 </form>
 
 <div class="button__sortable" type="" form="">⇅</div>
@@ -70,19 +68,18 @@
 
 <div class="lightbox">
   	<form id="create_menu" action="/create_menu" method="post">
-    <input class="form_text--small" type="text" name="class_3" placeholder="料理名" required>
-    <input class="form_text--small" type="number" name="price" placeholder="金額" required>
+    <input class="text_box--small" type="text" name="class_3" placeholder="料理名" required>
+    <input class="text_box--small" type="number" name="price" placeholder="金額" required>
   	<div class="selectbox">
   		<select class="selectbox" name="class_1">
    			<option value="food">食べ物</option>
     		<option value="drink">飲み物</option>
   		</select>
   	</div>
-    <input class="form_text--small" type="text" name="class_2" placeholder="分類" required>
-    <button class="form_button" type="submit" id="create_menu_submit">
+    <input class="text_box--small" type="text" name="class_2" placeholder="分類" required>
+    <button class="form__button" type="submit" id="create_menu_submit">
       <span><a href="/add_menu">確定</a></span>
       <span>登録</span>
     </button>
 	</form>
-</div>
 {% endblock %}

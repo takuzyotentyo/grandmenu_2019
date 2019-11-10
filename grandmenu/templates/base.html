@@ -13,14 +13,15 @@
 </head>
 
 <body>
-  <div class="back_box" >
-  <div class="wrapper__header">
-    <div class="header_menu three_line_menu">
+  <div class="background_color">
+    <div class="back_box" >
+    <div class="wrapper__header">
+      <div class="header__menu three_line_menu">
         <!-- メニューの三本線に使う -->
       <span></span><span></span><span></span>
+      </div>
+      <a href="/index" class="text__subtitle header__title">Ground Menu.com</a>
     </div>
-    <a href="/index" class="text__subtitle header__title">Ground Menu.com</a>
-  </div>
 
 <!-- サイドメニュー -->
     <ul class="wrapper__side">
@@ -57,12 +58,12 @@
 
 <!-- メインメニュー -->
     <div class="wrapper__main">
-      <div class="picture__base"></div>
+    <div class="picture--base"></div>
 
   {% block global_navi %}{% endblock %}
     </div>
   </div>
-
+</div>
 </body>
 
 </html>

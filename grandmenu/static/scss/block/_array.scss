@@ -2,10 +2,6 @@
  変数を定義しているsetting.scssのインポートは必須事項*/
 @import "../setting/setting.scss";
 
-.back_box{
-	position: fixed;
-    z-index: -10000;
-    width: 100vw;
-    height: 100vh;
-    background-color: $color-main;
+.array{
+	display: none;
 }

@@ -1,7 +1,7 @@
 #coding:utf-8
 
 # Flaskのインポート
-from flask import Flask, render_template, session, redirect, url_for, flash, request
+from flask import Flask, render_template, session, redirect, url_for, flash, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 # psycopg2のインポート
@@ -9,6 +9,7 @@ import psycopg2
 
 #他モジュール(.py)のインポート
 from app_qrcode import qr_code_api  #QRコード関連のモジュール
+from app_DBmanagement import db_management_api #DB管理のモジュール
 
 #SQLAlchemy必要に応じて適宜導入
 from sqlalchemy import create_engine, Column, Integer, String, func
@@ -22,11 +23,12 @@ app = Flask(__name__)
 
 #他モジュール(.py)から呼び出す
 app.register_blueprint(qr_code_api)
+app.register_blueprint(db_management_api)
 
 app.config['SECRET_KEY'] = 'secret key'
 
 #DBの向き先スイッチング
-# AWSを使う場合
+# Heroku DBを使う場合
 #app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://efyhucxwisbkfm:65bd9fb1a4769a3eb1eb533d70bd2fd2621d339b7821350f99f8e25b85656902@ec2-184-73-169-163.compute-1.amazonaws.com:5432/dbu4difidq79a9"
 
 
@@ -36,8 +38,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # SQLAlchemyを使うことの宣言
 db = SQLAlchemy(app)
-
-
 
 
 # 関数エリア-Start
@@ -56,10 +56,10 @@ class Store(db.Model):
 
     STORE_ID = db.Column(Integer, primary_key=True) # ≒代表者のSTAFF_ID
     STORE_NAME = db.Column(String(255))
-    TABLE_NUMBER = db.Column(Integer)
+    TABLES = db.Column(Integer)
 
     def __repr__(self):
-        return "(STORE_ID='%s', STORE_NAME='%s', TABLE_NUMBER='%s')" % (self.STORE_ID, self.STORE_NAME, self.TABLE_NUMBER)
+        return "(STORE_ID='%s', STORE_NAME='%s', TABLES='%s')" % (self.STORE_ID, self.STORE_NAME, self.TABLES)
 
 class Staff(db.Model):
     __tablename__ = 'staffs'
@@ -94,6 +94,18 @@ class Menu(db.Model):
     def __repr__(self):
         return "(MENU_ID='%s', STORE_ID='%s', STAFF_ID='%s', CLASS_1_ID='%s', CLASS_1='%s', CLASS_2_ID='%s', CLASS_2='%s', CLASS_3_ID='%s', CLASS_3='%s', PRICE='%s')" % (self.MENU_ID, self.STORE_ID, self.STAFF_ID, self.CLASS_1_ID, self.CLASS_1, self.CLASS_2_ID, self.CLASS_2, self.CLASS_3_ID, self.CLASS_3, self.PRICE)
 
+class Table(db.Model):
+    __tablename__ = 'tables'
+
+    TABLE_ID = db.Column(Integer, primary_key=True)
+    STORE_ID = db.Column(Integer)
+    TABLE_NUMBER = db.Column(Integer)
+    TABLE_ACTIVATE = db.Column(Integer)
+
+    def __repr__(self):
+        return "(TABLE_ID='%s', STORE_ID='%s', TABLE_NUMBER='%s', TABLE_ACTIVATE='%s')" % (self.TABLE_ID, self.STORE_ID, self.TABLE_NUMBER, self.TABLE_ACTIVATE)
+
+
 db.create_all()
 
 @app.route('/index')
@@ -104,7 +116,7 @@ def index():
     else:
         try:
             store_id = session['store_id']
-            store_name = db.session.query(Store.STORE_NAME).filter(Store.STORE_ID==store_id, Store.STORE_NAME != "", Store.TABLE_NUMBER != None).one()
+            store_name = db.session.query(Store.STORE_NAME).filter(Store.STORE_ID==store_id, Store.STORE_NAME != "", Store.TABLES != None).one()
             return render_template('index.html',store_name=store_name)
         except:
             return redirect('/store_setting')
@@ -144,8 +156,8 @@ def create_account():
                 db.session.commit()
                 db.session.close()
             return redirect("/login")
-
-    return redirect("/login")
+    else:
+        return redirect("/login")
 
 
 
@@ -160,7 +172,6 @@ def login():
 # メールアドレスが合致しているかで、アカウントがあるかを確認
         try:
             login_user = db.session.query(Staff).filter(Staff.E_MAIL==e_mail).one()
-            print(login_user)
             login_check = verify_password(login_user.PASSWORD, password)
             if login_check == True:
                 #パスワードOKの処理
@@ -176,8 +187,8 @@ def login():
         except:
             session['error'] = "メールアドレスもしくはパスワードが間違っています"   #この処理はアカウントが存在しない場合に起こるが、エラー文を変えるとリスクがあるので、パスワードエラーと同一の文章にしている
             return render_template('login.html')
-
-    return render_template('login.html')
+    else:
+        return render_template('login.html')
 
 
 
@@ -187,22 +198,21 @@ def store_information_add():
     if request.method == 'POST':
         store_id = session['store_id'] #セッションで登録する店舗を確認する
         store_name = request.form['store_name']
-        table_number = request.form['table_number']
-        print(store_name)
-        print(table_number)
-        print(store_id)
+        tables = request.form['tables']
         try:
-            store_information = db.session.query(Store).filter(Store.STORE_ID==store_id).one() #STORE_IDとSTORE_NAMEで検出。存在しない場合はログアウトの処理
-            print("デバック開始")
-            print(store_information)
+            store_information = db.session.query(Store).filter(Store.STORE_ID==store_id).one() #存在しない場合はログアウトの処理
             store_information.STORE_NAME = store_name
-            store_information.TABLE_NUMBER = table_number
+            store_information.TABLES = tables
+            db.session.query(Table).filter(Table.STORE_ID==store_id).delete()
+            for i in range(1,int(tables)+1):
+                db.session.add(Table(STORE_ID=store_id, TABLE_NUMBER=i, TABLE_ACTIVATE="0"))
             db.session.commit()
             db.session.close()
-            print("index.htmlへ")
             return redirect('/index')
         except:
             return redirect('/logout')
+    else:
+        return "rendering 「/store_information_add」 error!"
 
 
 
@@ -320,9 +330,6 @@ def sort_menu():
         class_2_sort_result_food_list = str(class_2_sort_result_food[0]).split(",")
         class_2_sort_result_drink_list = str(class_2_sort_result_drink[0]).split(",")
         class_3_sort_result_list = str(class_3_sort_result[0]).split(",")
-        # print(class_2_sort_result_food_list)
-        # print(class_2_sort_result_drink_list)
-        # print(class_3_sort_result_list)
 
         #CLASS_3から書き換え。理由は、クラス2を先に書き換えるとメニューの追跡が煩雑になるから
         #CLASS_3_IDを一旦全て0にする
@@ -334,14 +341,11 @@ def sort_menu():
                 class_3_change_class_1_id = class_3_sort_result_list[i+1]
                 class_3_change_class_2_id = class_3_sort_result_list[i+2]
                 class_3_change_record = db.session.query(Menu).filter(Menu.STORE_ID==store_id, Menu.MENU_ID==class_3_change_menu_id).one()  #store_idが合致していない場合は弾く
-                # print("変更するレコードは")
-                # print(class_3_change_record_debug)
-                # print("で、")
+
                 class_3_change_class_3_id = db.session.query(Menu.CLASS_3_ID).filter(Menu.STORE_ID==store_id, Menu.CLASS_1_ID==class_3_change_class_1_id, Menu.CLASS_2_ID==class_3_change_class_2_id).order_by(Menu.CLASS_3_ID.desc()).first()
                 class_3_change_record.CLASS_3_ID = class_3_change_class_3_id[0] + 1
                 class_3_change_record.STAFF_ID = staff_id
-                # print(class_3_change_record.CLASS_3_ID)
-                # print("に変更しました")
+
 
             # 一旦foodのCLASS_2_IDを0にする
             class_2_food_ids = db.session.query(Menu)
@@ -370,13 +374,28 @@ def sort_menu():
 @app.route('/activate')
 def activate():
     store_id = session['store_id']
-    table_number = db.session.query(Store.TABLE_NUMBER).filter(Store.STORE_ID == store_id).one()
-    table_number_int = int(table_number[0])
-    table_number_list = list(range(1,table_number_int+1))
-    print(table_number_list)
-    return render_template('activate.html', table_number_list=table_number_list)
+    tables = db.session.query(Table.TABLE_NUMBER, Table.TABLE_ACTIVATE).filter(Table.STORE_ID == store_id).order_by(Table.TABLE_NUMBER).all()
+    print(tables)
+    return render_template('activate.html', tables=tables)
 
 
+
+@app.route('/activate_json', methods = ['POST', 'GET'])
+def activate_json():
+    try:
+        store_id = session['store_id']
+        table_status = request.get_json()
+        table_number = table_status["table_number"]
+        activate_status = table_status["activate_status"]
+        db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE: activate_status})
+        db.session.commit()
+        db.session.close()
+        response = Response()
+        response.status_code = 200
+        return response
+    except:
+        status_change= "false"
+        return status_change
 
 
 @app.route('/store_setting')
@@ -386,7 +405,7 @@ def store_setting():
     else:
         try:
             store_id = session['store_id']
-            store_name = db.session.query(Store.STORE_NAME, Store.TABLE_NUMBER).filter(Store.STORE_ID==store_id, Store.STORE_NAME !="").one()
+            store_name = db.session.query(Store.STORE_NAME, Store.TABLES).filter(Store.STORE_ID==store_id, Store.STORE_NAME !="").one()
             return render_template('store_setting.html',store_name=store_name)
         except:
             return render_template('store_setting.html', store_name="")

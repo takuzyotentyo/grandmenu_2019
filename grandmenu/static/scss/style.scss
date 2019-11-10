@@ -19,13 +19,8 @@ mixinのインポート
 blockのインポート
 ====================*/
 @import "./block/lightbox.scss";
-// @import "./block/header.scss";
-// @import "./block/base-picture.scss";
-// @import "./block/welcome_text.scss";
-// @import "./block/footer.scss";
-@import "./block/form_text.scss";
+@import "./block/array.scss";
 @import "./block/selectbox.scss";
-@import "./block/form_button.scss";
 @import "./block/menu_box.scss";
 @import "./block/delete.scss";
 @import "./block/button.scss";
@@ -38,9 +33,11 @@ blockのインポート
 @import "./block/vibration.scss";
 @import "./block/radio_button.scss";
 @import "./block/form.scss";
-@import "./block/back_box.scss";
 @import "./block/error.scss";
 @import "./block/class_3.scss";
 @import "./block/sortable.scss";
 @import "./block/overlay.scss";
-// @import "./block/vertical-text.scss";
+@import "./block/background_color.scss";
+@import "./block/checkbox.scss";
+@import "./block/width_height.scss";
+@import "./block/text_box.scss";
