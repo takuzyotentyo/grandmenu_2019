@@ -9,6 +9,7 @@ import psycopg2
 
 #他モジュール(.py)のインポート
 from app_qrcode import qr_code_api  #QRコード関連のモジュール
+from app_DBmanagement import db_management_api #DB管理のモジュール
 
 #SQLAlchemy必要に応じて適宜導入
 from sqlalchemy import create_engine, Column, Integer, String, func
@@ -22,11 +23,12 @@ app = Flask(__name__)
 
 #他モジュール(.py)から呼び出す
 app.register_blueprint(qr_code_api)
+app.register_blueprint(db_management_api)
 
 app.config['SECRET_KEY'] = 'secret key'
 
 #DBの向き先スイッチング
-# AWSを使う場合
+# Heroku DBを使う場合
 #app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://efyhucxwisbkfm:65bd9fb1a4769a3eb1eb533d70bd2fd2621d339b7821350f99f8e25b85656902@ec2-184-73-169-163.compute-1.amazonaws.com:5432/dbu4difidq79a9"
 
 
@@ -36,7 +38,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # SQLAlchemyを使うことの宣言
 db = SQLAlchemy(app)
-
 
 
 
@@ -144,8 +145,8 @@ def create_account():
                 db.session.commit()
                 db.session.close()
             return redirect("/login")
-
-    return redirect("/login")
+    else:
+        return redirect("/login")
 
 
 
@@ -176,8 +177,8 @@ def login():
         except:
             session['error'] = "メールアドレスもしくはパスワードが間違っています"   #この処理はアカウントが存在しない場合に起こるが、エラー文を変えるとリスクがあるので、パスワードエラーと同一の文章にしている
             return render_template('login.html')
-
-    return render_template('login.html')
+    else:
+        return render_template('login.html')
 
 
 
@@ -203,6 +204,8 @@ def store_information_add():
             return redirect('/index')
         except:
             return redirect('/logout')
+    else:
+        return "rendering 「/store_information_add」 error!"
 
 
 
