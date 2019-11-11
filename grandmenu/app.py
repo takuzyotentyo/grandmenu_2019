@@ -107,7 +107,7 @@ class Table(db.Model):
 
 db.create_all()
 
-@app.route('/index')
+@app.route('/')
 def index():
 
     if 'store_id' not in session:
@@ -419,6 +419,18 @@ def logout():
     # session['logged_in'] = False
     session.clear()
     return render_template('login.html')
+
+
+
+# QRコードから復元する際のテスト
+@app.route("/test/<int:id_>/<name>")
+def test(id_,name):
+    print(name)
+    print(id_)
+    return redirect("/")
+# ここまで
+
+
 
 
 if __name__ == '__main__':
