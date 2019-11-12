@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 # psycopg2のインポート
 import psycopg2
+import qrcode
 
 #他モジュール(.py)のインポート
 from app_qrcode import qr_code_api  #QRコード関連のモジュール
@@ -420,7 +421,12 @@ def logout():
     session.clear()
     return render_template('login.html')
 
-
+# QRコード生成のアクション
+@app.route("/qr_genarate")
+def qr_genarate():
+    img = qrcode.make('hoge')
+    img.show()
+    return redirect("/")
 
 # QRコードから復元する際のテスト
 @app.route("/test/<int:id_>/<name>")
