@@ -179,7 +179,7 @@ def login():
                 session['store_id'] = login_user.STORE_ID
                 session['staff_id'] = login_user.STAFF_ID
                 username_session = login_user.STORE_ID#デバック用
-                return redirect('/index')
+                return redirect('/')
             else:
                 #パスワードNGの処理
                 session['error'] = "メールアドレスもしくはパスワードが間違っています"
@@ -208,7 +208,7 @@ def store_information_add():
                 db.session.add(Table(STORE_ID=store_id, TABLE_NUMBER=i, TABLE_ACTIVATE="0"))
             db.session.commit()
             db.session.close()
-            return redirect('/index')
+            return redirect('/')
         except:
             return redirect('/logout')
     else:
@@ -395,7 +395,8 @@ def activate_json():
         response.status_code = 200
         return response
     except:
-        status_change= "false"
+        response.status_code = 400
+        return response
         return status_change
 
 
