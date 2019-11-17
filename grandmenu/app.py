@@ -370,6 +370,28 @@ def sort_menu():
             return redirect("/logout")
     return redirect("/show_menu")
 
+# オーダーをカートに追加する処理
+@app.route('/add_to_cart_json', methods = ['POST'])
+def add_to_cart_json():
+    try:
+        store_id = session['store_id']
+        # order_list = session['order_list']
+        add_order = request.get_json()
+        print(add_order)
+        if 'order_list' not in session:
+            session['order_list'] = []
+        order_list = session['order_list']
+        print("既存のオーダーリストは")
+        print(order_list)
+        order_list.append(add_order)
+        session['order_list'] = order_list
+        print("変更後のオーダーリストは")
+        print(session['order_list'])
+        order_quantity= len(session['order_list'])
+        return str(order_quantity)
+    except:
+        return "false"
+
 
 # テーブルのアクティベートと、注文メニューの表示
 @app.route('/activate')
@@ -380,8 +402,7 @@ def activate():
     return render_template('activate.html', tables=tables)
 
 
-
-@app.route('/activate_json', methods = ['POST', 'GET'])
+@app.route('/activate_json', methods = ['POST'])
 def activate_json():
     try:
         store_id = session['store_id']
@@ -391,14 +412,11 @@ def activate_json():
         db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE: activate_status})
         db.session.commit()
         db.session.close()
-        response = Response()
-        response.status_code = 200
-        return response
+        result="true"
+        return result
     except:
-        response.status_code = 400
-        return response
-        return status_change
-
+        result="false"
+        return result
 
 @app.route('/store_setting')
 def store_setting():
@@ -430,14 +448,32 @@ def qr_genarate():
     return redirect("/")
 
 # QRコードから復元する際のテスト
-@app.route("/test/<int:id_>/<name>")
-def test(id_,name):
-    print(name)
-    print(id_)
-    return redirect("/")
+@app.route("/test/<int:store_id>/<int:table_number>")
+def test(store_id,table_number):
+    print(store_id)
+    print(table_number)
+    session.clear()
+    session['store_id'] = store_id
+    session['table_number'] = table_number
+    return redirect("/order")
 # ここまで
 
-
+# スマホで注文を飛ばす処理
+@app.route("/order")
+def order():
+    store_id = session['store_id']
+    table_number = session['table_number']
+    class_2 = db.session.query(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).filter(Menu.STORE_ID==store_id).\
+        group_by(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).\
+        order_by(Menu.CLASS_2_ID).\
+        all()
+    print(class_2)
+    class_3 = db.session.query(Menu.MENU_ID, Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_3_ID, Menu.CLASS_3, Menu.PRICE).filter(Menu.STORE_ID==store_id).\
+        order_by(Menu.CLASS_3_ID).\
+        all()
+    print(class_3)
+    return render_template('order.html',class_2=class_2, class_3=class_3)
+# ここまで
 
 
 if __name__ == '__main__':

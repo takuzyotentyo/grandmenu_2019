@@ -1,58 +1,44 @@
 @import "../setting/setting.scss";
 .menu_box{
-	@include menu_box;
-	font-size:$text-body;
-	margin-top:5px;
-	margin-bottom: 5px;
-	text-align: center;
-	height: 50px;
-	background-color: $color-main;
-	width: 96%;
-	&__food{
+	&--class_2{
 		@include menu_box;
+		display: inline-block;
+		color: $text-color-main;
+		opacity: 0.9;
+		position: relative;
+		line-height:50px;
+		flex-flow: nowrap;
 		font-size:$text-body;
-		margin-top:10px;
-		margin-bottom: 5px;
-		text-align: center;
-		height: 50px;
-		background-color: $color-active;
-		font-weight: bold;
-		width: 96%;
-	}
-	&__drink{
-		@include menu_box;
-		font-size:$text-body;
-		margin-top:10px;
-		margin-bottom: 5px;
-		text-align: center;
-		height: 50px;
-		background-color: $color-active;
-		font-weight: bold;
-		width: 96%;
-	}
-	&__class_3{
-		@include menu_box;
-		font-size:$text-body;
-		margin-top:5px;
-		margin-bottom: 5px;
+		margin:5px 1% 5px 1%;
 		text-align: center;
 		height: 50px;
 		background-color: $color-main;
 		width: 48%;
+		@media screen and (max-width: 768px) {
+			width: 98%;
+		}
 	}
-	&__class_3--delete{
-		width: 50%;
+	&--class_3{
+		color: $text-color-main;
+		opacity: 0.9;
+		position: relative;
+		display: inline;
+		margin-top:5px;
+		margin-bottom: 5px;
+		flex-flow: row wrap;
+		background-color: $color-main;
+		width: 48%;
+		align-items: center;
+		@media screen and (max-width: 768px) {
+			width: 98%;
+		}
 	}
 }
 
-.menu_box__array{
-	width:100%;
-}
-
-.menu_box:hover {
+.menu_box--class_2:hover {
 	  background: $color-active;
 }
 
-.menu_box__class_3:hover {
+.menu_box--class_3:hover {
 	  background: $color-active;
 }

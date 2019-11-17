@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
+  <!-- スマホでtouchイベントの処理を早くするためのメタタグ -->
+  <meta name="viewport" content="width=device-width">
   <title>Ground Menu.com</title>
   <link rel="stylesheet" href="../static/css/normalize.css">
   <link rel="stylesheet" href="../static/css/reset.css">
@@ -14,46 +16,50 @@
 
 <body>
   <div class="background_color">
-    <div class="back_box" >
     <div class="wrapper__header">
-      <div class="header__menu three_line_menu">
+      <div class="header__menu js-header__menu icon_menu">
         <!-- メニューの三本線に使う -->
-      <span></span><span></span><span></span>
+      <span></span>
+      <span></span>
+      <span></span>
       </div>
-      <a href="/" class="text__subtitle header__title">Ground Menu.com</a>
+    <a href="/" class="header__title">Ground Menu.com</a>
+    <div class="header__cart">
+      <!-- <div class="header__quantity">99</div> -->
     </div>
+  </div>
 
 <!-- サイドメニュー -->
     <ul class="wrapper__side">
 
-      <li class="global_navi__1">
-        <div class="global_navi__content--1">オーダーシステム</div>
-        <div class="global_navi__1_opener icon_pulus">
+      <li class="side_menu_1">
+        <div class="side_menu_1__content">オーダーシステム</div>
+        <div class="js-side_menu_1__opener icon_pulus">
           <span></span>
           <span></span>
         </div>
       </li>
 
-      <ul class="global_navi__2">
-        <li><a class="global_navi__content--2" href="/show_menu">メニュー表登録・修正</a></li>
-        <li><a class="global_navi__content--2" href="/qr_genarate">QRコード発行</a></li>
-        <li><a class="global_navi__content--2" href="/activate">テーブルアクティベート</a></li>
+      <ul class="side_menu_2">
+        <li><a class="side_menu_2__content" href="/show_menu">メニュー表登録・修正</a></li>
+        <li><a class="side_menu_2__content" href="/qr_genarate">QRコード発行</a></li>
+        <li><a class="side_menu_2__content" href="/activate">テーブルアクティベート</a></li>
       </ul>
 
-      <li class="global_navi__1">
-        <div class="global_navi__content--1">設定</div>
-        <div class="global_navi__1_opener icon_pulus">
+      <li class="side_menu_1">
+        <div class="side_menu_1__content">設定</div>
+        <div class="js-side_menu_1__opener icon_pulus">
           <span></span>
           <span></span>
         </div>
       </li>
 
-      <ul class="global_navi__2">
-        <li><a class="global_navi__content--2" href="/store_setting">店舗情報</a></li>
-        <li><a class="global_navi__content--2" href="#">従業員情報</a></li>
+      <ul class="side_menu_2">
+        <li><a class="side_menu_2__content" href="/store_setting">店舗情報</a></li>
+        <li><a class="side_menu_2__content" href="#">従業員情報</a></li>
       </ul>
 
-      <a class="global-navi__logout" href="/logout">ログアウト</a>
+      <a class="side_menu__logout" href="/logout">ログアウト</a>
     </ul>
 
 <!-- メインメニュー -->
