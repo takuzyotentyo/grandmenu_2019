@@ -45,6 +45,7 @@
 			height: 100%;
 			flex-flow: row wrap;
     		justify-content: flex-start;
+    		overflow:scroll;
     		font-size: 0;	//子要素間の隙間を0にするために必要
     	}
 	}

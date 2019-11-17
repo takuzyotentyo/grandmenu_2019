@@ -460,6 +460,7 @@ blockのインポート
     -webkit-box-pack: start;
     -ms-flex-pack: start;
     justify-content: flex-start;
+    overflow: scroll;
     font-size: 0; }
 
 .wrapper__card {
