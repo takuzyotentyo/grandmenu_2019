@@ -1,8 +1,11 @@
 from flask import Blueprint, Flask, render_template, session, redirect, url_for, flash, request
+from flask_sqlalchemy import SQLAlchemy
 import qrcode as qr
 import base64
 from io import BytesIO
 from PIL import Image
+# #app.pyをモジュールとして読み込み(そろそろDB用の別ファイルを構成しておきたい)
+# from models import Staff, Menu, Table
 
 #デバッグ用モジュールのimport
 from datetime import datetime
@@ -23,8 +26,8 @@ qr_code_api = Blueprint('app_qrcode', __name__, url_prefix='/qrcode')
 # )
 #デバッグ1-OFF-E
 
-@qr_code_api.route("/make")
-def qr_make():
+@qr_code_api.route("/make_datetime")
+def qr_make_datetime():
     now = datetime.now()
     timeString = now.strftime(str("%Y-%m-%d %H:%M"))
 
@@ -34,6 +37,27 @@ def qr_make():
     qr_b64data=qr_b64data,
     qr_name=qr_name
     )
+
+@qr_code_api.route("/generate")
+def qr_generate():
+    store_id = session['store_id']
+    store_name = session['store_name']
+    tablenum = session['table_number']
+    print(store_id)
+    print(tablenum)
+    QR_list = []
+    QR_name = []
+    for i in range(tablenum):
+        QR_string = str(store_id) + "/" + str(i)
+        QR_list.append(qrmaker(QR_string))
+        QR_name.append("qrcode_image_{}".format(QR_string))
+    print(QR_list)
+    print(QR_name)
+    return render_template("/qrcode/output_code.html",
+    QR_list=QR_list,
+    QR_name=QR_name,
+    tablenum=tablenum)
+
 
 
 # QRコードを生成する関数

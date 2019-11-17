@@ -18,8 +18,6 @@ from sqlalchemy.orm.exc import NoResultFound
 #from sqlalchemy.ext.declarative import declarative_base
 #from sqlalchemy.orm import sessionmaker
 
-
-
 app = Flask(__name__)
 
 #他モジュール(.py)から呼び出す
@@ -178,6 +176,9 @@ def login():
                 session['logged_in'] = True
                 session['store_id'] = login_user.STORE_ID
                 session['staff_id'] = login_user.STAFF_ID
+                store_info = db.session.query(Store).filter(Store.STORE_ID==login_user.STORE_ID).one()
+                session['store_name'] = store_info.STORE_NAME
+                session['table_number'] = store_info.TABLES
                 username_session = login_user.STORE_ID#デバック用
                 return redirect('/')
             else:
@@ -440,12 +441,14 @@ def logout():
     session.clear()
     return render_template('login.html')
 
+'''
 # QRコード生成のアクション
 @app.route("/qr_genarate")
 def qr_genarate():
     img = qrcode.make('hoge')
     img.show()
     return redirect("/")
+'''
 
 # QRコードから復元する際のテスト
 @app.route("/test/<int:store_id>/<int:table_number>")

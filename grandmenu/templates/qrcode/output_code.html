@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block global_navi %}
         <center>
-          <h1>QR image</h1>>
-          <img src="{{qr_b64data}}" alt="{{qr_name}}" >
+          {% for i in range(tablenum) %}
+          <h1>{{QR_name[i]}}</h1>>
+          <img src="{{QR_list[i]}}" alt="{{QR_name[i]}}" >
+          {% endfor %}
         </center>
 {% endblock %}
