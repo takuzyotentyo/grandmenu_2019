@@ -18,36 +18,34 @@ $(function(){
 });
 
 
-//グローバルナビの大メニューに関するjs
+//サイドメニュー表示に関するjs
 $(document).on('click', '.js-header__menu', function(){
+//レスポンシブ対応のための閾値
   var device_width = $(window).width();
-  if(device_width < 1024){
+// サイドメニューを隠す処理は同じ
     if($(this).hasClass("js-header__menu--doing")){
       $(this).removeClass("js-header__menu--doing");
       $("body").removeClass("overflow-hidden"); //サイドメニューが表示されることで起こるレイアウトの崩れのhiddenを解除
-      $(".wrapper__side").animate({width:"0vw", queue: false}, 250)
-      $(".wrapper__main").animate({width:"100vw"},250)
-      $(".wrapper__main").animate({left:"0vw", queue: false}, 250);
+      $(".wrapper__side").animate({width:"0vw"}, 250);
+      $(".wrapper__main").animate({width:"100vw"},250);
+      $(".wrapper__main").animate({left:"0vw"}, 250);
     }else{
+// サイドメニューを表示する処理
       $(this).addClass("js-header__menu--doing");
       $("body").addClass("overflow-hidden"); //サイドメニューが表示されることで起こるレイアウトの崩れをhiddenで回避
-      $(".wrapper__side").animate({width:"100vw", queue: false}, 250)
-      $(".wrapper__main").animate({width:"0vw"},250)
-      $(".wrapper__main").animate({left:"100vw", queue: false}, 250);
-    };
-  }else{
-    if($(this).hasClass("js-header__menu--doing")){
-      $(this).removeClass("js-header__menu--doing");
-      $("body").removeClass("overflow-hidden"); //サイドメニューが表示されることで起こるレイアウトの崩れのhiddenを解除
-      $(".wrapper__side").animate({width:"0vw", queue: false}, 250)
-      $(".wrapper__main").animate({width:"100vw"},250)
-      $(".wrapper__main").animate({left:"0vw", queue: false}, 250);
+// ディスプレイサイズによって、どこまで表示するかを選択する
+    if(device_width <= 767){
+      $(".wrapper__side").animate({width:"100vw"}, 250);
+      $(".wrapper__main").animate({width:"0vw"},250);
+      $(".wrapper__main").animate({left:"100vw"}, 250);
+    }else if(767 < device_width <= 1024){
+      $(".wrapper__side").animate({width:"50vw"}, 250);
+      $(".wrapper__main").animate({width:"50vw"},250);
+      $(".wrapper__main").animate({left:"50vw"}, 250);
     }else{
-      $(this).addClass("js-header__menu--doing");
-      $("body").addClass("overflow-hidden"); //サイドメニューが表示されることで起こるレイアウトの崩れをhiddenで回避
-      $(".wrapper__side").animate({width:"25vw", queue: false}, 250)
-      $(".wrapper__main").animate({width:"75vw"},250)
-      $(".wrapper__main").animate({left:"25vw", queue: false}, 250);
+      $(".wrapper__side").animate({width:"25vw"}, 250);
+      $(".wrapper__main").animate({width:"75vw"},250);
+      $(".wrapper__main").animate({left:"25vw"}, 250);
     };
   };
 });
@@ -102,28 +100,39 @@ $(function(){
   });
 });
 
-// 小分類類メニュー表示
+// // 小分類メニューを表示する時のPC用jquery
+// $(function() {
+//   $(".menu_box--class_2").click(function(){
+//     var selector = $(this).attr('value')
+//     $("." + selector).css("display", "flex");
+//     $(".lightbox--class_3").animate({left:"0%"}, 0);
+//   });
+// });
+
+// // 小分類メニューを消す時のPC用jquery
+// $(function() {
+//   $(".lightbox--class_3").dblclick(function(){
+//   $(".lightbox--class_3 li").css("display", "none");
+//   $(".lightbox--class_3").animate({left:"100%"}, 0);
+//   });
+// });
+
+// 小分類メニューを表示する時のスマホ用jquery
 $(function() {
   $(".menu_box--class_2").click(function(){
     var selector = $(this).attr('value')
-    $(".lightbox--class_3").css(
-      "display", "flex"
-    );
-    $("." + selector).css(
-      "display", "flex"
-    );
+    $("." + selector).css("display", "flex");
+    $(".lightbox--class_3__back").css("display", "inline-block");
+    $(".lightbox--class_3").animate({left:"0%"}, 250);
   });
 });
 
-// 小分類のメニュー消す
+// 小分類のメニューを消す時のスマホ用jquery
 $(function() {
-  $(".lightbox--class_3").dblclick(function(){
-    $(".lightbox--class_3 li").css(
-        "display", "none"
-    );
-    $(".lightbox--class_3").css(
-        "display", "none"
-    );
+  $(".lightbox--class_3__back").click(function(){
+  $(".lightbox--class_3 li").css("display", "none");
+  $(".lightbox--class_3__back").css("display", "none");
+  $(".lightbox--class_3").animate({left:"100%"}, 250);
   });
 });
 
@@ -162,25 +171,25 @@ $(document).on("click", "#sort_submit", function () {
 // デリートボタンを押した後の挙動
 $(function(){
   $(".button__delete").click(function(){
+// 一度ボタンを消した後に、同じ場所にsubmit属性を持ったボタンを追加する
   $(this).remove();
   $('<button form="delete_menu" class="button__delete--active" type="submit">ー</button>').insertAfter(".button__add");
+// vibrationクラスを追加して震えさせる
   $(".menu_box--class_2").addClass("vibration");
   $(".menu_box--class_3").addClass("vibration");
-  $(".menu_box--class_2").css(
-    "background-color","#DC3B00"
-    );
-  $(".menu_box--class_3").css(
-    "background-color","#DC3B00"
-    );
+// 色を変える
+  $(".menu_box--class_2").css("background-color","#DC3B00");
+  $(".menu_box--class_3").css("background-color","#DC3B00");
+// deleteというチェックボックスを使えるようにする
   $(".delete").prop("disabled", false);
   });
 });
 
-
-
 // デリートのチェックが入ったときの処理
 $(document).on("click", ".menu_box--class_3", function () {
+// 子要素のチェックボックスが入力可能かどうか判定し、無理なら何もしない
   if($(this).children("input:checkbox").prop("disabled") == false){
+// 子要素のチェックボックスにチェックが入っているか判定し、チェックが入っていればチェックを取る。入ってなければ入れる
     if($(this).children("input:checkbox").prop("checked") == true){
       $(this).children("input:checkbox").prop('checked', false);
       $(this).css("background-color","#DC3B00");
@@ -193,7 +202,7 @@ $(document).on("click", ".menu_box--class_3", function () {
 });
 
 // 注文数量の隣の+を押した後の処理
-$(document).on("click", ".class_3__increase", function () {
+$(document).on("click", ".menu_box--class_3__increase", function () {
   var order_quantity_befor = $(this).next(".text_box--number").val();
   if(order_quantity_befor == ""){
     $(this).next(".text_box--number").val(1)
@@ -205,7 +214,7 @@ $(document).on("click", ".class_3__increase", function () {
 });
 
 // 注文数量の隣の-を押した後の処理
-$(document).on("click", ".class_3__decrease", function () {
+$(document).on("click", ".menu_box--class_3__decrease", function () {
   var order_quantity_befor = $(this).prev(".text_box--number").val();
   if(order_quantity_befor == "" || order_quantity_befor == 1 || order_quantity_befor == 0){
     $(this).prev(".text_box--number").val("")
@@ -217,7 +226,7 @@ $(document).on("click", ".class_3__decrease", function () {
 });
 
 // オーダーを追加したときにカートに加える仕組み
-$(document).on("click", ".class_3__add_to_cart", function () {
+$(document).on("click", ".menu_box--class_3__add_to_cart", function () {
   var quantity = $(this).siblings(".text_box--number").val()
   //正の数且つ整数の時のみカートに加える判定
   if(quantity > 0 && Number.isInteger(quantity) == false){

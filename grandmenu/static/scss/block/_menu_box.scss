@@ -7,13 +7,16 @@
 		opacity: 0.9;
 		position: relative;
 		line-height:50px;
-		flex-flow: nowrap;
+		flex-flow: row wrap;
 		font-size:$text-body;
 		margin:5px 1% 5px 1%;
 		text-align: center;
 		height: 50px;
 		background-color: $color-main;
 		width: 48%;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		@media screen and (max-width: 768px) {
 			width: 98%;
 		}
@@ -29,8 +32,75 @@
 		background-color: $color-main;
 		width: 48%;
 		align-items: center;
-		@media screen and (max-width: 768px) {
+		min-width: 320px;
+		@media screen and (max-width: 767px) {
 			width: 98%;
+		}
+		&__name{
+			display: inline-block;
+			width: 100%;
+			text-align:center;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			font-size: $text-body;
+			line-height: 50px;
+			border-bottom: dashed 3px $text-color-main;
+		}
+		&__price{
+			display: inline-block;
+			width: 27.5%;
+			text-align:center;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			margin-left:0;
+			margin-right:0;
+			font-size: $text-body;
+			line-height: 50px;
+		}
+		&__quantity{
+			width: 50px;
+			margin-left: auto;
+			font-size: $text-body;
+			line-height:50px;
+			text-align:center;
+		}
+		&__increase{
+			width: 30px;
+			height: 30px;
+			margin-left: 5px;
+			font-size: $text-title;
+			text-align:center;
+			border-radius: 5px;
+			opacity: .75;
+			filter:drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+			background-color: $color-sub;
+		}
+		&__decrease{
+			width: 30px;
+			height: 30px;
+			font-size: $text-title;
+			margin-right: 5px;
+			text-align:center;
+			border-radius: 5px;
+			opacity: .75;
+			filter:drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+			background-color: $color-sub;
+		}
+		&__add_to_cart{
+			text-align: center;
+			width: 30px;
+			height: 30px;
+			margin: auto auto auto 5px;
+			background: url('../img/add_to_cart.svg');
+	    	background-size: cover;
+	    	background-repeat: no-repeat;
+	    	border-radius: 5px;
+	    	opacity: .75;
+	    	filter:drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+	    	background-color: $color-sub;
+	    	border: solid 5px $color-sub;
 		}
 	}
 }
