@@ -34,11 +34,11 @@ $(document).on('click', '.js-header__menu', function(){
       $(this).addClass("js-header__menu--doing");
       $("body").addClass("overflow-hidden"); //サイドメニューが表示されることで起こるレイアウトの崩れをhiddenで回避
 // ディスプレイサイズによって、どこまで表示するかを選択する
-    if(device_width <= 767){
+    if( device_width < 768){
       $(".wrapper__side").animate({width:"100vw"}, 250);
       $(".wrapper__main").animate({width:"0vw"},250);
       $(".wrapper__main").animate({left:"100vw"}, 250);
-    }else if(767 < device_width <= 1024){
+    }else if ( device_width < 1024 ){
       $(".wrapper__side").animate({width:"50vw"}, 250);
       $(".wrapper__main").animate({width:"50vw"},250);
       $(".wrapper__main").animate({left:"50vw"}, 250);
