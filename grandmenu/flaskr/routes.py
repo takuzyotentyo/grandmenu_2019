@@ -242,8 +242,7 @@ def sort_menu():
             #CLASS_3_IDを一旦全て0にする
             class_3_ids = db.session.query(Menu)
             class_3_ids = db.session.query(Menu).filter(Menu.STORE_ID==store_id).update({Menu.CLASS_3_ID: 0})
-            # 渡されるメニューの最後の項目に""があるため、len()-1にしている
-            for i in range(0, len(class_3_sort_result_list)-1, 4):
+            for i in range(0, len(class_3_sort_result_list), 4):
                 class_3_change_menu_id = class_3_sort_result_list[i]
                 class_3_change_class_1_id = class_3_sort_result_list[i+1]
                 class_3_change_class_2_id = class_3_sort_result_list[i+2]
