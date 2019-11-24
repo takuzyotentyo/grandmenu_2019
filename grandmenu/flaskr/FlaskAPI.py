@@ -1,3 +1,6 @@
+#__init__.pyから設定情報を引き継ぐ
+from flaskr import app
+
 #パスワードハッシュ関連
 from werkzeug.security import generate_password_hash, check_password_hash
 #QRコード関連
@@ -17,6 +20,8 @@ def verify_password(hash_pass, original_pass):
 
 
 # QRコードを生成する関数
+#[0] = QRのバイナリ
+#[1] = QRimageのPath
 def qrmaker(code):
     #デバッグ1-ON-S
     # qr.add_data(code)
@@ -27,6 +32,9 @@ def qrmaker(code):
     #デバッグ1-OFF-S
     qr_img = qr.make(str(code))
     #デバッグ1-OFF-S
+    #bufへimage保存
+    qr_save_path = app.config['BUF_DIR'] +  "/" + code + ".png"   #...buf/配下への保存
+    qr_img.save(qr_save_path)
 
     # 画像書き込み用バッファを確保して画像データをそこに書き込む
     buf = BytesIO()
@@ -38,4 +46,7 @@ def qrmaker(code):
     # image要素のsrc属性に埋め込めこむために、適切に付帯情報を付与する
     qr_b64data = "data:image/png;base64,{}".format(qr_b64str)
 
-    return qr_b64data
+    return qr_b64data, qr_save_path
+
+#   QRコードが簡素なので加工する関数
+#   <T.B.D>

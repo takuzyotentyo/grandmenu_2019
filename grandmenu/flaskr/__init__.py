@@ -2,6 +2,7 @@
 from flask import Flask
 #Config設定のために必要
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 
 
@@ -10,7 +11,8 @@ app.config['SECRET_KEY'] = 'secret key'
 # ローカルのDBを使う場合
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://localhost/postgres"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+#bufディレクトリの設定
+app.config['BUF_DIR'] = os.path.dirname(os.path.abspath(__file__)) + "/buf"
 db = SQLAlchemy(app)
 
 
