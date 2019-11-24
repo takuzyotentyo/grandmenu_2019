@@ -12,7 +12,7 @@
     <input type="radio" id="drink" class="js-drink radio_button--food_drink__radio" name="food_drink" value="drink">
       <label for="drink">Drink</label>
   </div>
-  <ul class="sortable_class_2--food js-sortable_class_2--food">
+  <ul class="js-sortable_class_2--food">
     {% for class_2 in class_2 %}
       {% if class_2[0] == 0 %}
         <li class="menu_box--class_2" value="{{class_2[0]}}_{{class_2[1]}}" id="{{class_2[0]}},{{class_2[1]}},{{class_2[2]}}">
@@ -22,7 +22,7 @@
     {% endfor %}
   </ul>
 <!-- ドリンク中分類 -->
-<ul class="sortable_class_2--drink js-sortable_class_2--drink" style= display:none;>
+<ul class="js-sortable_class_2--drink" style= display:none;>
     {% for class_2 in class_2 %}
       {% if class_2[0] == 1 %}
         <li class="menu_box--class_2" value="{{class_2[0]}}_{{class_2[1]}}" id="{{class_2[0]}},{{class_2[1]}},{{class_2[2]}}">
@@ -37,12 +37,11 @@
 <!-- jqueryのthisを使って直接要素指定のため、display:noneを直書きしている -->
 <!-- 小分類 -->
 <form id="delete_menu" method="post" action="/delete_menu">
-  <ul class="lightbox--class_3 sortable_class_3">
+  <ul class="lightbox--class_3 js-sortable_class_3">
   {% for class_3 in class_3 %}
     <li style= display:none; class="menu_box--class_3 {{class_3[1]}}_{{class_3[2]}}" id="{{class_3[0]}},{{class_3[1]}},{{class_3[2]}},{{class_3[3]}}">
     <input type="checkbox" disabled="true" class="delete" value="{{class_3[0]}}" name="menu_id" id="menu_id_{{class_3[0]}}">
       <label class="menu_box--class_3__name" for="menu_id_{{class_3[0]}}" value="menu_id_{{class_3[0]}}">{{class_3[4]}}</label>
-    </input>
     <span class="menu_box--class_3__price">¥{{class_3[5]}}</span>
     <span class="menu_box--class_3__quantity">数量</span>
     <span class="menu_box--class_3__increase">+</span>
