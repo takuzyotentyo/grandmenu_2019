@@ -13,6 +13,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://localhost/postgres"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #bufディレクトリの設定
 app.config['BUF_DIR'] = os.path.dirname(os.path.abspath(__file__)) + "/buf"
+#static/imgディレクトリの設定
+app.config['IMG_DIR'] = os.path.dirname(os.path.abspath(__file__)) + "/static/img"
 db = SQLAlchemy(app)
 
 

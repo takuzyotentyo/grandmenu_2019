@@ -20,6 +20,7 @@ def verify_password(hash_pass, original_pass):
 
 
 # QRコードを生成する関数
+# <T.B.D>QR付帯情報の検討，暗号化等
 #[0] = QRのバイナリ
 #[1] = QRimageのPath
 def qrmaker(code):
@@ -35,6 +36,8 @@ def qrmaker(code):
     #bufへimage保存
     qr_save_path = app.config['BUF_DIR'] +  "/" + code + ".png"   #...buf/配下への保存
     qr_img.save(qr_save_path)
+    #QRコードを加工
+    qrfix(app.config['IMG_DIR'] + "/QR_base.png", qr_save_path)
 
     # 画像書き込み用バッファを確保して画像データをそこに書き込む
     buf = BytesIO()
@@ -49,4 +52,11 @@ def qrmaker(code):
     return qr_b64data, qr_save_path
 
 #   QRコードが簡素なので加工する関数
-#   <T.B.D>
+#<T.B.D>QRをどんなデータ量でも一定のサイズにしておかないとPasteの位置がズレる
+def qrfix(baseimg_path, qrimg_path):
+    baseimg = Image.open(baseimg_path)
+    qrimg = Image.open(qrimg_path)
+    #Baseを元にQRを埋め込む
+    baseimg_backup = baseimg.copy()
+    baseimg_backup.paste(qrimg, (50, 40))   #とりあえず決め打ちでこの値
+    baseimg_backup.save(qrimg_path)

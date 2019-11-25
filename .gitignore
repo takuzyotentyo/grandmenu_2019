@@ -2,3 +2,6 @@
 .DS_Store
 venv
 */*.pyc
+/buf/*.jpg
+/buf/*.png
+/buf/*.zip
