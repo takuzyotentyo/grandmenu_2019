@@ -66,18 +66,16 @@ $(document).on('click', '.js-side_menu_1__opener', function(){
 // メニュー追加のためのLightboxを表示
 $(function() {
 $(".button__add").click(function(){
-$(".lightbox--add").css(
-        "display", "flex"
-    );
-});
+$(".lightbox--add__back").css("display", "inline-block");
+    $(".lightbox--add").animate({left:"0%"}, 250);
+  });
 });
 
 // メニュー追加のためのLightboxを消す
 $(function() {
-  $(".lightbox--add").dblclick(function(){
-    $(".lightbox--add").css(
-        "display", "none"
-      );
+  $(".lightbox--add__back").click(function(){
+    $(".lightbox--add__back").css("display", "none");
+    $(".lightbox--add").animate({left:"100%"}, 250);
   });
 });
 

@@ -8,9 +8,37 @@
 	height: 100%;
 	background: rgba($color-sub,0.3);
 	top: 0;
-	left: 0;
-	display: none;
+	left: 100%;
+	display: flex;
 	flex-flow: column nowrap;
+	// padding:65px 0 100px 0;
+	&__back{
+		display: none;
+		position: fixed;
+		right: 0;
+		top: 50%;
+		font-size:$text-icon;
+		color: $text-color-main;
+		width: 30px;
+ 		height: 75px;
+ 		line-height: 75px;
+ 		text-align: center;
+ 		overflow: hidden;
+ 		transition: .4s;
+ 		background-color: $color-main;
+ 		filter:drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+ 		@media screen and (max-width: 768px) {
+ 			opacity: 0.75;
+ 			background-color: $color-sub;
+			font-size:$text-body;
+			width: 20px;
+		}
+ 		// background: $color-sub;
+ 		&:hover {
+			background: $color-active;
+			box-shadow: 0px 0px 0px 5px $color-active;
+		}
+	}
 }
 
 .lightbox--class_3{

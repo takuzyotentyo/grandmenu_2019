@@ -86,12 +86,42 @@ blockのインポート
   height: 100%;
   background: rgba(7, 42, 36, 0.3);
   top: 0;
-  left: 0;
-  display: none;
+  left: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-flow: column nowrap;
   flex-flow: column nowrap; }
+  .lightbox--add__back {
+    display: none;
+    position: fixed;
+    right: 0;
+    top: 50%;
+    font-size: 30px;
+    color: #ffffff;
+    width: 30px;
+    height: 75px;
+    line-height: 75px;
+    text-align: center;
+    overflow: hidden;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    background-color: #FFA500;
+    -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5)); }
+    @media screen and (max-width: 768px) {
+      .lightbox--add__back {
+        opacity: 0.75;
+        background-color: #072A24;
+        font-size: 16px;
+        width: 20px; } }
+    .lightbox--add__back:hover {
+      background: #111111;
+      -webkit-box-shadow: 0px 0px 0px 5px #111111;
+      box-shadow: 0px 0px 0px 5px #111111; }
 
 .lightbox--class_3 {
   -webkit-box-align: center;
@@ -261,7 +291,7 @@ blockのインポート
   color: #ffffff;
   opacity: 0.9;
   position: relative;
-  display: inline;
+  display: block;
   margin-top: 5px;
   margin-bottom: 5px;
   -webkit-box-orient: horizontal;
