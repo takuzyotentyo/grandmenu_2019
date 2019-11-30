@@ -15,6 +15,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['BUF_DIR'] = os.path.dirname(os.path.abspath(__file__)) + "/buf"
 #static/imgディレクトリの設定
 app.config['IMG_DIR'] = os.path.dirname(os.path.abspath(__file__)) + "/static/img"
+#static/fontsディレクトリの設定
+app.config['FONTS_DIR'] = os.path.dirname(os.path.abspath(__file__)) + "/static/fonts"
 db = SQLAlchemy(app)
 
 

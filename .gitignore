@@ -2,6 +2,6 @@
 .DS_Store
 venv
 */*.pyc
-grandmenu/flaskr/buf/*.jpg
-grandmenu/flaskr/buf/*.png
-grandmenu/flaskr/buf/*.zip
+grandmenu/flaskr/buf/*/*.jpg
+grandmenu/flaskr/buf/*/*.png
+grandmenu/flaskr/buf/*/*.zip

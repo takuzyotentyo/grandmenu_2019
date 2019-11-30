@@ -13,6 +13,7 @@ from flaskr import FlaskAPI
 
 # このファイルで必要なモジュール
 from sqlalchemy.orm.exc import NoResultFound
+import os
 
 #sqlalchemyでfuncを使う(maxやminなどが使えるようになる)
 from sqlalchemy import func
@@ -91,6 +92,13 @@ def login():
                 session['store_name'] = store_info.STORE_NAME
                 session['table_number'] = store_info.TABLES
                 username_session = login_user.STORE_ID#デバック用
+
+                #bufへ店舗専用のディレクトリを作成する(初回ログインのみ)
+                store_dir_path = app.config['BUF_DIR'] + "/" + str(login_user.STORE_ID)
+                if (os.path.isdir(store_dir_path) == False):
+                    os.makedirs(store_dir_path)
+                    print("{} is CREATE".format(store_dir_path))
+
                 return redirect('/')
             else:
                 #パスワードNGの処理

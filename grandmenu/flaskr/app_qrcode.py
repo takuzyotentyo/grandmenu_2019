@@ -20,32 +20,31 @@ qr_code_api = Blueprint('app_qrcode', __name__, url_prefix='/qrcode')
 @qr_code_api.route("/generate")
 def qr_generate():
     store_id = session['store_id']
-    store_name = session['store_name']
-    tablenum = session['table_number']
-    QR_list = []
+    #DBクエリの発行により情報を格納する
+    store_info = db.session.query(Store).filter(Store.STORE_ID==store_id).one()
+    store_name = store_info.STORE_NAME
+    tablenum = store_info.TABLES
+
     QR_name = []
     QR_save_path = []
 
     for i in range(tablenum):
-        QR_string = str(store_id) + "-" + str(i)
-        QR_list.append(FlaskAPI.qrmaker(QR_string)[0])
-        QR_name.append("qrcode_image_{}".format(QR_string))
-        QR_save_path.append(FlaskAPI.qrmaker(QR_string)[1])
+        QR_string = str(store_id) + "-" + store_name + "-" + str(i + 1)
+
+        QR_name.append("{}".format(QR_string))
+        QR_save_path.append(FlaskAPI.qrmaker(QR_string, store_id, store_name))
+
         #QRのZipファイル化(ここは後々関数化予定)
-        #<T.B.D>Zipの名前を店名.zipのグローバル変数に持たせる
-        with zipfile.ZipFile(app.config['BUF_DIR'] + "/" + "new.zip", 'w', compression=zipfile.ZIP_DEFLATED) as new_zip:
+        with zipfile.ZipFile(app.config['BUF_DIR'] + "/" + str(store_id) + "/" + "grandmenu.zip", 'w', compression=zipfile.ZIP_DEFLATED) as new_zip:
             for n in range(len(QR_save_path)):
-                new_zip.write(QR_save_path[n], arcname="dir" + "/" + QR_name[n] + ".png")
-    return render_template("/qrcode/zipdownload.html",
-    QR_list=QR_list,
-    QR_name=QR_name,
-    tablenum=tablenum)  #renderで渡す値も必要ないものもあるので<T.B.D>としておく
+                new_zip.write(QR_save_path[n], arcname="table_QR" + "/" + QR_name[n] + ".png")
+    return render_template("/qrcode/zipdownload.html", tablenum=tablenum)
 
 @qr_code_api.route("/zip")
 def zip_save():
     ZIP_MIMETYPE = "application/zip"
-    downloadFile = "new.zip"    #<T.B.D>Zipの名前を店名.zipのグローバル変数に持たせる
-    downloadPath = app.config['BUF_DIR']
+    downloadFile = "grandmenu.zip"    #<T.B.D>Zipの名前を店名.zipのグローバル変数に持たせる
+    downloadPath = app.config['BUF_DIR'] + "/" + str(session['store_id'])
 
     return send_from_directory(downloadPath, downloadFile, as_attachment=True, mimetype=ZIP_MIMETYPE)
 #
