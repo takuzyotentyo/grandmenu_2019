@@ -6,13 +6,16 @@ from flaskr import app
 from flaskr import db
 
 #modelの読み込み
-from flaskr.models import Store, Staff, Menu, Table
+from flaskr.models import Store, Staff, Menu, Table, Order
 
 #関数群ファイルの読み込み
 from flaskr import FlaskAPI
 
 # このファイルで必要なモジュール
 from sqlalchemy.orm.exc import NoResultFound
+
+#sqlalchemyでfuncを使う(maxやminなどが使えるようになる)
+from sqlalchemy import func
 
 @app.route('/')
 def index():
@@ -284,24 +287,59 @@ def sort_menu():
     return redirect("/show_menu")
 
 # オーダーをカートに追加する処理
+# ajaxで送られてくる情報はmenu_id, class_3, price, quantityの並び
 @app.route('/add_to_cart_json', methods = ['POST'])
 def add_to_cart_json():
     try:
         store_id = session['store_id']
-        # order_list = session['order_list']
+        # jsonを受け取る
         add_order = request.get_json()
-        print(add_order)
-        if 'order_list' not in session:
-            session['order_list'] = []
-        order_list = session['order_list']
-        print("既存のオーダーリストは")
+        # dict型からvalueのみを取得
+        add_order_val = list(add_order.values())
+        # list型に変換したものの[0]を取り出し、splitで分割
+        add_order_list = add_order_val[0].split(",")
+        print(add_order_list)
+        # カートに加えられるアイテムが正しいか判定
+        db.session.query(Menu.STORE_ID).filter(\
+            Menu.MENU_ID == add_order_list[0],\
+            Menu.CLASS_3 == add_order_list[1],\
+            Menu.PRICE == add_order_list[2],\
+            ).one() == store_id
+
+        #order_status=0はかごに入ってる状態を示す
+        order_status = 0
+        # 既存のgroup_idの最大値を取得。Order.ORDER_STATUS==3は会計まで終わったオーダーを示す。
+        group_id_max = db.session.query(func.max(Order.GROUP_ID)).filter(Order.STORE_ID==store_id, Order.ORDER_STATUS==3).first()
+        print(type(group_id_max))
+        print(group_id_max)
+
+        # group_id_maxがリストで取得されるので、None若しくは数値が格納されている[0]に対してif文使用
+        if group_id_max[0] is None:
+            group_id = 1
+        else:
+            group_id = int(group_id_max[0]) + 1
+        print("group_idは")
+        print(group_id)
+
+        # エンドユーザーであればtable_idを持っているはず。持ってない≒店側のはずなので、下記で処理する。
+        if 'table_id' not in session:
+            table_id = 0
+        else:
+            table_id = session['table_id']
+
+        menu_id = add_order_list[0]
+        class_3 = add_order_list[1]
+        price = add_order_list[2]
+        order_quantity = add_order_list[3]
+        db.session.add(Order(ORDER_STATUS=order_status, GROUP_ID=group_id, STORE_ID=store_id, TABLE_ID=table_id, MENU_ID=menu_id, CLASS_3=class_3, PRICE=price, ORDER_QUANTITY=order_quantity))
+        db.session.commit()
+        db.session.close()
+
+        order_list = db.session.query(Order.ORDER_ID)\
+        .filter(Order.STORE_ID==store_id, Order.TABLE_ID==table_id, Order.ORDER_STATUS==0, Order.GROUP_ID==group_id)\
+        .all()
         print(order_list)
-        order_list.append(add_order)
-        session['order_list'] = order_list
-        print("変更後のオーダーリストは")
-        print(session['order_list'])
-        order_quantity= len(session['order_list'])
-        return str(order_quantity)
+        return str(len(order_list))
     except:
         return "false"
 

@@ -224,7 +224,12 @@ $(document).on("click", ".menu_box--class_3__add_to_cart", function () {
   var quantity = $(this).siblings(".text_box--number").val()
   //正の数且つ整数の時のみカートに加える判定
   if(quantity > 0 && Number.isInteger(quantity) == false){
-    var add_order = $(this).parent("li").attr("id") + "," + $(this).siblings(".text_box--number").val();
+    // add_orderの変数に加える情報は menu_id, class_3, price, quantity
+    var add_order = $(this).siblings('input[type="checkbox"]').attr("value") +
+      "," + $(this).siblings(".menu_box--class_3__name").text() +
+      "," + $(this).siblings(".menu_box--class_3__price").attr("value") +
+      "," + $(this).siblings(".text_box--number").val()
+    ;
     console.log(add_order);
     var add_order_json = {
     "add_order": add_order
