@@ -65,17 +65,19 @@ $(document).on('click', '.js-side_menu_1__opener', function(){
 
 // メニュー追加のためのLightboxを表示
 $(function() {
-$(".button__add").click(function(){
-$(".lightbox--add__back").css("display", "inline-block");
-    $(".lightbox--add").animate({left:"0%"}, 250);
+  $(".button__add").click(function(){
+    $.when($(".lightbox--add").css("display", "flex")).done(function(){
+     $(".lightbox--add").animate({left:"0%"}, 250);
+    });
   });
 });
 
 // メニュー追加のためのLightboxを消す
 $(function() {
   $(".lightbox--add__back").click(function(){
-    $(".lightbox--add__back").css("display", "none");
-    $(".lightbox--add").animate({left:"100%"}, 250);
+    $.when($(".lightbox--add").animate({left:"100%"}, 250)).done(function(){
+      $(".lightbox--add").css("display", "none");
+    });
   });
 });
 
@@ -98,39 +100,26 @@ $(function(){
   });
 });
 
-// // 小分類メニューを表示する時のPC用jquery
-// $(function() {
-//   $(".menu_box--class_2").click(function(){
-//     var selector = $(this).attr('value')
-//     $("." + selector).css("display", "flex");
-//     $(".lightbox--class_3").animate({left:"0%"}, 0);
-//   });
-// });
-
-// // 小分類メニューを消す時のPC用jquery
-// $(function() {
-//   $(".lightbox--class_3").dblclick(function(){
-//   $(".lightbox--class_3 li").css("display", "none");
-//   $(".lightbox--class_3").animate({left:"100%"}, 0);
-//   });
-// });
-
-// 小分類メニューを表示する時のスマホ用jquery
+// 小分類メニューを表示する
 $(function() {
   $(".menu_box--class_2").click(function(){
     var selector = $(this).attr('value')
     $("." + selector).css("display", "flex");
     $(".lightbox--class_3__back").css("display", "inline-block");
-    $(".lightbox--class_3").animate({left:"0%"}, 250);
+    $.when($(".lightbox--class_3").css("display", "flex")).done(function(){
+      $(".lightbox--class_3").animate({left:"0%"}, 250);
+    });
   });
 });
 
-// 小分類のメニューを消す時のスマホ用jquery
+// 小分類のメニューを消す
 $(function() {
   $(".lightbox--class_3__back").click(function(){
-  $(".lightbox--class_3 li").css("display", "none");
-  $(".lightbox--class_3__back").css("display", "none");
-  $(".lightbox--class_3").animate({left:"100%"}, 250);
+    $(".lightbox--class_3 li").css("display", "none");
+    $(".lightbox--class_3__back").css("display", "none");
+    $.when($(".lightbox--class_3").animate({left:"100%"}, 250)).done(function(){
+      $(".lightbox--class_3").css("display", "none");
+    });
   });
 });
 

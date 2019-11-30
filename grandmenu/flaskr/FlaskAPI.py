@@ -60,8 +60,7 @@ def qrfix(baseimg_path, qrimg_path, store_name):
     draw = ImageDraw.Draw(baseimg)
 
     #フォントを指定する
-    font = ImageFont.truetype(app.config['FONTS_DIR'] + "/ki_kokugo/font_1_kokugl_1.15_rls.ttf", size=20)
-
+    font = ImageFont.truetype(app.config['FONTS_DIR'] + "/NotoSansCJKjp-Regular.otf", size=16)
     #テキストペースト位置の調整
     text_width = ((baseimg.size[0] - draw.textsize(text_msg, font)[0]) / 2)
     text_hight = baseimg.size[1] - ((baseimg.size[1] - draw.textsize(text_msg, font)[1]) / 2.5)
