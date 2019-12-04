@@ -215,8 +215,6 @@ $(document).on("click", ".menu_box--class_3__add_to_cart", function () {
   if(quantity > 0 && Number.isInteger(quantity) == false){
     // add_orderの変数に加える情報は menu_id, class_3, price, quantity
     var add_order = $(this).siblings('input[type="checkbox"]').attr("value") +
-      "," + $(this).siblings(".menu_box--class_3__name").text() +
-      "," + $(this).siblings(".menu_box--class_3__price").attr("value") +
       "," + $(this).siblings(".text_box--number").val()
     ;
     console.log(add_order);
@@ -235,8 +233,25 @@ $(document).on("click", ".menu_box--class_3__add_to_cart", function () {
       $('<div class="header__quantity"></div>').appendTo(".header__cart");
       console.log(data);
       $('.header__quantity').text(data);
+    })
+    .fail(function(data, textStatus, jqXHR){
     });
   }else{};
+});
+
+// カート内を確認する
+$(document).on("click", ".header__cart", function () {
+    $.ajax({
+      url: "/cart_show",
+    })
+    .done(function(data, textStatus, jqXHR){
+      // $(".header__quantity").remove();
+      // $('<div class="header__quantity"></div>').appendTo(".header__cart");
+      console.log(data);
+      // $('.header__quantity').text(data);
+    })
+    .fail(function(data, textStatus, jqXHR){
+    });
 });
 
 

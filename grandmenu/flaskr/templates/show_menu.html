@@ -40,14 +40,14 @@
   <ul class="lightbox--class_3 js-sortable_class_3">
   {% for class_3 in class_3 %}
     <li style= display:none; class="menu_box--class_3 {{class_3[1]}}_{{class_3[2]}}" id="{{class_3[0]}},{{class_3[1]}},{{class_3[2]}},{{class_3[3]}}">
-    <input type="checkbox" disabled="true" class="delete" value="{{class_3[0]}}" name="menu_id" id="menu_id_{{class_3[0]}}">
-    <label class="menu_box--class_3__name" for="menu_id_{{class_3[0]}}" value="menu_id_{{class_3[0]}}">{{class_3[4]}}</label>
-    <span class="menu_box--class_3__price" value="{{class_3[5]}}">¥{{class_3[5]}}</span>
-    <span class="menu_box--class_3__quantity">数量</span>
-    <span class="menu_box--class_3__increase">+</span>
-    <input class="text_box--number" min="0" type="number" pattern="\d">
-    <span class="menu_box--class_3__decrease">−</span>
-    <span class="menu_box--class_3__add_to_cart"></span>
+      <input type="checkbox" disabled="true" class="delete" value="{{class_3[0]}}" name="menu_id" id="menu_id_{{class_3[0]}}">
+      <label class="menu_box--class_3__name" for="menu_id_{{class_3[0]}}" value="menu_id_{{class_3[0]}}">{{class_3[4]}}</label>
+      <span class="menu_box--class_3__price" value="{{class_3[5]}}">¥{{class_3[5]}}</span>
+      <span class="menu_box--class_3__quantity">数量</span>
+      <span class="menu_box--class_3__increase">+</span>
+      <input class="text_box--number" min="0" type="number" pattern="\d">
+      <span class="menu_box--class_3__decrease">−</span>
+      <span class="menu_box--class_3__add_to_cart"></span>
     </li>
   {% endfor %}
   </ul>

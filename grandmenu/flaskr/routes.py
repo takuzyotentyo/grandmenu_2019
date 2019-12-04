@@ -295,7 +295,7 @@ def sort_menu():
     return redirect("/show_menu")
 
 # オーダーをカートに追加する処理
-# ajaxで送られてくる情報はmenu_id, class_3, price, quantityの並び
+# ajaxで送られてくる情報はmenu_id,quantityの並び
 @app.route('/add_to_cart_json', methods = ['POST'])
 def add_to_cart_json():
     try:
@@ -307,21 +307,27 @@ def add_to_cart_json():
         # list型に変換したものの[0]を取り出し、splitで分割
         add_order_list = add_order_val[0].split(",")
         print(add_order_list)
+
         # カートに加えられるアイテムが正しいか判定
         db.session.query(Menu.STORE_ID).filter(\
-            Menu.MENU_ID == add_order_list[0],\
-            Menu.CLASS_3 == add_order_list[1],\
-            Menu.PRICE == add_order_list[2],\
+            Menu.MENU_ID == add_order_list[1],\
             ).one() == store_id
+
+        # エンドユーザーであればtable_idを持っているはず。持ってない≒店側なので、下記で処理する。
+        if 'table_id' not in session:
+            table_id = 0
+        else:
+            table_id = session['table_id']
 
         #order_status=0はかごに入ってる状態を示す
         order_status = 0
-        # 既存のgroup_idの最大値を取得。Order.ORDER_STATUS==3は会計まで終わったオーダーを示す。
-        group_id_max = db.session.query(func.max(Order.GROUP_ID)).filter(Order.STORE_ID==store_id, Order.ORDER_STATUS==3).first()
+        print("ここまでOK")
+        # Order.ORDER_STATUS==3(会計完了)のGROUP_IDの最大値を取得する
+        group_id_max = db.session.query(func.max(Order.GROUP_ID)).filter(Order.STORE_ID==store_id, Order.TABLE_ID==table_id, Order.ORDER_STATUS==3).first()
         print(type(group_id_max))
         print(group_id_max)
-
-        # group_id_maxがリストで取得されるので、None若しくは数値が格納されている[0]に対してif文使用
+        # group_id_maxに対して+1した数字が現在のGROUP_ID
+        # group_id_maxが何故かリストで取得されるので、None若しくは数値が格納されている[0]に対してif文使用
         if group_id_max[0] is None:
             group_id = 1
         else:
@@ -329,28 +335,47 @@ def add_to_cart_json():
         print("group_idは")
         print(group_id)
 
-        # エンドユーザーであればtable_idを持っているはず。持ってない≒店側のはずなので、下記で処理する。
-        if 'table_id' not in session:
-            table_id = 0
-        else:
-            table_id = session['table_id']
-
         menu_id = add_order_list[0]
-        class_3 = add_order_list[1]
-        price = add_order_list[2]
-        order_quantity = add_order_list[3]
-        db.session.add(Order(ORDER_STATUS=order_status, GROUP_ID=group_id, STORE_ID=store_id, TABLE_ID=table_id, MENU_ID=menu_id, CLASS_3=class_3, PRICE=price, ORDER_QUANTITY=order_quantity))
-        db.session.commit()
-        db.session.close()
+        order_quantity = add_order_list[1]
+        # 既にオーダーされている種類であれば数量追加、なければ新規登録
+        try:
+            existing_order = db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_ID==table_id,  Order.GROUP_ID==group_id, Order.ORDER_STATUS==0, Order.MENU_ID==menu_id).one()
+            existing_order.ORDER_QUANTITY = existing_order.ORDER_QUANTITY + int(order_quantity)
+            db.session.commit()
+            db.session.close()
+        except:
+            db.session.add(Order(ORDER_STATUS=order_status, STORE_ID=store_id, TABLE_ID=table_id, GROUP_ID=group_id, MENU_ID=menu_id, ORDER_QUANTITY=order_quantity))
+            db.session.commit()
+            db.session.close()
 
-        order_list = db.session.query(Order.ORDER_ID)\
-        .filter(Order.STORE_ID==store_id, Order.TABLE_ID==table_id, Order.ORDER_STATUS==0, Order.GROUP_ID==group_id)\
-        .all()
-        print(order_list)
-        return str(len(order_list))
+        total_quantity_list = db.session.query(func.sum(Order.ORDER_QUANTITY)).\
+        filter(Order.STORE_ID==store_id, Order.TABLE_ID==table_id, Order.GROUP_ID==group_id, Order.ORDER_STATUS==0).\
+        one()
+        print(total_quantity_list[0])
+        return str(total_quantity_list[0])
     except:
         return "false"
 
+# カート内の商品を確認
+@app.route('/cart_show')
+def cart_show():
+    store_id = session['store_id']
+    if 'table_id' not in session:
+        table_id = 0
+    else:
+        table_id = session['table_id']
+
+    # oders = db.session.query(Order.MENU_ID, Order.CLASS_3, Order.PRICE)\
+    # .filter(Order.STORE_ID == store_id, Order.TABLE_ID==table_id, Order.ORDER_STATUS==0).all()
+    oders = db.session.query(Menu.MENU_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY, Order.ORDER_ID).\
+    join(Order, Order.MENU_ID==Menu.MENU_ID).\
+    filter(Order.STORE_ID==store_id, Order.TABLE_ID==table_id, Order.ORDER_STATUS==0).\
+    all()
+    # .group_by(Order.MENU_ID)
+    print(type(oders))
+    print(oders)
+    # print(list(oders))
+    return str(oders)
 
 # テーブルのアクティベートと、注文メニューの表示
 @app.route('/activate')
@@ -399,14 +424,6 @@ def logout():
     session.clear()
     return render_template('login.html')
 
-'''
-# QRコード生成のアクション
-@app.route("/qr_genarate")
-def qr_genarate():
-    img = qrcode.make('hoge')
-    img.show()
-    return redirect("/")
-'''
 
 # QRコードから復元する際のテスト
 @app.route("/test/<int:store_id>/<int:table_number>")

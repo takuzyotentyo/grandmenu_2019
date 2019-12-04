@@ -64,16 +64,14 @@ class Order(db.Model):
 
     ORDER_ID = db.Column(Integer, primary_key=True)
     ORDER_STATUS = db.Column(Integer)   #0はかごに入ってる,1はオーダーされた,2はかごから削除された,3は決済完了
-    GROUP_ID = db.Column(Integer)   #オーダーをしたグループを特定
     STORE_ID = db.Column(Integer)
     TABLE_ID = db.Column(Integer)
+    GROUP_ID = db.Column(Integer)   #オーダーをしたグループを特定
     MENU_ID = db.Column(Integer)
-    CLASS_3 = db.Column(String(64))
-    PRICE = db.Column(Integer)
     ORDER_QUANTITY = db.Column(Integer)
 
     def __repr__(self):
-        return "(ORDER_ID='%s', ORDER_STATUS='%s', GROUP_ID='%s', STORE_ID='%s', TABLE_ID='%s', CLASS_1_ID='%s', CLASS_2_ID='%s', CLASS_3_ID='%s', ORDER_QUANTITY='%s')" % (self.ORDER_ID, self.ORDER_STATUS, self.GROUP_ID, self.STORE_ID, self.TABLE_ID, self.CLASS_1_ID, self.CLASS_2_ID, self.CLASS_3_ID, self.ORDER_QUANTITY)
+        return "(ORDER_ID='%s', ORDER_STATUS='%s', STORE_ID='%s', TABLE_ID='%s', GROUP_ID='%s', MENU_ID='%s', ORDER_QUANTITY='%s')" % (self.ORDER_ID, self.ORDER_STATUS, self.STORE_ID, self.TABLE_ID, self.GROUP_ID, self.MENU_ID, self.ORDER_QUANTITY)
 
 #DBの作成をここで行う。
 db.create_all()
