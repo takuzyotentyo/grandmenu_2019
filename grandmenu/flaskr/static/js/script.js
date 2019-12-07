@@ -186,36 +186,36 @@ $(document).on("click", ".menu_box--class_3", function () {
 
 // 注文数量の隣の+を押した後の処理
 $(document).on("click", ".menu_box--class_3__increase", function () {
-  var order_quantity_befor = $(this).next(".text_box--number").val();
+  var order_quantity_befor = $(this).next(".text_box--quantity").val();
   if(order_quantity_befor == ""){
-    $(this).next(".text_box--number").val(1)
+    $(this).next(".text_box--quantity").val(1)
   }else{
     // parseIntで数字として足し算
     order_quantity = parseInt(order_quantity_befor) + parseInt(1);
-    $(this).next(".text_box--number").val(order_quantity)
+    $(this).next(".text_box--quantity").val(order_quantity)
   };
 });
 
 // 注文数量の隣の-を押した後の処理
 $(document).on("click", ".menu_box--class_3__decrease", function () {
-  var order_quantity_befor = $(this).prev(".text_box--number").val();
+  var order_quantity_befor = $(this).prev(".text_box--quantity").val();
   if(order_quantity_befor == "" || order_quantity_befor == 1 || order_quantity_befor == 0){
-    $(this).prev(".text_box--number").val("")
+    $(this).prev(".text_box--quantity").val("")
   }else{
     // parseIntで数字として足し算
     order_quantity = parseInt(order_quantity_befor) - parseInt(1);
-    $(this).prev(".text_box--number").val(order_quantity)
+    $(this).prev(".text_box--quantity").val(order_quantity)
   };
 });
 
 // オーダーを追加したときにカートに加える仕組み
 $(document).on("click", ".menu_box--class_3__add_to_cart", function () {
-  var quantity = $(this).siblings(".text_box--number").val()
+  var quantity = $(this).siblings(".text_box--quantity").val()
   //正の数且つ整数の時のみカートに加える判定
   if(quantity > 0 && Number.isInteger(quantity) == false){
     // add_orderの変数に加える情報は menu_id, class_3, price, quantity
     var add_order = $(this).siblings('input[type="checkbox"]').attr("value") +
-      "," + $(this).siblings(".text_box--number").val()
+      "," + $(this).siblings(".text_box--quantity").val()
     ;
     console.log(add_order);
     var add_order_json = {
@@ -241,20 +241,137 @@ $(document).on("click", ".menu_box--class_3__add_to_cart", function () {
 
 // カート内を確認する
 $(document).on("click", ".header__cart", function () {
+  if ($('.lightbox--order').length){
+    $('.lightbox--order').remove()
+  } else {
     $.ajax({
       url: "/cart_show",
     })
     .done(function(data, textStatus, jqXHR){
-      // $(".header__quantity").remove();
-      // $('<div class="header__quantity"></div>').appendTo(".header__cart");
-      console.log(data);
-      // $('.header__quantity').text(data);
+      $('<div class="lightbox--order"></div>').insertAfter("#delete_menu");
+      // $(".lightbox--order").append('<li class="menu_box--order"></li>');
+      var len = data.length;
+      $('<div class="menu_box--order__food_drink"></div>').appendTo(".lightbox--order").text("food");
+      for (var i=0; i<len; i++) {
+        if (data[i][1]=="food"){
+          $('<li class="menu_box--order"></li>').appendTo(".lightbox--order").attr('id','order_id_' + (data[i][0]));
+          $('<span class="menu_box--order__class_2"></span>').appendTo('#order_id_' + data[i][0]).text(data[i][2]);
+          $('<span class="menu_box--order__class_3"></span>').appendTo('#order_id_' + data[i][0]).text(data[i][3]);
+          $('<span class="menu_box--order__price"></span>').appendTo('#order_id_' + data[i][0]).text("¥ "+data[i][4]);
+          $('<span class="menu_box--order__quantity"></span>').appendTo('#order_id_' + data[i][0]).text("数量");
+          $('<span class="menu_box--order__increase"></span>').appendTo('#order_id_' + data[i][0]).text("+");
+          $('<input class="text_box--quantity" min="0" type="number" pattern="\d" disabled>').appendTo('#order_id_' + data[i][0]).val(data[i][5]);
+          $('<span class="menu_box--order__decrease"></span>').appendTo('#order_id_' + data[i][0]).text("-");
+          $('<span class="menu_box--order__garbage"></span>').appendTo('#order_id_' + data[i][0]);
+          $('<span class="menu_box--order__subtotal"></span>').appendTo('#order_id_' + data[i][0]).text("小計 ¥ "+data[i][4]*data[i][5]);
+        };
+        console.log(data[i][3]);
+      };
+      $('<div class="menu_box--order__food_drink"></div>').appendTo(".lightbox--order").text("drink");
+      for (var i=0; i<len; i++) {
+        if (data[i][1]=="drink"){
+          $('<li class="menu_box--order"></li>').appendTo(".lightbox--order").attr('id','order_id_' + data[i][0]);
+          $('<span class="menu_box--order__class_2"></span>').appendTo('#order_id_' + data[i][0]).text(data[i][2]);
+          $('<span class="menu_box--order__class_3"></span>').appendTo('#order_id_' + data[i][0]).text(data[i][3]);
+          $('<span class="menu_box--order__price"></span>').appendTo('#order_id_' + data[i][0]).text("¥ "+data[i][4]);
+          $('<span class="menu_box--order__quantity"></span>').appendTo('#order_id_' + data[i][0]).text("数量");
+          $('<span class="menu_box--order__increase"></span>').appendTo('#order_id_' + data[i][0]).text("+");
+          $('<input class="text_box--quantity" min="0" type="number" pattern="\d" disabled>').appendTo('#order_id_' + data[i][0]).val(data[i][5]);
+          $('<span class="menu_box--order__decrease"></span>').appendTo('#order_id_' + data[i][0]).text("-");
+          $('<span class="menu_box--order__garbage"></span>').appendTo('#order_id_' + data[i][0]);
+          $('<span class="menu_box--order__subtotal"></span>').appendTo('#order_id_' + data[i][0]).text("小計 ¥ "+data[i][4]*data[i][5]);
+        };
+        console.log(data[i][3]);
+      };
+      $('<div class="lightbox--order__back"></div>').appendTo(".lightbox--order").text(">");
     })
     .fail(function(data, textStatus, jqXHR){
-    });
+    })
+  }
 });
 
+// オーダーリスト表示中に+を押した後の処理
+$(document).on("click", ".menu_box--order__increase", function () {
+  var order_quantity_befor = $(this).next(".text_box--quantity").val();
+  var order_quantity_after = parseInt(order_quantity_befor) + parseInt(1);
+  var change_order = $(this).parent().attr("id").replace("order_id_", "") + "," + order_quantity_after;
+    console.log(change_order);
+    var change_order_json = {"change_order":change_order}
+  $.ajax({
+    url: "/change_cart_json",
+    type: 'post',
+    data: JSON.stringify(change_order_json),
+    dataType: 'json',
+    contentType: 'application/json',
+  })
+  .done(function(data, textStatus, jqXHR){
+    order_id = "order_id_" + data
+    $("#" + order_id).children(".text_box--quantity").val(order_quantity_after);
+    var new_subtotal = parseInt($("#" + order_id).children('.menu_box--order__price').text().replace("¥ ", "")) * parseInt($("#" + order_id).children('.text_box--quantity').val());
+    $("#" + order_id).children('.menu_box--order__subtotal').text("小計 ¥ " + new_subtotal);
+    total_quantity = parseInt($('.header__quantity').text());
+    $('.header__quantity').text(total_quantity+1)
+  })
+  .fail(function(data, textStatus, jqXHR){
+  });
+});
 
+// オーダーリスト表示中に-を押した後の処理
+$(document).on("click", ".menu_box--order__decrease", function () {
+  var order_quantity_befor = $(this).prev(".text_box--quantity").val();
+  var order_quantity_after = parseInt(order_quantity_befor) - parseInt(1);
+  var change_order = $(this).parent().attr("id").replace("order_id_", "") + "," + order_quantity_after;
+  console.log(change_order);
+  var change_order_json = {"change_order":change_order}
+  $.ajax({
+    url: "/change_cart_json",
+    type: 'post',
+    data: JSON.stringify(change_order_json),
+    dataType: 'json',
+    contentType: 'application/json',
+  })
+  .done(function(data, textStatus, jqXHR){
+    order_id = "order_id_" + data
+    if(order_quantity_after == 0){
+      $("#" + order_id).remove()
+    }else{
+      $("#" + order_id).children(".text_box--quantity").val(order_quantity_after);
+      var new_subtotal = parseInt($("#" + order_id).children('.menu_box--order__price').text().replace("¥ ", "")) * parseInt($("#" + order_id).children('.text_box--quantity').val());
+      $("#" + order_id).children('.menu_box--order__subtotal').text("小計 ¥ " + new_subtotal);
+    }
+    total_quantity = parseInt($('.header__quantity').text());
+    $('.header__quantity').text(total_quantity-1)
+  })
+  .fail(function(data, textStatus, jqXHR){
+  });
+});
+
+// オーダーリストの時ゴミ箱を押した後の処理
+$(document).on("click", ".menu_box--order__garbage", function () {
+  var order_quantity_befor = parseInt($(this).siblings(".text_box--quantity").val());
+  var change_order = $(this).parent().attr("id").replace("order_id_", "") + ",0";
+  var change_order_json = {"change_order":change_order}
+  $.ajax({
+    url: "/change_cart_json",
+    type: 'post',
+    data: JSON.stringify(change_order_json),
+    dataType: 'json',
+    contentType: 'application/json',
+  })
+  .done(function(data, textStatus, jqXHR){
+    order_id = "order_id_" + data
+    $("#" + order_id).remove()
+    total_quantity = parseInt($('.header__quantity').text());
+    $('.header__quantity').text(total_quantity - order_quantity_befor)
+  })
+  .fail(function(data, textStatus, jqXHR){
+  });
+});
+
+// オーダーリストの確認から戻る処理
+$(document).on("click", ".lightbox--order__back", function () {
+  $(this).parent().remove()
+});
 
 // テーブルアクティベートの処理
 $(document).on("click", ".checkbox--activate__checkbox", function () {

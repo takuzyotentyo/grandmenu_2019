@@ -367,15 +367,52 @@ def cart_show():
 
     # oders = db.session.query(Order.MENU_ID, Order.CLASS_3, Order.PRICE)\
     # .filter(Order.STORE_ID == store_id, Order.TABLE_ID==table_id, Order.ORDER_STATUS==0).all()
-    oders = db.session.query(Menu.MENU_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY, Order.ORDER_ID).\
+    oders = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY).\
     join(Order, Order.MENU_ID==Menu.MENU_ID).\
     filter(Order.STORE_ID==store_id, Order.TABLE_ID==table_id, Order.ORDER_STATUS==0).\
     all()
-    # .group_by(Order.MENU_ID)
+
     print(type(oders))
     print(oders)
-    # print(list(oders))
-    return str(oders)
+    # json形式で投げ返す
+    return jsonify(oders)
+
+# カート確認中に数量が増減した時の処理
+# ajaxで送られてくる情報はorder_id,quantityの並び
+@app.route('/change_cart_json', methods = ['POST'])
+def change_cart_json():
+    try:
+        store_id = session['store_id']
+        # jsonを受け取る
+        change_order = request.get_json()
+        # dict型からvalueのみを取得
+        change_order_val = list(change_order.values())
+        # list型に変換したものの[0]を取り出し、splitで分割
+        change_order_list = change_order_val[0].split(",")
+        print(change_order_list)
+
+        order_id = int(change_order_list[0])
+        order_quantity = int(change_order_list[1])
+        # 変更されるアイテムが正しいか判定
+        db.session.query(Order.STORE_ID).filter(Order.ORDER_ID == order_id).one() == store_id
+        #order_status=0はかごに入ってる状態,1はかごから削除された状態を示す
+        if order_quantity == 0:
+            order_status = 1
+        else:
+            order_status = 0
+        # 数量変更
+
+        change_order = db.session.query(Order).filter(Order.ORDER_ID==order_id).one()
+        change_order.ORDER_QUANTITY = order_quantity
+        change_order.ORDER_STATUS = order_status
+
+        db.session.commit()
+        db.session.close()
+
+        return str(order_id)
+    except:
+        return "false"
+
 
 # テーブルのアクティベートと、注文メニューの表示
 @app.route('/activate')

@@ -168,6 +168,53 @@ blockのインポート
       -webkit-box-shadow: 0px 0px 0px 5px #111111;
       box-shadow: 0px 0px 0px 5px #111111; }
 
+.lightbox--order {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /*上下中央揃え*/
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(7, 42, 36, 0.3);
+  top: 0;
+  left: 0;
+  display: inline-block;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  overflow-y: scroll;
+  padding: 5px 0 100px 0; }
+  .lightbox--order__back {
+    display: inline-block;
+    position: fixed;
+    right: 0;
+    top: 50%;
+    font-size: 30px;
+    color: #ffffff;
+    width: 30px;
+    height: 75px;
+    line-height: 75px;
+    text-align: center;
+    overflow: hidden;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    background-color: #FFA500;
+    -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5)); }
+    @media screen and (max-width: 768px) {
+      .lightbox--order__back {
+        opacity: 0.75;
+        background-color: #072A24;
+        font-size: 16px;
+        width: 20px; } }
+    .lightbox--order__back:hover {
+      background: #111111;
+      -webkit-box-shadow: 0px 0px 0px 5px #111111;
+      box-shadow: 0px 0px 0px 5px #111111; }
+
 /*「_」抜きの名前でインポートする
  変数を定義しているsetting.scssのインポートは必須事項*/
 /*====================
@@ -316,7 +363,7 @@ blockのインポート
     border-bottom: dashed 3px #ffffff; }
   .menu_box--class_3__price {
     display: inline-block;
-    width: 27.5%;
+    width: calc(100% - 215px);
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
@@ -325,10 +372,10 @@ blockのインポート
     margin-left: 0;
     margin-right: 0;
     font-size: 16px;
-    line-height: 50px; }
+    line-height: 50px;
+    margin-right: auto; }
   .menu_box--class_3__quantity {
     width: 50px;
-    margin-left: auto;
     font-size: 16px;
     line-height: 50px;
     text-align: center; }
@@ -358,7 +405,7 @@ blockのインポート
     text-align: center;
     width: 30px;
     height: 30px;
-    margin: auto auto auto 5px;
+    margin: auto 30px auto 5px;
     background: url("../img/add_to_cart.svg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -368,6 +415,140 @@ blockのインポート
     filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
     background-color: #072A24;
     border: solid 5px #072A24; }
+
+.menu_box--order {
+  color: #ffffff;
+  opacity: 0.9;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 45px auto;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  background-color: #FFA500;
+  width: 48%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-width: 320px; }
+  @media screen and (max-width: 767px) {
+    .menu_box--order {
+      width: 98%; } }
+  .menu_box--order__food_drink {
+    color: #ffffff;
+    opacity: 0.9;
+    position: relative;
+    display: block;
+    margin: 5px auto 10px;
+    background-color: #072A24;
+    width: 48%;
+    line-height: 50px;
+    min-width: 320px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold; }
+    @media screen and (max-width: 767px) {
+      .menu_box--order__food_drink {
+        width: 98%; } }
+  .menu_box--order__class_2 {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    line-height: 25px;
+    max-width: 100%;
+    padding: 0 5px;
+    background-color: #072A24; }
+  .menu_box--order__class_3 {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    line-height: 50px;
+    padding: 0 5px;
+    border-bottom: dashed 3px #ffffff; }
+  .menu_box--order__price {
+    display: inline-block;
+    width: calc(100% - 215px);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 16px;
+    line-height: 50px;
+    padding: 0 5px; }
+  .menu_box--order__quantity {
+    width: 50px;
+    font-size: 16px;
+    line-height: 50px;
+    text-align: center; }
+  .menu_box--order__increase {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    font-size: 24px;
+    text-align: center;
+    border-radius: 5px;
+    opacity: .75;
+    -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    background-color: #072A24; }
+  .menu_box--order__decrease {
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
+    margin-right: 5px;
+    text-align: center;
+    border-radius: 5px;
+    opacity: .75;
+    -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    background-color: #072A24; }
+  .menu_box--order__garbage {
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    margin: auto 30px auto 5px;
+    background: url("../img/garbage.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    opacity: .75;
+    -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    background-color: #072A24;
+    border: solid 5px #072A24; }
+  .menu_box--order__subtotal {
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    line-height: 25px;
+    max-width: 100%;
+    padding: 0 5px;
+    background-color: #BF7900; }
 
 .menu_box--class_2:hover {
   background: #111111; }
@@ -1209,7 +1390,7 @@ input[type="checkbox"]:checked + label {
     background-position: -100% 0;
     color: #fff; }
 
-.text_box--number {
+.text_box--quantity {
   width: 30px;
   height: 30px;
   -webkit-box-sizing: border-box;
