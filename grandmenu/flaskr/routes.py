@@ -14,101 +14,96 @@ from flaskr import FlaskAPI
 # このファイルで必要なモジュール
 from sqlalchemy.orm.exc import NoResultFound
 import os
+# websocketに関するモジュール
+from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, rooms, disconnect, send
 
 #sqlalchemyでfuncを使う(maxやminなどが使えるようになる)
 from sqlalchemy import func
 
-@app.route('/')
-def index():
-
-    if 'store_id' not in session:
-        return redirect('/logout')
-    else:
-        try:
-            store_id = session['store_id']
-            store_name = db.session.query(Store.STORE_NAME).filter(Store.STORE_ID==store_id, Store.STORE_NAME != "", Store.TABLES != None).one()
-            return render_template('index.html',store_name=store_name)
-        except:
-            return redirect('/store_setting')
-
-    # return redirect('/store_setting')
-
 #会員情報を登録
-@app.route('/create_account', methods = ['POST', 'GET'])
+@app.route('/create_account', methods = ['POST'])
 def create_account():
-
-    if request.method == 'POST':
-        session.clear()     #エラーのセッションなどを持っている可能性があるので、クリアしている
-        e_mail = request.form['e_mail']
-        password = FlaskAPI.hash_password(request.form['password'])
-# メールアドレスとパスワードが両方ある場合既に登録されているので、.one()がエラーを吐きexceptに飛ぶ。(.first()だとエラーにならないので注意)
-        try:
-            double_create_check = db.session.query(Staff).filter(Staff.E_MAIL==e_mail, Staff.PASSWORD!="").one()
-            print(double_create_check.E_MAIL + "は既に存在しています")
-            session['error'] = "そのメールアドレスは使用できません"
-            return render_template('login.html')
-        except NoResultFound as ex:
-            print(ex)
+    #エラーのセッションなどを持っている可能性があるので、クリアしている
+    session.clear()
+    e_mail = request.form['e_mail']
+    password = FlaskAPI.hash_password(request.form['password'])
+    # メールアドレスとパスワードが両方ある場合既に登録されているので、.one()がエラーを吐きexceptに飛ぶ。(.first()だとエラーにならないので注意)
+    try:
+        double_create_check = db.session.query(Staff).filter(Staff.E_MAIL==e_mail, Staff.PASSWORD!="").one()
+        print(double_create_check.E_MAIL + "は既に存在しています")
+        session['error'] = "そのメールアドレスは使用できません"
+        return render_template('login.html')
+    except NoResultFound as ex:
+        print(ex)
 # メールアドレスは存在するが、パスワードが存在しない場合、招待されているので、tryで処理する。(STAFF_CLASSは招待時に付与される想定)
-            try:
-                db.session.query(Staff).filter(Staff.E_MAIL==e_mail, Staff.PASSWORD=="").one()
-                db.session.add(Staff(E_MAIL=e_mail, PASSWORD=password))
-                db.session.commit()
-                db.session.close()
-                return render_template('error_1.html')
+        try:
+            staff = db.session.query(Staff).filter(Staff.E_MAIL==e_mail, Staff.PASSWORD=="").one()
+            staff.update({PASSWORD: password})
+            db.session.commit()
+            db.session.close()
+            # 今の所、招待機能は追加していないので、エラーに飛ぶようにしている
+            return render_template('error_1.html')
 # 上記2パターン以外の場合、純粋な新規登録なので下記で処理
-            except:
-                db.session.add(Staff(E_MAIL=e_mail, PASSWORD=password, STAFF_CLASS_ID=1, STAFF_CLASS="Representative")) #代表者として登録。その際のIDは1とする。
-                store_create=db.session.query(Staff).filter(Staff.E_MAIL==e_mail).one() #登録した代表者のレコードを抽出
-                store_create.STORE_ID = store_create.STAFF_ID
-                store_id=store_create.STAFF_ID  #登録した代表者のSTAFF_IDを取得
-                db.session.add(Store(STORE_ID=store_id))    #代表者が登録された場合、新しいお店としてstoresテーブルに登録
-                db.session.commit()
-                db.session.close()
-            return redirect("/login")
-    else:
+        except:
+            db.session.add(Staff(E_MAIL=e_mail, PASSWORD=password, STAFF_CLASS_ID=1, STAFF_CLASS="Representative")) #代表者として登録。その際のIDは1とする。
+            store_create=db.session.query(Staff).filter(Staff.E_MAIL==e_mail).one() #登録した代表者のレコードを抽出
+            store_create.STORE_ID = store_create.STAFF_ID
+            store_id=store_create.STAFF_ID  #登録した代表者のSTAFF_IDを取得
+            db.session.add(Store(STORE_ID=store_id))    #代表者が登録された場合、新しいお店としてstoresテーブルに登録
+            db.session.commit()
+            db.session.close()
         return redirect("/login")
 
 
 
 # ログイン
-@app.route("/login", methods = ['POST', 'GET'])
+@app.route("/login", methods = ['POST'])
 def login():
-
-    if request.method == 'POST':
-        session.clear()     #エラーのセッションなどを持っている可能性があるので、クリアしている
-        e_mail = request.form['e_mail']
-        password = request.form['password']
+    session.clear()     #エラーのセッションなどを持っている可能性があるので、クリアしている
+    e_mail = request.form['e_mail']
+    password = request.form['password']
 # メールアドレスが合致しているかで、アカウントがあるかを確認
-        try:
-            login_user = db.session.query(Staff).filter(Staff.E_MAIL==e_mail).one()
-            login_check = FlaskAPI.verify_password(login_user.PASSWORD, password)
-            if login_check == True:
-                #パスワードOKの処理
-                session['logged_in'] = True
-                session['store_id'] = login_user.STORE_ID
-                session['staff_id'] = login_user.STAFF_ID
-                store_info = db.session.query(Store).filter(Store.STORE_ID==login_user.STORE_ID).one()
-                session['store_name'] = store_info.STORE_NAME
-                session['table_number'] = store_info.TABLES
-                username_session = login_user.STORE_ID#デバック用
+    try:
+        login_user = db.session.query(Staff).filter(Staff.E_MAIL==e_mail).one()
+        login_password = FlaskAPI.verify_password(login_user.PASSWORD, password)
+        if login_password == True:
+            #パスワードOKの処理
+            session['loggin'] = True
+            session['store_id'] = login_user.STORE_ID
+            session['staff_id'] = login_user.STAFF_ID
+            store_info = db.session.query(Store).filter(Store.STORE_ID==login_user.STORE_ID).one()
+            session['store_name'] = store_info.STORE_NAME
+            session['table_number'] = 0
+            session['tables'] = store_info.TABLES
+            username_session = login_user.STORE_ID#デバック用
 
-                #bufへ店舗専用のディレクトリを作成する(初回ログインのみ)
-                store_dir_path = app.config['BUF_DIR'] + "/" + str(login_user.STORE_ID)
-                if (os.path.isdir(store_dir_path) == False):
-                    os.makedirs(store_dir_path)
-                    print("{} is CREATE".format(store_dir_path))
+            #bufへ店舗専用のディレクトリを作成する(初回ログインのみ)
+            store_dir_path = app.config['BUF_DIR'] + "/" + str(login_user.STORE_ID)
+            if (os.path.isdir(store_dir_path) == False):
+                os.makedirs(store_dir_path)
+                print("{} is CREATE".format(store_dir_path))
 
-                return redirect('/')
-            else:
-                #パスワードNGの処理
-                session['error'] = "メールアドレスもしくはパスワードが間違っています"
-                return render_template('login.html')
-        except:
-            session['error'] = "メールアドレスもしくはパスワードが間違っています"   #この処理はアカウントが存在しない場合に起こるが、エラー文を変えるとリスクがあるので、パスワードエラーと同一の文章にしている
+            return redirect('/')
+        else:
+            #パスワードNGの処理
+            session['error'] = "メールアドレスもしくはパスワードが間違っています"
             return render_template('login.html')
-    else:
+    except:
+        session['error'] = "メールアドレスもしくはパスワードが間違っています"   #この処理はアカウントが存在しない場合に起こるが、エラー文を変えるとリスクがあるので、パスワードエラーと同一の文章にしている
         return render_template('login.html')
+
+# /に飛んだ時
+@app.route('/')
+def index():
+    # sessionに'login'がなければlogout処理
+    login_check = FlaskAPI.login_check()
+    # 店舗名が登録されてなければ、store_settingに飛ばす
+    try:
+        store_id = session['store_id']
+        store_name = db.session.query(Store.STORE_NAME).filter(Store.STORE_ID==store_id, Store.STORE_NAME != "", Store.TABLES != None).one()
+        return render_template('index.html',store_name=store_name)
+    except:
+        return redirect('/store_setting')
 
 
 
@@ -294,126 +289,6 @@ def sort_menu():
             return redirect("/logout")
     return redirect("/show_menu")
 
-# オーダーをカートに追加する処理
-# ajaxで送られてくる情報はmenu_id,quantityの並び
-@app.route('/add_to_cart_json', methods = ['POST'])
-def add_to_cart_json():
-    try:
-        store_id = session['store_id']
-        # jsonを受け取る
-        add_order = request.get_json()
-        # dict型からvalueのみを取得
-        add_order_val = list(add_order.values())
-        # list型に変換したものの[0]を取り出し、splitで分割
-        add_order_list = add_order_val[0].split(",")
-        print(add_order_list)
-
-        # カートに加えられるアイテムが正しいか判定
-        db.session.query(Menu.STORE_ID).filter(\
-            Menu.MENU_ID == add_order_list[1],\
-            ).one() == store_id
-
-        # エンドユーザーであればtable_idを持っているはず。持ってない≒店側なので、下記で処理する。
-        if 'table_id' not in session:
-            table_id = 0
-        else:
-            table_id = session['table_id']
-
-        #order_status=0はかごに入ってる状態を示す
-        order_status = 0
-        print("ここまでOK")
-        # Order.ORDER_STATUS==3(会計完了)のGROUP_IDの最大値を取得する
-        group_id_max = db.session.query(func.max(Order.GROUP_ID)).filter(Order.STORE_ID==store_id, Order.TABLE_ID==table_id, Order.ORDER_STATUS==3).first()
-        print(type(group_id_max))
-        print(group_id_max)
-        # group_id_maxに対して+1した数字が現在のGROUP_ID
-        # group_id_maxが何故かリストで取得されるので、None若しくは数値が格納されている[0]に対してif文使用
-        if group_id_max[0] is None:
-            group_id = 1
-        else:
-            group_id = int(group_id_max[0]) + 1
-        print("group_idは")
-        print(group_id)
-
-        menu_id = add_order_list[0]
-        order_quantity = add_order_list[1]
-        # 既にオーダーされている種類であれば数量追加、なければ新規登録
-        try:
-            existing_order = db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_ID==table_id,  Order.GROUP_ID==group_id, Order.ORDER_STATUS==0, Order.MENU_ID==menu_id).one()
-            existing_order.ORDER_QUANTITY = existing_order.ORDER_QUANTITY + int(order_quantity)
-            db.session.commit()
-            db.session.close()
-        except:
-            db.session.add(Order(ORDER_STATUS=order_status, STORE_ID=store_id, TABLE_ID=table_id, GROUP_ID=group_id, MENU_ID=menu_id, ORDER_QUANTITY=order_quantity))
-            db.session.commit()
-            db.session.close()
-
-        total_quantity_list = db.session.query(func.sum(Order.ORDER_QUANTITY)).\
-        filter(Order.STORE_ID==store_id, Order.TABLE_ID==table_id, Order.GROUP_ID==group_id, Order.ORDER_STATUS==0).\
-        one()
-        print(total_quantity_list[0])
-        return str(total_quantity_list[0])
-    except:
-        return "false"
-
-# カート内の商品を確認
-@app.route('/cart_show')
-def cart_show():
-    store_id = session['store_id']
-    if 'table_id' not in session:
-        table_id = 0
-    else:
-        table_id = session['table_id']
-
-    # oders = db.session.query(Order.MENU_ID, Order.CLASS_3, Order.PRICE)\
-    # .filter(Order.STORE_ID == store_id, Order.TABLE_ID==table_id, Order.ORDER_STATUS==0).all()
-    oders = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY).\
-    join(Order, Order.MENU_ID==Menu.MENU_ID).\
-    filter(Order.STORE_ID==store_id, Order.TABLE_ID==table_id, Order.ORDER_STATUS==0).\
-    all()
-
-    print(type(oders))
-    print(oders)
-    # json形式で投げ返す
-    return jsonify(oders)
-
-# カート確認中に数量が増減した時の処理
-# ajaxで送られてくる情報はorder_id,quantityの並び
-@app.route('/change_cart_json', methods = ['POST'])
-def change_cart_json():
-    try:
-        store_id = session['store_id']
-        # jsonを受け取る
-        change_order = request.get_json()
-        # dict型からvalueのみを取得
-        change_order_val = list(change_order.values())
-        # list型に変換したものの[0]を取り出し、splitで分割
-        change_order_list = change_order_val[0].split(",")
-        print(change_order_list)
-
-        order_id = int(change_order_list[0])
-        order_quantity = int(change_order_list[1])
-        # 変更されるアイテムが正しいか判定
-        db.session.query(Order.STORE_ID).filter(Order.ORDER_ID == order_id).one() == store_id
-        #order_status=0はかごに入ってる状態,1はかごから削除された状態を示す
-        if order_quantity == 0:
-            order_status = 1
-        else:
-            order_status = 0
-        # 数量変更
-
-        change_order = db.session.query(Order).filter(Order.ORDER_ID==order_id).one()
-        change_order.ORDER_QUANTITY = order_quantity
-        change_order.ORDER_STATUS = order_status
-
-        db.session.commit()
-        db.session.close()
-
-        return str(order_id)
-    except:
-        return "false"
-
-
 # テーブルのアクティベートと、注文メニューの表示
 @app.route('/activate')
 def activate():
@@ -451,10 +326,6 @@ def store_setting():
         except:
             return render_template('store_setting.html', store_name="")
 
-@app.route('/revise_menu')
-def revise_menu():
-    return "未実装"
-
 @app.route("/logout")
 def logout():
     # session['logged_in'] = False
@@ -473,19 +344,3 @@ def test(store_id,table_number):
     return redirect("/order")
 # ここまで
 
-# スマホで注文を飛ばす処理
-@app.route("/order")
-def order():
-    store_id = session['store_id']
-    table_number = session['table_number']
-    class_2 = db.session.query(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).filter(Menu.STORE_ID==store_id).\
-        group_by(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).\
-        order_by(Menu.CLASS_2_ID).\
-        all()
-    print(class_2)
-    class_3 = db.session.query(Menu.MENU_ID, Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_3_ID, Menu.CLASS_3, Menu.PRICE).filter(Menu.STORE_ID==store_id).\
-        order_by(Menu.CLASS_3_ID).\
-        all()
-    print(class_3)
-    return render_template('order.html',class_2=class_2, class_3=class_3)
-# ここまで

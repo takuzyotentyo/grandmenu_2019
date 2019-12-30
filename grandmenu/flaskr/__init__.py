@@ -2,6 +2,8 @@
 from flask import Flask
 #Config設定のために必要
 from flask_sqlalchemy import SQLAlchemy
+# websocketに必要なモジュール
+from flask_socketio import SocketIO
 import os
 
 

@@ -25,7 +25,7 @@
 		color: $text-color-main;
 		opacity: 0.9;
 		position: relative;
-		display: block;
+		display: inline-block;
 		margin-top:5px;
 		margin-bottom: 5px;
 		flex-flow: row wrap;
@@ -60,7 +60,7 @@
 			line-height: 50px;
 			margin-right: auto;
 		}
-		&__quantity{
+		&__quantity_label{
 			width: 50px;
 			font-size: $text-body;
 			line-height:50px;
@@ -77,6 +77,17 @@
 			filter:drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
 			background-color: $color-sub;
 		}
+		&__quantity{
+	        width:30px;
+	        height:30px;
+	        box-sizing: border-box;
+	        display: block;
+	        position: relative;
+	        border:solid 2px #FFA500;
+	        border-radius: 5px;
+	        font-size: $text-subtitle;
+	        text-align:center;
+    	}
 		&__decrease{
 			width: 30px;
 			height: 30px;
@@ -108,7 +119,7 @@
 		opacity: 0.9;
 		position: relative;
 		display: flex;
-		margin:45px auto;
+		margin:45px 1%;
 		flex-flow: row wrap;
 		background-color: $color-main;
 		width: 48%;
@@ -117,7 +128,7 @@
 		@media screen and (max-width: 767px) {
 			width: 98%;
 		}
-		&__food_drink{
+		&__title{
 			color: $text-color-main;
 			opacity: 0.9;
 			position: relative;
@@ -133,6 +144,42 @@
 			@media screen and (max-width: 767px) {
 				width: 98%;
 			}
+		}
+		&__food{
+			color: $text-color-main;
+			opacity: 0.9;
+			position: relative;
+			display: block;
+			margin:5px auto 10px;
+			background-color: $color-sub;
+			width: 98%;
+			height: 50px;
+			line-height:50px;
+			min-width: 320px;
+			text-align:center;
+			font-size:$text-body;
+			font-weight: bold;
+			// @media screen and (max-width: 767px) {
+			// 	width: 98%;
+			// }
+		}
+		&__drink{
+			color: $text-color-main;
+			opacity: 0.9;
+			position: relative;
+			display: block;
+			margin:5px auto 10px;
+			background-color: $color-sub;
+			width: 98%;
+			height: 50px;
+			line-height:50px;
+			min-width: 320px;
+			text-align:center;
+			font-size:$text-body;
+			font-weight: bold;
+			// @media screen and (max-width: 767px) {
+			// 	width: 98%;
+			// }
 		}
 		&__class_2{
 			position: absolute;
@@ -174,13 +221,25 @@
 			line-height: 50px;
 			padding: 0 5px;
 		}
-		&__quantity{
+		&__quantity_label{
 			width: 50px;
 			// margin-left: auto;
 			font-size: $text-body;
 			line-height:50px;
 			text-align:center;
 		}
+		&__quantity{
+	        width:30px;
+	        height:30px;
+	        box-sizing: border-box;
+	        display: block;
+	        position: relative;
+	        border:solid 2px #FFA500;
+	        border-radius: 5px;
+	        font-size: $text-subtitle;
+	        text-align:center;
+	        padding: 3px;
+    	}
 		&__increase{
 			width: 30px;
 			height: 30px;
@@ -218,6 +277,21 @@
 	    	border: solid 5px $color-sub;
 		}
 		&__subtotal{
+			position: absolute;
+			bottom: -20px;
+			right: 0;
+			display: inline-block;
+			text-align:center;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			font-size: $text-body;
+			line-height: 25px;
+			max-width: 100%;
+			padding: 0 5px;
+			background-color: $color-doing;
+		}
+		&__table{
 			position: absolute;
 			bottom: -20px;
 			right: 0;

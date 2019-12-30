@@ -3,9 +3,17 @@ from flaskr import app
 
 #パスワードハッシュ関連
 from werkzeug.security import generate_password_hash, check_password_hash
+
 #QRコード関連
 import qrcode as qr
 from PIL import Image, ImageDraw, ImageFont
+
+# メニュー操作関連(秋吉使用)
+from flask import session
+from flaskr.models import Store, Staff, Menu, Table, Order
+from flask_sqlalchemy import SQLAlchemy
+from flaskr import db
+from sqlalchemy import func
 
 
 #ハッシュパスワードを作成する関数
@@ -16,6 +24,46 @@ def hash_password(original_pass):
 def verify_password(hash_pass, original_pass):
     return check_password_hash(hash_pass, original_pass)
 
+def login_check():
+    if 'login' not in session:
+        return
+    else:
+        return redirect('/logout')
+
+# 商品数を求める関数、oder_statusの値によって、カートの中身や、注文済み、決済済みなどの値を求められる
+def total_quantity(store_id, table_number, group_id, order_status):
+    total_quantity = db.session.query(func.sum(Order.ORDER_QUANTITY)).\
+        filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=order_status).\
+        scalar()
+
+    # 該当情報が1つもない場合、返り値がNoneになるので、その場合は0を代入する
+    if total_quantity is None:
+        total_quantity = 0
+
+    return total_quantity
+
+# テーブル単位の商品情報を求める関数、oder_statusの値によって、カートの中身や、注文済み、決済済みなどの値を求められる
+def order_list(store_id, table_number, group_id, order_status):
+    order_list = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY).\
+    join(Order, Order.MENU_ID==Menu.MENU_ID).\
+    filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID= group_id, ORDER_STATUS=order_status).\
+    all()
+    return order_list
+
+# 単一の商品を求める関数
+def order_item(store_id, table_number, group_id, order_status, menu_id):
+    order_item = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY).\
+    join(Order, Order.MENU_ID==Menu.MENU_ID).\
+    filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID= group_id, ORDER_STATUS=order_status, MENU_ID=menu_id).\
+    one()
+    return order_item
+
+def order_list_all(store_id, order_status):
+    order_list = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Order.ORDER_QUANTITY, Order.TABLE_NUMBER).\
+    join(Order, Order.MENU_ID==Menu.MENU_ID).\
+    filter_by(STORE_ID=store_id, ORDER_STATUS=order_status).\
+    all()
+    return order_list
 
 # QRコードを生成する関数
 # <T.B.D>QR付帯情報の検討，暗号化等

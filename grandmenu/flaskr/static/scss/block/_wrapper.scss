@@ -37,7 +37,7 @@
     	align-items: center;
     	top: 50px;
     	&--multi{	//main要素は基本的に1カラムだが、マルチカラムにする場合に掛けるwrapper
-    		display: inline;
+    		display: inline-block;
 			position: absolute;
 			top:0;
 			left:0;
@@ -48,11 +48,6 @@
     		overflow:scroll;
     		font-size: 0;	//子要素間の隙間を0にするために必要
     	}
-	}
-	&__card{
-		position: relative;
-		display: inline;
-		width:100%;
 	}
 	&__100p{
 		@include wrapper;
@@ -86,14 +81,58 @@
 			justify-content: center; /*左右中央揃え*/
 		}
 	}
-	&--content{
-		&__100p{
+	&__25p{
+		@include wrapper;
+		width: 25%;
+		height: 100%;
+		flex-flow: wrap;
+		overflow:scroll;
+		&--v_h_center{
 			@include wrapper;
-			width: 100%;
-			flex-flow: row wrap;	//カラム内のコンテンツを1列で表示
+			width: 25%;
+			height: 100%;
+			flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
 			overflow:scroll;
-			margin-top: 1%;
-			margin-bottom: 1%;
+			align-items: center;     /*コンテンツの上下中央揃え*/
+			justify-content: center; /*左右中央揃え*/
 		}
 	}
 }
+
+.table_activate__wrap{
+	display: flex;
+	flex-flow: wrap;
+	overflow:scroll;
+}
+
+.order_list__wrap{
+	display: none;
+	flex-flow: wrap;
+	overflow:scroll;
+}
+	// &--content{
+	// 	&__100p{
+	// 		@include wrapper;
+	// 		width: 100%;
+	// 		flex-flow: row wrap;	//カラム内のコンテンツを1列で表示
+	// 		overflow:scroll;
+	// 		margin-top: 1%;
+	// 		margin-bottom: 1%;
+	// 	}
+	// 	&__50p{
+	// 		@include wrapper;
+	// 		width: 50%;
+	// 		flex-flow: row wrap;	//カラム内のコンテンツを1列で表示
+	// 		overflow:scroll;
+	// 		margin-top: 1%;
+	// 		margin-bottom: 1%;
+	// 	}
+	// 	&__25p{
+	// 		@include wrapper;
+	// 		width: 25%;
+	// 		flex-flow: row wrap;	//カラム内のコンテンツを1列で表示
+	// 		overflow:scroll;
+	// 		margin-top: 1%;
+	// 		margin-bottom: 1%;
+	// 	}
+	// }

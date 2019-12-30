@@ -1,26 +1,34 @@
-{% extends "base.html" %}
+{% extends "base--kitchin.html" %}
 {% block global_navi %}
-<div class="wrapper__main--multi overlay">
-	<div class="wrapper__50p">
-		<div class="text__subtitle">Tables</div>
+<div class="wrapper__main--multi">
+	<div class="radio_button--activate_order">
+    <input type="radio" id="activate" class="js-activate radio_button--activate_order__radio" name="activate_order" value="activate" checked="true">
+      <label for="activate">Activate</label>
+    <input type="radio" id="order" class="js-order radio_button--activate_order__radio" name="activate_order" value="order">
+      <label for="order">Order</label>
+  	</div>
+    <div class="table_activate__wrap">
 		{% for tables in tables %}
-		<div class="wrapper--content__100p">
-		<div class="text__subtitle w--50p">Table {{tables[0]}}</div>
-		<div class="checkbox--activate__aera">
+		<div class="table_activate">
+		<div class="table_activate__table_number">Table {{tables[0]}}</div>
+		<div class="table_activate__checkbox_aera">
 			<!-- アクティベートされているかをチェック -->
 			{% if tables[1] == 0 %}
-  			<input type="checkbox" id="table_{{tables[0]}}" class="checkbox--activate__checkbox">
+  			<input type="checkbox" id="table_{{tables[0]}}" class="table_activate__checkbox">
   			{% else %}
-  			<input type="checkbox" id="table_{{tables[0]}}" class="checkbox--activate__checkbox" checked>
+  			<input type="checkbox" id="table_{{tables[0]}}" class="table_activate__checkbox" checked>
   			{% endif %}
-    		<label for="table_{{tables[0]}}" class="checkbox--activate__label">
-      				<div class="checkbox--activate__decoration">
-      				</div>
+    		<label for="table_{{tables[0]}}" class="table_activate__checkbox_label">
+      			<div class="table_activate__checkbox_decoration"></div>
    			</label>
    		</div>
-   	</div>
+   		<div class="text__body">
+   			QR確認 >
+   		</div>
+   		</div>
 		{% endfor %}
-	</div>
-	<div class="wrapper__50p"></div>
+    </div>
+    <div class="order_list__wrap">
+    </div>
 </div>
 {% endblock %}
