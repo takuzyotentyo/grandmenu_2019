@@ -12,7 +12,7 @@ from flaskr.models import Store, Staff, Menu, Table, Order
 from sqlalchemy import func
 
 from flask_sqlalchemy import SQLAlchemy
-
+from datetime import datetime
 #関数群ファイルの読み込み
 from flaskr import FlaskAPI
 
@@ -151,8 +151,10 @@ def order_submit():
 	table_number=session['table_number']
 	group_id=session['group_id']
 	order_status=2
+	order_timestamp = datetime.now()
 
-	db.session.query(Order).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=0).update({Order.ORDER_STATUS: order_status})
+
+	db.session.query(Order).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=0).update({Order.ORDER_STATUS: order_status, Order.ORDER_TIMESTAMP: order_timestamp})
 	db.session.commit()
 	db.session.close()
 

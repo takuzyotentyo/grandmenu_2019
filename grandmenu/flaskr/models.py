@@ -2,7 +2,7 @@
 from flaskr import db
 
 # このファイルでで必要なモジュール
-from sqlalchemy import create_engine, Column, Integer, String, func
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, func
 
 #テーブル定義
 class Store(db.Model):
@@ -63,6 +63,7 @@ class Order(db.Model):
     __tablename__ = 'orders'
 
     ORDER_ID = db.Column(Integer, primary_key=True)
+    ORDER_TIMESTAMP = Column(DateTime)
     ORDER_STATUS = db.Column(Integer)   #0はかごに入ってる,1はオーダーされた,2はかごから削除された,3は決済完了
     STORE_ID = db.Column(Integer)
     TABLE_NUMBER = db.Column(Integer)
@@ -75,31 +76,3 @@ class Order(db.Model):
 
 #DBの作成をここで行う。
 db.create_all()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
