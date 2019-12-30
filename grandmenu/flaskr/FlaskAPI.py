@@ -46,7 +46,7 @@ def total_quantity(store_id, table_number, group_id, order_status):
 def order_list(store_id, table_number, group_id, order_status):
     order_list = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY).\
     join(Order, Order.MENU_ID==Menu.MENU_ID).\
-    filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID= group_id, ORDER_STATUS=order_status).\
+    filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=order_status).\
     all()
     return order_list
 
@@ -58,10 +58,17 @@ def order_item(store_id, table_number, group_id, order_status, menu_id):
     one()
     return order_item
 
-def order_list_all(store_id, order_status):
+def order_list_all_for_kitchin(store_id, order_status):
     order_list = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Order.ORDER_QUANTITY, Order.TABLE_NUMBER).\
     join(Order, Order.MENU_ID==Menu.MENU_ID).\
     filter_by(STORE_ID=store_id, ORDER_STATUS=order_status).\
+    all()
+    return order_list
+
+def order_list_for_kitchin(store_id, table_number, group_id, order_status):
+    order_list = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Order.ORDER_QUANTITY, Order.TABLE_NUMBER).\
+    join(Order, Order.MENU_ID==Menu.MENU_ID).\
+    filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=order_status).\
     all()
     return order_list
 
