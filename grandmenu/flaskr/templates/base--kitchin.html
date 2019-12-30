@@ -53,6 +53,24 @@
       };
     });
 
+    socket.on('add_to_order', function(add_to_order){
+      console.log(add_to_order);
+      console.log("追加のオーダー");
+
+      var len = add_to_order.length;
+      // 以下の処理で、add_to_orderをHTML内に組み込む
+      for (var i=0; i<len; i++) {
+          $('<li class="menu_box--order"></li>').appendTo(".order_list__wrap").attr('id','order_id_' + (add_to_order[i][0]));
+          $('<span class="menu_box--order__class_2"></span>').appendTo('#order_id_' + add_to_order[i][0]).text(add_to_order[i][2]);
+          $('<span class="menu_box--order__class_3"></span>').appendTo('#order_id_' + add_to_order[i][0]).text(add_to_order[i][3]);
+          $('<span class="menu_box--order__quantity_label"></span>').appendTo('#order_id_' + add_to_order[i][0]).text("数量");
+          $('<span class="menu_box--order__quantity"><span>').appendTo('#order_id_' + add_to_order[i][0]).text(add_to_order[i][4]);
+          $('<span class="menu_box--order__garbage"></span>').appendTo('#order_id_' + add_to_order[i][0]);
+          $('<span class="menu_box--order__table"></span>').appendTo('#order_id_' + add_to_order[i][0]).text("Table "+add_to_order[i][5]);
+        console.log(add_to_order[i][3]);
+      };
+    });
+
   });
 </script>
 
@@ -65,9 +83,6 @@
       <span></span>
       </div>
     <a href="/" class="header__title">Ground Menu.com</a>
-    <div class="header__cart">
-      <div class="header__quantity"></div>
-    </div>
   </div>
 
 <!-- サイドメニュー -->
