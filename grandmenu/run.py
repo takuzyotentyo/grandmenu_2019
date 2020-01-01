@@ -173,19 +173,30 @@ def order_submit():
 def show_order(msg):
 	# 受け取ったMessageを表示
 	print(msg)
-
 	# store_id → table_table_number → group_id → room(そのテーブルに座っている人にだけ送るチャットルームみたいなもの)の順に変数を設定していく
 	store_id=session['store_id']
 	# roomというチャットスペースみたいなところに入る
 	join_room(store_id)
-
 	# カートの中身を見たいので、order_status=0を設定
 	order_status=2
 	# カートに入っている商品情報を求める(order_statusの値を変更すれば、カートに入っているものや、注文済みのもの、決済が完了したものを見ることができる)
 	order_list=FlaskAPI.order_list_all_for_kitchin(store_id, order_status)
-
 	# roomのメンバーに情報を送信
 	emit("show_order",order_list)
+
+@socketio.on("order_check")
+def order_check(order_id):
+	# order_status = 3は調理完了を示す
+	print("ここまでOK")
+	order_id = order_id
+	order_status = 3
+	store_id = session['store_id']
+	# オーダーステータスのアップデート
+	db.session.query(Order).filter_by(ORDER_ID=order_id).update({Order.ORDER_STATUS: order_status})
+	db.session.commit()
+	db.session.close()
+	# roomのメンバーに情報を送信
+	emit("order_check",order_id, room=store_id)
 
 if __name__ == '__main__':
 	# app.run(debug=True)

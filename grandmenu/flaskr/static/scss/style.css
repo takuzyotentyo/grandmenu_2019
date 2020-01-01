@@ -210,7 +210,7 @@ blockのインポート
       -webkit-box-shadow: 0px 0px 0px 5px #111111;
       box-shadow: 0px 0px 0px 5px #111111; }
 
-.lightbox--order_verification {
+.light_box--order_check_verification {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -225,7 +225,9 @@ blockのインポート
   -ms-flex-flow: column nowrap;
   flex-flow: column nowrap;
   overflow-y: scroll;
-  padding: 5px 0 100px 0; }
+  padding: 5px 0 100px 0;
+  top: 0;
+  left: 0; }
 
 /*「_」抜きの名前でインポートする
  変数を定義しているsetting.scssのインポートは必須事項*/
@@ -613,20 +615,30 @@ blockのインポート
     padding: 0 5px;
     background-color: #BF7900; }
   .menu_box--order__table {
-    position: absolute;
-    bottom: -20px;
+    position: relative;
     right: 0;
     display: inline-block;
     text-align: center;
-    white-space: nowrap;
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     font-size: 16px;
-    line-height: 25px;
-    max-width: 100%;
-    padding: 0 5px;
-    background-color: #BF7900; }
+    width: 50%;
+    padding: auto; }
+  .menu_box--order__order_check {
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    background: url("../img/check.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    opacity: .75;
+    -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    background-color: #072A24;
+    border: solid 5px #072A24; }
 
 .menu_box--class_2:hover {
   background: #111111; }

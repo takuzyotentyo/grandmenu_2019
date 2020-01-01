@@ -125,7 +125,7 @@
 	}
 }
 
-.lightbox--order_verification{
+.light_box--order_check_verification{
 	align-items: center;     /*上下中央揃え*/
 	position: absolute;
 	width: 100%;
@@ -135,4 +135,6 @@
 	flex-flow: column nowrap;
 	overflow-y: scroll;
 	padding:5px 0 100px 0;
+	top: 0;
+	left: 0;
 }

@@ -45,32 +45,50 @@
           $('<li class="menu_box--order"></li>').appendTo(".order_list__wrap").attr('id','order_id_' + (order_list[i][0]));
           $('<span class="menu_box--order__class_2"></span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][2]);
           $('<span class="menu_box--order__class_3"></span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][3]);
+          $('<span class="menu_box--order__table"></span>').appendTo('#order_id_' + order_list[i][0]).text("Table "+order_list[i][4]);
           $('<span class="menu_box--order__quantity_label"></span>').appendTo('#order_id_' + order_list[i][0]).text("数量");
-          $('<span class="menu_box--order__quantity"><span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][4]);
-          $('<span class="menu_box--order__garbage"></span>').appendTo('#order_id_' + order_list[i][0]);
-          $('<span class="menu_box--order__table"></span>').appendTo('#order_id_' + order_list[i][0]).text("Table "+order_list[i][5]);
+          $('<span class="menu_box--order__quantity"><span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][5]);
+          $('<span class="menu_box--order__order_check"></span>').appendTo('#order_id_' + order_list[i][0]);
         console.log(order_list[i][3]);
       };
     });
 
-    socket.on('add_to_order', function(add_to_order){
-      console.log(add_to_order);
+    socket.on('add_to_order', function(order_list){
+      console.log(order_list);
       console.log("追加のオーダー");
-
-      var len = add_to_order.length;
+      var len = order_list.length;
       // 以下の処理で、add_to_orderをHTML内に組み込む
       for (var i=0; i<len; i++) {
-          $('<li class="menu_box--order"></li>').appendTo(".order_list__wrap").attr('id','order_id_' + (add_to_order[i][0]));
-          $('<span class="menu_box--order__class_2"></span>').appendTo('#order_id_' + add_to_order[i][0]).text(add_to_order[i][2]);
-          $('<span class="menu_box--order__class_3"></span>').appendTo('#order_id_' + add_to_order[i][0]).text(add_to_order[i][3]);
-          $('<span class="menu_box--order__quantity_label"></span>').appendTo('#order_id_' + add_to_order[i][0]).text("数量");
-          $('<span class="menu_box--order__quantity"><span>').appendTo('#order_id_' + add_to_order[i][0]).text(add_to_order[i][4]);
-          $('<span class="menu_box--order__garbage"></span>').appendTo('#order_id_' + add_to_order[i][0]);
-          $('<span class="menu_box--order__table"></span>').appendTo('#order_id_' + add_to_order[i][0]).text("Table "+add_to_order[i][5]);
-        console.log(add_to_order[i][3]);
+          $('<li class="menu_box--order"></li>').appendTo(".order_list__wrap").attr('id','order_id_' + (order_list[i][0]));
+          $('<span class="menu_box--order__class_2"></span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][2]);
+          $('<span class="menu_box--order__class_3"></span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][3]);
+          $('<span class="menu_box--order__table"></span>').appendTo('#order_id_' + order_list[i][0]).text("Table "+order_list[i][4]);
+          $('<span class="menu_box--order__quantity_label"></span>').appendTo('#order_id_' + order_list[i][0]).text("数量");
+          $('<span class="menu_box--order__quantity"><span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][5]);
+          $('<span class="menu_box--order__order_check"></span>').appendTo('#order_id_' + order_list[i][0]);
+        console.log(order_list[i][3]);
       };
     });
 
+    $(document).on("click", ".menu_box--order__order_check", function () {
+    // var menu_box = $(this).parent()
+    var menu = $(this).siblings(".menu_box--order__class_3").text()
+    var quantity = $(this).siblings(".menu_box--order__quantity").text()
+    var order_id = $(this).parent().attr("id").replace("order_id_", "")
+    console.log(order_id)
+    if(!confirm(menu + quantity + "個の調理を完了しましたか？")){
+      /*キャンセルの時の処理 */
+    }else{
+      /*OKの時の処理 */
+      // menu_box.remove();
+      socket.emit("order_check", order_id);
+    }
+    });
+
+    socket.on('order_check', function(order_id){
+    $('#order_id_' + order_id).remove()
+    console.log("ここまでOK")
+    });
   });
 </script>
 
