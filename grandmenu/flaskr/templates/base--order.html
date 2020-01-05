@@ -25,6 +25,7 @@
     var socket = io.connect('http://127.0.0.1:5000');
 
     socket.on('connect', function() {
+      $(".lightbox--ws_error").css('left','100%')
       socket.emit("cart_information","client has connected");
     });
 
@@ -144,6 +145,11 @@
       location.reload();
     });
 
+    socket.on('error', function(){
+    console.log("接続エラー")
+    $(".lightbox--ws_error").css('left','0%')
+    });
+
   });
 </script>
 
@@ -197,8 +203,11 @@
 <!-- メインメニュー -->
     <div class="wrapper__main">
     <div class="picture--base"></div>
-
   {% block global_navi %}{% endblock %}
+    <div class="lightbox--ws_error">
+      <div class="lightbox--ws_error__wi-fi"></div>
+      <div class="lightbox--ws_error__msg text__subtitle">接続エラーが発生しました</div>
+    </div>
     </div>
   </div>
 </div>

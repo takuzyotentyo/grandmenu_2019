@@ -82,6 +82,27 @@
 	}
 }
 
+.lightbox--ws_error{
+	position: absolute;
+	display: flex;
+	align-items: center;     /*上下中央揃え*/
+	flex-flow: column nowrap;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: rgba($color-sub,0.3);
+	&__wi-fi{
+		width: 100px;
+		height: 100px;
+		margin: 200px auto 20px auto;
+		background: url('../img/wi-fi.svg');
+    	background-size: cover;
+    	background-repeat: no-repeat;
+    	filter:drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+	}
+}
+
 .lightbox--order{
 	// align-items: center;     /*上下中央揃え*/
 	position: absolute;
