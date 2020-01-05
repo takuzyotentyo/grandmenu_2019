@@ -52,12 +52,12 @@ def create_account():
             db.session.add(Store(STORE_ID=store_id))    #代表者が登録された場合、新しいお店としてstoresテーブルに登録
             db.session.commit()
             db.session.close()
-        return redirect("/login")
+        return render_template('login.html')
 
 
 
 # ログイン
-@app.route("/login", methods = ['POST'])
+@app.route("/login", methods = ['POST', 'GET'])
 def login():
     session.clear()     #エラーのセッションなどを持っている可能性があるので、クリアしている
     e_mail = request.form['e_mail']
