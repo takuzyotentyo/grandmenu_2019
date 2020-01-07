@@ -150,6 +150,7 @@ def order_submit():
 	store_id=session['store_id']
 	table_number=session['table_number']
 	group_id=session['group_id']
+	room=session['room']
 
 	order_status=0
 	order_list=FlaskAPI.order_list_for_kitchin(store_id, table_number, group_id, order_status)
@@ -167,6 +168,23 @@ def order_submit():
 	print(order_list)
 
 	emit("add_to_order", order_list, room=store_id)
+	emit("cart_information", {'total_quantity': 0, 'order_list': []}, room=room)
+
+# テーブルアクティベートの処理
+@socketio.on("table_activate")
+def activate_json(table_status):
+	# activate_statusをDBに書き込み、クライアント側に情報を戻して、反映する
+    try:
+        store_id = session['store_id']
+        table_number = table_status["table_number"]
+        activate_status = table_status["activate_status"]
+        db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE: activate_status})
+        db.session.commit()
+        db.session.close()
+        emit("table_activate", table_status, room=store_id)
+    except:
+        result="false"
+        emit("server_to_client_connection", "error", room=store_id)
 
 # 店舗側がオーダーを確認する仕組み
 @socketio.on("show_order")
@@ -197,6 +215,10 @@ def order_check(order_id):
 	db.session.close()
 	# roomのメンバーに情報を送信
 	emit("order_check",order_id, room=store_id)
+
+@socketio.on("reload")
+def reload():
+	emit("reload")
 
 if __name__ == '__main__':
 	# app.run(debug=True)

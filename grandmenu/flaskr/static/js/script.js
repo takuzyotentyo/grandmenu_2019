@@ -338,31 +338,31 @@ $(document).on("click", ".lightbox--order__back", function () {
 });
 
 // テーブルアクティベートの処理
-$(document).on("click", ".table_activate__checkbox", function () {
+// $(document).on("click", ".table_activate__checkbox", function () {
 
-  var table_number = $(this).attr("id").replace("table_", "");
-  if($(this).prop("checked") == true) {
-    var activate_status = 1
-  }else{
-    var activate_status = 0
-  };
-  var data = {
-  "table_number": table_number,
-  "activate_status": activate_status
-  }
-  console.log(data);
-  $.ajax({
-    url: "/activate_json",
-    type: 'post',
-    data: JSON.stringify(data),
-    dataType: 'json',
-    contentType: 'application/json',
-  })
-  .done(function(data, textStatus, jqXHR){
-    console.log(data)
-  });
+//   var table_number = $(this).attr("id").replace("table_", "");
+//   if($(this).prop("checked") == true) {
+//     var activate_status = 1
+//   }else{
+//     var activate_status = 0
+//   };
+//   var data = {
+//   "table_number": table_number,
+//   "activate_status": activate_status
+//   }
+//   console.log(data);
+//   $.ajax({
+//     url: "/activate_json",
+//     type: 'post',
+//     data: JSON.stringify(data),
+//     dataType: 'json',
+//     contentType: 'application/json',
+//   })
+//   .done(function(data, textStatus, jqXHR){
+//     console.log(data)
+//   });
 
-});
+// });
 
 // テーブルアクティベートのテーブル状況と、オーダー状況に関する記述
 $(function(){

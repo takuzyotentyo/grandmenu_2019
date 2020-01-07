@@ -84,13 +84,13 @@
 
 .lightbox--ws_error{
 	position: absolute;
-	display: flex;
+	display: none;
 	align-items: center;     /*上下中央揃え*/
 	flex-flow: column nowrap;
 	width: 100%;
 	height: 100%;
 	top: 0;
-	left: 0;
+	left: 100%;
 	background: rgba($color-sub,0.3);
 	&__wi-fi{
 		width: 100px;

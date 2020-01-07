@@ -298,21 +298,21 @@ def activate():
     return render_template('activate.html', tables=tables)
 
 
-@app.route('/activate_json', methods = ['POST'])
-def activate_json():
-    try:
-        store_id = session['store_id']
-        table_status = request.get_json()
-        table_number = table_status["table_number"]
-        activate_status = table_status["activate_status"]
-        db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE: activate_status})
-        db.session.commit()
-        db.session.close()
-        result="true"
-        return result
-    except:
-        result="false"
-        return result
+# @app.route('/activate_json', methods = ['POST'])
+# def activate_json():
+#     try:
+#         store_id = session['store_id']
+#         table_status = request.get_json()
+#         table_number = table_status["table_number"]
+#         activate_status = table_status["activate_status"]
+#         db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE: activate_status})
+#         db.session.commit()
+#         db.session.close()
+#         result="true"
+#         return result
+#     except:
+#         result="false"
+#         return result
 
 @app.route('/store_setting')
 def store_setting():

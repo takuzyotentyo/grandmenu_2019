@@ -25,8 +25,17 @@
     var socket = io.connect('http://127.0.0.1:5000');
 
     socket.on('connect', function() {
-      $(".lightbox--ws_error").css('left','100%')
+      // lightbox--ws_errorがvisibleということは、一旦conecctが完了した後に、エラーで接続が切れ、再度connectの処理が必要になったということ
+      if($(".lightbox--ws_error").is(':visible')) {
+        socket.emit("reload");
+      }else{
+        $(".lightbox--ws_error").css('display','flex')
       socket.emit("cart_information","client has connected");
+      };
+    });
+
+    socket.on('reload', function(){
+      location.reload();
     });
 
     socket.on('server_to_client_connection', function(msg){
@@ -49,7 +58,7 @@
       $('<span>確認</span>').appendTo('#order_submit');
       $('<span>注文</span>').appendTo('#order_submit');
       $('<div class="lightbox--order__back">></div>').appendTo('.lightbox--order');
-      $('#order_menu').wrap('<a href="/order_verification"></a>');
+      // $('#order_menu').wrap('<a href="/order_verification"></a>');
 
       var len = cart_information['order_list'].length;
       // 以下の処理で、menu_listをHTML内に組み込む
@@ -140,14 +149,15 @@
     });
 
     $(document).on("click", "#order_submit", function () {
-      console.log("オーター確定")
-      socket.emit("order_submit");
-      location.reload();
+      if(confirm("一緒にご来店頂いた方が\n注文をカートに追加している場合があります。\n本当にオーダーを確定しますか？")){
+        console.log("オーター確定")
+        socket.emit("order_submit");
+      };
     });
 
     socket.on('error', function(){
-    console.log("接続エラー")
-    $(".lightbox--ws_error").css('left','0%')
+      console.log("接続エラー")
+      $(".lightbox--ws_error").css('left','0%')
     });
 
   });
