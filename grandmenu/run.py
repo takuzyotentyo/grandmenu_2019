@@ -204,7 +204,6 @@ def kitchin_infomation(msg):
 	order_status=2
 	# カートに入っている商品情報を求める(order_statusの値を変更すれば、カートに入っているものや、注文済みのもの、決済が完了したものを見ることができる)
 	order_list=FlaskAPI.order_list_for_kitchin(store_id, order_status)
-	print(table_information)
 	# roomのメンバーに情報を送信
 	emit("show_order",{'action':'load', 'order_list':order_list})
 

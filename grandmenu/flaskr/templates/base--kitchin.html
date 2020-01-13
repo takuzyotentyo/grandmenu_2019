@@ -129,6 +129,7 @@
         $(".order_list__wrap").remove();
         $('<div class="order_list__wrap"></div>').insertAfter(".table_activate__wrap").css("display", "none");
       };
+      console.log("オーダーリスト表示まではきてるよー")
       var len = data['order_list'].length;
       order_list = data['order_list']
       // 以下の処理で、order_listをHTML内に組み込む
