@@ -100,11 +100,17 @@
       var table_number_obj = $("#table_" + table_status['table_number'])
       var activate_status = table_status['activate_status']
       var one_time_password = "http://127.0.0.1:5000/qrcode/" + table_status['one_time_password']
+      // 実際にチェックを入れたユーザーをorigin_userとする(origin_userの場合、前の工程でチェックを入れているので、trueが入る)
+      var origin_user = table_number_obj.prop("checked")
+      console.log(origin_user)
       // チェックボックスを動かす処理
       if(activate_status == 1){
         table_number_obj.prop("checked", true);
         table_number_obj.parent().next(".text__body").css("visibility","visible")
         $('<div class="lightbox--qrcode" id =  "qrcode_' + table_number + '_wrap"></div>').insertAfter(".table_activate__wrap");
+        if(origin_user == false){
+          $('#qrcode_' + table_number + '_wrap').css("left","100%");
+        };
         $('<div class="text__title">Table ' + table_number + '</div>').appendTo("#qrcode_" + table_number + "_wrap");
         $('<span id="qrcode_' + table_number +'"></span>').appendTo("#qrcode_" + table_number + "_wrap");
         $("#qrcode_" + table_number).qrcode(one_time_password);
