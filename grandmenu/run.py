@@ -153,7 +153,7 @@ def order_submit():
 	room=session['room']
 
 	order_status=0
-	order_list=FlaskAPI.order_list_for_kitchin(store_id, table_number, group_id, order_status)
+	order_list=FlaskAPI.order_item_for_kitchin(store_id, table_number, group_id, order_status)
 	print("テスト")
 	print(order_list)
 	order_status=2
@@ -167,29 +167,34 @@ def order_submit():
 	print("追加のオーダーは")
 	print(order_list)
 
-	emit("add_to_order", order_list, room=store_id)
+	emit("show_order", {'action':'add', 'order_list':order_list}, room=store_id)
 	emit("cart_information", {'total_quantity': 0, 'order_list': []}, room=room)
 
 # テーブルアクティベートの処理
 @socketio.on("table_activate")
-def activate_json(table_status):
+def table_activate(table_information):
 	# activate_statusをDBに書き込み、クライアント側に情報を戻して、反映する
-    try:
+    # try:
         store_id = session['store_id']
-        table_number = table_status["table_number"]
-        activate_status = table_status["activate_status"]
-        db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE: activate_status})
+        table_number = table_information["table_number"]
+        activate_status = table_information["activate_status"]
+        one_time_password = table_information["one_time_password"]
+        print("one_time_passwordは")
+        print(table_information["one_time_password"])
+        print(one_time_password)
+        db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE: activate_status, Table.ONE_TIME_PASSWORD: one_time_password})
         db.session.commit()
         db.session.close()
-        emit("table_activate", table_status, room=store_id)
-    except:
-        result="false"
-        emit("server_to_client_connection", "error", room=store_id)
+        emit("table_activate", table_information, room=store_id)
+    # except:
+    #     result="false"
+    #     emit("server_to_client_connection", "error", room=store_id)
 
 # 店舗側がオーダーを確認する仕組み
-@socketio.on("show_order")
-def show_order(msg):
+@socketio.on("kitchin_infomation")
+def kitchin_infomation(msg):
 	# 受け取ったMessageを表示
+	print('キッチンインフォメーションだよー')
 	print(msg)
 	# store_id → table_table_number → group_id → room(そのテーブルに座っている人にだけ送るチャットルームみたいなもの)の順に変数を設定していく
 	store_id=session['store_id']
@@ -198,9 +203,10 @@ def show_order(msg):
 	# カートの中身を見たいので、order_status=0を設定
 	order_status=2
 	# カートに入っている商品情報を求める(order_statusの値を変更すれば、カートに入っているものや、注文済みのもの、決済が完了したものを見ることができる)
-	order_list=FlaskAPI.order_list_all_for_kitchin(store_id, order_status)
+	order_list=FlaskAPI.order_list_for_kitchin(store_id, order_status)
+	print(table_information)
 	# roomのメンバーに情報を送信
-	emit("show_order",order_list)
+	emit("show_order",{'action':'load', 'order_list':order_list})
 
 @socketio.on("order_check")
 def order_check(order_id):

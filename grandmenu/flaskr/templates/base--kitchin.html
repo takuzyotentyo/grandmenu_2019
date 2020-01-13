@@ -12,6 +12,7 @@
   <script src="../static/js/jquery-3.4.1.min.js"></script>
   <script src="../static/js//jQuery UI - v1.11.3 - 2015-02-12.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+  <script type="text/javascript" src="../static/js/jquery.qrcode.min.js"></script>
 
   <!-- スマホでsortableを実装するためのライブラリ -->
   <script src="../static/js/jquery.ui.touch-punch.min.js"></script>
@@ -31,7 +32,7 @@
         socket.emit("reload");
       }else{
         $(".lightbox--ws_error").css('display','flex')
-        socket.emit("show_order","client has connected");
+        socket.emit("kitchin_infomation","client has connected");
       };
     });
 
@@ -52,10 +53,19 @@
       if($(this).prop("checked") == true) {
         if(confirm("テーブルアクティベートを行いますか？")){
           // OK時の処理
+          // チェックボックスが動いてしまうけど、その後の処理の流れで、他のユーザーのチェックボックスも動くので問題ない
           var activate_status = 1
+          // ランダムな文字列(one_time_password)を作成
+          var str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+          //桁数の定義
+          var len = 16;
+          //ランダムな文字列の生成
+          var one_time_password = "";
+          for(var i=0;i<len;i++){
+            one_time_password += str.charAt(Math.floor(Math.random() * str.length));
+          }
         }else{
           // キャンセルをした場合、チェックボックスを戻す
-          // チェックボックスが動いてしまうけど、その後の処理の流れで、他のユーザーのチェックボックスも動くので問題ない
           $(this).prop("checked", false);
         };
       }else{
@@ -63,6 +73,7 @@
           // OK時の処理
           // チェックボックスが動いてしまうけど、その後の処理の流れで、他のユーザーのチェックボックスも動くので問題ない
           var activate_status = 0
+          one_time_password = null;
         }else{
           // キャンセルをした場合、チェックボックスを戻す
           $(this).prop("checked", true);
@@ -71,11 +82,13 @@
       // activate_statusが設定されていない場合、"null"ではなく、"undifined"になるので、一応チェック(デバック用なので、消してよし)
       console.log("activate_status")
       console.log(activate_status)
+      console.log(one_time_password)
       // activate_statusが変数として存在しているかチェックし、していなければemitでサーバーに送る処理を回避する
       if(typeof activate_status != "undefined"){
         var table_status = {
           "table_number": table_number,
-          "activate_status": activate_status
+          "activate_status": activate_status,
+          "one_time_password": one_time_password
         };
         socket.emit("table_activate", table_status);
       };
@@ -83,42 +96,36 @@
 
     // table_activateを反映する処理
     socket.on('table_activate', function(table_status){
-      var table_number = $("#table_" + table_status['table_number'])
+      var table_number = table_status['table_number']
+      var table_number_obj = $("#table_" + table_status['table_number'])
       var activate_status = table_status['activate_status']
+      var one_time_password = "http://127.0.0.1:5000/qrcode/" + table_status['one_time_password']
       // チェックボックスを動かす処理
       if(activate_status == 1){
-        table_number.prop("checked", true);
+        table_number_obj.prop("checked", true);
+        table_number_obj.parent().next(".text__body").css("visibility","visible")
+        $('<div class="lightbox--qrcode" id =  "qrcode_' + table_number + '_wrap"></div>').insertAfter(".table_activate__wrap");
+        $('<div class="text__title">Table ' + table_number + '</div>').appendTo("#qrcode_" + table_number + "_wrap");
+        $('<span id="qrcode_' + table_number +'"></span>').appendTo("#qrcode_" + table_number + "_wrap");
+        $("#qrcode_" + table_number).qrcode(one_time_password);
+        $('<div class="lightbox__back">></div>').appendTo("#qrcode_" + table_number + "_wrap");
+        console.log(one_time_password)
       }else{
-        table_number.prop("checked", false);
+        table_number_obj.prop("checked", false);
+        table_number_obj.parent().next(".text__body").css("visibility","hidden")
+        $("#qrcode_" + table_number + "_wrap").remove();
       };
     });
 
-    socket.on('show_order', function(order_list){
-      console.log(order_list);
-
+    socket.on('show_order', function(data){
+      if(data['action']=="load"){
       // 一度消して、再度表示させる処理は、websocketが意図せず切れたときのために必要
-      $(".order_list__wrap").remove();
-      $('<div class="order_list__wrap"></div>').insertAfter(".table_activate__wrap").css("display", "none");
-
-      var len = order_list.length;
-      // 以下の処理で、order_listをHTML内に組み込む
-      for (var i=0; i<len; i++) {
-          $('<li class="menu_box--order"></li>').appendTo(".order_list__wrap").attr('id','order_id_' + (order_list[i][0]));
-          $('<span class="menu_box--order__class_2"></span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][2]);
-          $('<span class="menu_box--order__class_3"></span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][3]);
-          $('<span class="menu_box--order__table"></span>').appendTo('#order_id_' + order_list[i][0]).text("Table "+order_list[i][4]);
-          $('<span class="menu_box--order__quantity_label"></span>').appendTo('#order_id_' + order_list[i][0]).text("数量");
-          $('<span class="menu_box--order__quantity"><span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][5]);
-          $('<span class="menu_box--order__order_check"></span>').appendTo('#order_id_' + order_list[i][0]);
-        console.log(order_list[i][3]);
+        $(".order_list__wrap").remove();
+        $('<div class="order_list__wrap"></div>').insertAfter(".table_activate__wrap").css("display", "none");
       };
-    });
-
-    socket.on('add_to_order', function(order_list){
-      console.log(order_list);
-      console.log("追加のオーダー");
-      var len = order_list.length;
-      // 以下の処理で、add_to_orderをHTML内に組み込む
+      var len = data['order_list'].length;
+      order_list = data['order_list']
+      // 以下の処理で、order_listをHTML内に組み込む
       for (var i=0; i<len; i++) {
           $('<li class="menu_box--order"></li>').appendTo(".order_list__wrap").attr('id','order_id_' + (order_list[i][0]));
           $('<span class="menu_box--order__class_2"></span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][2]);
@@ -137,6 +144,7 @@
       var quantity = $(this).siblings(".menu_box--order__quantity").text()
       var order_id = $(this).parent().attr("id").replace("order_id_", "")
       console.log(order_id)
+      // アラートを出して、調理完了を確認
       if(confirm(menu + quantity + "個の調理を完了しましたか？")){
         // OKの時の処理
         socket.emit("order_check", order_id);

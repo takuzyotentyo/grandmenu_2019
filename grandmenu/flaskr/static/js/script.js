@@ -385,6 +385,30 @@ $(function(){
   });
 });
 
+$(document).on("click", ".lightbox__back", function () {
+  $.when($(this).parent().animate({left:"100%"}, 250)).done(function(){
+    $(this).css("display", "none");
+  });
+});
+
+$(document).on("click", ".js-show_qrcode", function () {
+  var table_number = $(this).siblings('.table_activate__table_number').text().replace("Table ","")
+  var one_time_password = $('#qrcode_' + table_number + '_wrap').val()
+  console.log(table_number)
+
+  test = $("#qrcode_" + table_number + "_wrap").children('span').children()
+  console.log(test)
+  if($("#qrcode_" + table_number).length){
+    console.log('キャンパスは存在するよ')
+  }else{
+    console.log('キャンパスは存在しないよ')
+    $('<span id="qrcode_' + table_number +'"></span>').appendTo("#qrcode_" + table_number + "_wrap");
+    $("#qrcode_" + table_number).qrcode("http://127.0.0.1:5000/qrcode/" + one_time_password);
+  };
+  $.when($("#qrcode_" + table_number + "_wrap").css("display", "flex")).done(function(){
+    $(this).animate({left:"0"}, 250);
+  });
+});
 
 
 

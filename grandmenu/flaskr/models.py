@@ -55,9 +55,10 @@ class Table(db.Model):
     STORE_ID = db.Column(Integer)
     TABLE_NUMBER = db.Column(Integer)
     TABLE_ACTIVATE = db.Column(Integer)
+    ONE_TIME_PASSWORD = db.Column(String(16))
 
     def __repr__(self):
-        return "(TABLE_ID='%s', STORE_ID='%s', TABLE_NUMBER='%s', TABLE_ACTIVATE='%s')" % (self.TABLE_ID, self.STORE_ID, self.TABLE_NUMBER, self.TABLE_ACTIVATE)
+        return "(TABLE_ID='%s', STORE_ID='%s', TABLE_NUMBER='%s', TABLE_ACTIVATE='%s', ONE_TIME_PASSWORD='%s')" % (self.TABLE_ID, self.STORE_ID, self.TABLE_NUMBER, self.TABLE_ACTIVATE, self.ONE_TIME_PASSWORD)
 
 class Order(db.Model):
     __tablename__ = 'orders'

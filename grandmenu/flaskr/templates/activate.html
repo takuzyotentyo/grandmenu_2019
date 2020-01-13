@@ -15,20 +15,35 @@
 			<!-- アクティベートされているかをチェック -->
 			{% if tables[1] == 0 %}
   			<input type="checkbox" id="table_{{tables[0]}}" class="table_activate__checkbox">
-  			{% else %}
+  		{% else %}
   			<input type="checkbox" id="table_{{tables[0]}}" class="table_activate__checkbox" checked="true">
-  			{% endif %}
+  		{% endif %}
     		<label for="table_{{tables[0]}}" class="table_activate__checkbox_label">
       			<div class="table_activate__checkbox_decoration"></div>
    			</label>
    		</div>
-   		<div class="text__body">
+      {% if tables[1] == 0 %}
+   		<div class="text__body js-show_qrcode" style="visibility:hidden;">
    			QR確認 >
    		</div>
+      {% else %}
+      <div class="text__body js-show_qrcode">
+        QR確認 >
+      </div>
+      {% endif %}
    		</div>
 		{% endfor %}
     </div>
+
     <div class="order_list__wrap">
     </div>
+    {% for tables in tables %}
+    {% if tables[1] == 1 %}
+        <div class="lightbox--qrcode" id="qrcode_{{tables[0]}}_wrap" value="{{tables[2]}}" style="left:100%; display:none;">
+          <div class="text__title">Table {{tables[0]}}</div>
+          <div class="lightbox__back">></div>
+        </div>
+    {% endif %}
+    {% endfor %}
 </div>
 {% endblock %}

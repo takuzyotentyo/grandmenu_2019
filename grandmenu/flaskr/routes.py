@@ -293,7 +293,7 @@ def sort_menu():
 @app.route('/activate')
 def activate():
     store_id = session['store_id']
-    tables = db.session.query(Table.TABLE_NUMBER, Table.TABLE_ACTIVATE).filter(Table.STORE_ID == store_id).order_by(Table.TABLE_NUMBER).all()
+    tables = db.session.query(Table.TABLE_NUMBER, Table.TABLE_ACTIVATE, Table.ONE_TIME_PASSWORD).filter(Table.STORE_ID == store_id).order_by(Table.TABLE_NUMBER).all()
     print(tables)
     return render_template('activate.html', tables=tables)
 
