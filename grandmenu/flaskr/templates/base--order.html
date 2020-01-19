@@ -57,7 +57,7 @@
       $('<button class="form__button" id="order_submit"></button>').appendTo('.lightbox--order');
       $('<span>確認</span>').appendTo('#order_submit');
       $('<span>注文</span>').appendTo('#order_submit');
-      $('<div class="lightbox--order__back">></div>').appendTo('.lightbox--order');
+      $('<div class="lightbox__back">></div>').appendTo('.lightbox--order');
       // $('#order_menu').wrap('<a href="/order_verification"></a>');
 
       var len = cart_information['order_list'].length;
@@ -172,7 +172,7 @@
       <span></span>
       </div>
     <a href="/" class="header__title">Ground Menu.com</a>
-    <div class="header__cart">
+    <div class="header__cart js-show__lightbox" data-lightbox="lightbox--order">
       <div class="header__quantity"></div>
     </div>
   </div>

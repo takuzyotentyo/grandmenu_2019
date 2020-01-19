@@ -240,15 +240,17 @@ def sort_menu():
         class_2_sort_result_food = request.form.getlist("class_2_sort_result_food")     #CLASS_1_ID,CLASS_2_ID,CLASS_2の順番で並んだ文字列を受け取る
         class_2_sort_result_drink = request.form.getlist("class_2_sort_result_drink")   #CLASS_1_ID,CLASS_2_ID,CLASS_2の順番で並んだ文字列を受け取る
         class_3_sort_result = request.form.getlist("class_3_sort_result")               #MENU_ID,CLASS_1_ID,CLASS_2_ID,CLASS_3_IDの順番で並んだ文字列を受け取る
-
+        print(class_3_sort_result)
         try:
             #受け取った文字列からリストを作成
             class_3_sort_result_list = class_3_sort_result[0].split(",")
+            print(class_3_sort_result_list)
             #CLASS_3から書き換え。理由は、クラス2を先に書き換えるとメニューの追跡が煩雑になるから
             #CLASS_3_IDを一旦全て0にする
             class_3_ids = db.session.query(Menu)
             class_3_ids = db.session.query(Menu).filter(Menu.STORE_ID==store_id).update({Menu.CLASS_3_ID: 0})
             for i in range(0, len(class_3_sort_result_list), 4):
+                print(i)
                 class_3_change_menu_id = class_3_sort_result_list[i]
                 class_3_change_class_1_id = class_3_sort_result_list[i+1]
                 class_3_change_class_2_id = class_3_sort_result_list[i+2]
@@ -298,22 +300,6 @@ def activate():
     return render_template('activate.html', tables=tables)
 
 
-# @app.route('/activate_json', methods = ['POST'])
-# def activate_json():
-#     try:
-#         store_id = session['store_id']
-#         table_status = request.get_json()
-#         table_number = table_status["table_number"]
-#         activate_status = table_status["activate_status"]
-#         db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE: activate_status})
-#         db.session.commit()
-#         db.session.close()
-#         result="true"
-#         return result
-#     except:
-#         result="false"
-#         return result
-
 @app.route('/store_setting')
 def store_setting():
     if 'store_id' not in session:
@@ -334,13 +320,13 @@ def logout():
 
 
 # QRコードから復元する際のテスト
-@app.route("/test/<int:store_id>/<int:table_number>")
-def test(store_id,table_number):
-    print(store_id)
-    print(table_number)
-    session.clear()
-    session['store_id'] = store_id
-    session['table_number'] = table_number
-    return redirect("/order")
+@app.route("/qrcode/<one_time_password>")
+def test(one_time_password):
+    # session.clear()
+    print("/orderに飛びたい")
+    print(one_time_password)
+    # session['store_id'] = store_id
+    # session['table_number'] = table_number
+    return render_template("order.html")
 # ここまで
 

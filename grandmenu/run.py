@@ -194,7 +194,6 @@ def table_activate(table_information):
 @socketio.on("kitchin_infomation")
 def kitchin_infomation(msg):
 	# 受け取ったMessageを表示
-	print('キッチンインフォメーションだよー')
 	print(msg)
 	# store_id → table_table_number → group_id → room(そのテーブルに座っている人にだけ送るチャットルームみたいなもの)の順に変数を設定していく
 	store_id=session['store_id']

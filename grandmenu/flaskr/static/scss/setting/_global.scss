@@ -35,3 +35,14 @@ select{
     -moz-appearance: none;
     text-align: center;
 }
+
+button {
+    background: none;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+button:focus { outline:0; }

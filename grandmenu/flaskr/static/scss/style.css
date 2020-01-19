@@ -52,6 +52,17 @@ select {
   -moz-appearance: none;
   text-align: center; }
 
+button {
+  background: none;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
+
+button:focus {
+  outline: 0; }
+
 /*====================
 mixinのインポート
 ====================*/
@@ -92,34 +103,6 @@ blockのインポート
   -webkit-box-direction: normal;
   -ms-flex-flow: column nowrap;
   flex-flow: column nowrap; }
-  .lightbox--add__back {
-    display: inline-block;
-    position: fixed;
-    right: 0;
-    top: 50%;
-    font-size: 30px;
-    color: #ffffff;
-    width: 30px;
-    height: 75px;
-    line-height: 75px;
-    text-align: center;
-    overflow: hidden;
-    -webkit-transition: .4s;
-    -o-transition: .4s;
-    transition: .4s;
-    background-color: #FFA500;
-    -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5)); }
-    @media screen and (max-width: 768px) {
-      .lightbox--add__back {
-        opacity: 0.75;
-        background-color: #072A24;
-        font-size: 16px;
-        width: 20px; } }
-    .lightbox--add__back:hover {
-      background: #111111;
-      -webkit-box-shadow: 0px 0px 0px 5px #111111;
-      box-shadow: 0px 0px 0px 5px #111111; }
 
 .lightbox--class_3 {
   -webkit-box-align: center;
@@ -139,34 +122,6 @@ blockのインポート
   flex-flow: column nowrap;
   overflow-y: scroll;
   padding: 65px 0 100px 0; }
-  .lightbox--class_3__back {
-    display: none;
-    position: fixed;
-    right: 0;
-    top: 50%;
-    font-size: 30px;
-    color: #ffffff;
-    width: 30px;
-    height: 75px;
-    line-height: 75px;
-    text-align: center;
-    overflow: hidden;
-    -webkit-transition: .4s;
-    -o-transition: .4s;
-    transition: .4s;
-    background-color: #FFA500;
-    -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5)); }
-    @media screen and (max-width: 768px) {
-      .lightbox--class_3__back {
-        opacity: 0.75;
-        background-color: #072A24;
-        font-size: 16px;
-        width: 20px; } }
-    .lightbox--class_3__back:hover {
-      background: #111111;
-      -webkit-box-shadow: 0px 0px 0px 5px #111111;
-      box-shadow: 0px 0px 0px 5px #111111; }
 
 .lightbox--ws_error {
   position: absolute;
@@ -198,43 +153,18 @@ blockのインポート
   position: absolute;
   width: 100%;
   height: 100%;
-  text-align: center;
   background: rgba(7, 42, 36, 0.3);
   top: 0;
   left: 100%;
   display: none;
-  -ms-flex-flow: wrap;
-  flex-flow: wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
   overflow-y: scroll;
-  padding: 5px 0 100px 0; }
-  .lightbox--order__back {
-    display: inline-block;
-    position: fixed;
-    right: 0;
-    top: 50%;
-    font-size: 30px;
-    color: #ffffff;
-    width: 30px;
-    height: 75px;
-    line-height: 75px;
-    text-align: center;
-    overflow: hidden;
-    -webkit-transition: .4s;
-    -o-transition: .4s;
-    transition: .4s;
-    background-color: #FFA500;
-    -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5)); }
-    @media screen and (max-width: 768px) {
-      .lightbox--order__back {
-        opacity: 0.75;
-        background-color: #072A24;
-        font-size: 16px;
-        width: 20px; } }
-    .lightbox--order__back:hover {
-      background: #111111;
-      -webkit-box-shadow: 0px 0px 0px 5px #111111;
-      box-shadow: 0px 0px 0px 5px #111111; }
+  padding: 5px 0 100px 0;
+  -ms-flex-line-pack: start;
+  align-content: flex-start; }
 
 .lightbox--qrcode {
   -webkit-box-pack: center;
@@ -261,7 +191,7 @@ blockのインポート
 
 .lightbox__back {
   display: inline-block;
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 50%;
   font-size: 30px;
@@ -1388,7 +1318,7 @@ blockのインポート
   cursor: pointer;
   width: 250px;
   height: 50px;
-  margin: 10px auto 10px auto;
+  margin: 10px calc(50% - 125px) 10px calc(50% - 125px);
   border-radius: 5px;
   border-style: none; }
   .form__button > span {
