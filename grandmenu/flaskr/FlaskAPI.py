@@ -31,19 +31,24 @@ def login_check():
         return redirect('/logout')
 
 # 商品数を求める関数、oder_statusの値によって、カートの中身や、注文済み、決済済みなどの値を求められる
-def total_quantity(store_id, table_number, group_id, order_status):
+def total_quantity():
+    store_id = session['store_id']
+    table_number = session['table_number']
+    group_id = session['group_id']
+    order_status = 0
     total_quantity = db.session.query(func.sum(Order.ORDER_QUANTITY)).\
         filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=order_status).\
         scalar()
-
     # 該当情報が1つもない場合、返り値がNoneになるので、その場合は0を代入する
     if total_quantity is None:
         total_quantity = 0
-
     return total_quantity
 
 # テーブル単位の商品情報を求める関数、oder_statusの値によって、カートの中身や、注文済み、決済済みなどの値を求められる
-def order_list(store_id, table_number, group_id, order_status):
+def order_list(order_status):
+    store_id = session['store_id']
+    table_number = session['table_number']
+    group_id = session['group_id']
     order_list = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY).\
     join(Order, Order.MENU_ID==Menu.MENU_ID).\
     filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=order_status).\
@@ -51,11 +56,11 @@ def order_list(store_id, table_number, group_id, order_status):
     return order_list
 
 # 単一の商品を求める関数
-def order_item(store_id, table_number, group_id, order_status, menu_id):
+def order_item(order_id):
     order_item = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY).\
     join(Order, Order.MENU_ID==Menu.MENU_ID).\
-    filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID= group_id, ORDER_STATUS=order_status, MENU_ID=menu_id).\
-    one()
+    filter_by(ORDER_ID=order_id).\
+    all()
     return order_item
 
 def order_list_for_kitchin(store_id, order_status):

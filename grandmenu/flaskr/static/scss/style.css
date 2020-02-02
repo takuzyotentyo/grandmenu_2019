@@ -44,9 +44,6 @@ select {
   text-overflow: '';
   /*テキストがオーバーフローした際に””で表示*/
   vertical-align: auto;
-  -webkit-appearance: button;
-  -moz-appearance: button;
-  appearance: button;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -83,15 +80,7 @@ blockのインポート
 /*テキストの大きさ*/
 /*色関係*/
 /*ブレイクポイント*/
-.lightbox--add {
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  /*左右中央揃え*/
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  /*上下中央揃え*/
+.lightbox {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -99,29 +88,14 @@ blockのインポート
   top: 0;
   left: 100%;
   display: none;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap; }
-
-.lightbox--class_3 {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  /*上下中央揃え*/
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(7, 42, 36, 0.3);
-  top: 0;
-  left: 100%;
-  display: none;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
   overflow-y: scroll;
-  padding: 65px 0 100px 0; }
+  padding: 5px 0 100px 0;
+  -ms-flex-line-pack: start;
+  align-content: flex-start; }
 
 .lightbox--ws_error {
   position: absolute;
@@ -138,6 +112,7 @@ blockのインポート
   height: 100%;
   top: 0;
   left: 100%;
+  visibility: hidden;
   background: rgba(7, 42, 36, 0.3); }
   .lightbox--ws_error__wi-fi {
     width: 100px;
@@ -148,23 +123,6 @@ blockのインポート
     background-repeat: no-repeat;
     -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
     filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5)); }
-
-.lightbox--order {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(7, 42, 36, 0.3);
-  top: 0;
-  left: 100%;
-  display: none;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: row wrap;
-  flex-flow: row wrap;
-  overflow-y: scroll;
-  padding: 5px 0 100px 0;
-  -ms-flex-line-pack: start;
-  align-content: flex-start; }
 
 .lightbox--qrcode {
   -webkit-box-pack: center;
@@ -329,7 +287,10 @@ blockのインポート
   overflow: hidden;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis; }
-  @media screen and (max-width: 768px) {
+  @media (min-width: 767px) and (max-width: 1024px) {
+    .menu_box--class_2 {
+      min-width: 48vw; } }
+  @media (max-width: 767px) {
     .menu_box--class_2 {
       width: 98%; } }
 
@@ -337,9 +298,10 @@ blockのインポート
   color: #ffffff;
   opacity: 0.9;
   position: relative;
-  display: inline-block;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 5px 1% 5px;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -ms-flex-flow: row wrap;
@@ -348,9 +310,11 @@ blockのインポート
   width: 48%;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
-  min-width: 320px; }
-  @media screen and (max-width: 767px) {
+  align-items: center; }
+  @media (min-width: 767px) and (max-width: 1024px) {
+    .menu_box--class_3 {
+      min-width: 48vw; } }
+  @media (max-width: 767px) {
     .menu_box--class_3 {
       width: 98%; } }
   .menu_box--class_3__name {
@@ -446,27 +410,13 @@ blockのインポート
   width: 48%;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
-  min-width: 320px; }
-  @media screen and (max-width: 767px) {
+  align-items: center; }
+  @media (min-width: 767px) and (max-width: 1024px) {
+    .menu_box--order {
+      min-width: 48vw; } }
+  @media (max-width: 767px) {
     .menu_box--order {
       width: 98%; } }
-  .menu_box--order__title {
-    color: #ffffff;
-    opacity: 0.9;
-    position: relative;
-    display: block;
-    margin: 5px auto 10px;
-    background-color: #072A24;
-    width: 48%;
-    line-height: 50px;
-    min-width: 320px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold; }
-    @media screen and (max-width: 767px) {
-      .menu_box--order__title {
-        width: 98%; } }
   .menu_box--order__food {
     color: #ffffff;
     opacity: 0.9;
@@ -629,6 +579,155 @@ blockのインポート
     background-color: #072A24;
     border: solid 5px #072A24; }
 
+.menu_box--order_history {
+  color: #ffffff;
+  opacity: 0.9;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 45px 1%;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  background-color: #FFA500;
+  width: 48%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center; }
+  @media (min-width: 767px) and (max-width: 1024px) {
+    .menu_box--order_history {
+      min-width: 48vw; } }
+  @media (max-width: 767px) {
+    .menu_box--order_history {
+      width: 98%; } }
+  .menu_box--order_history__food {
+    color: #ffffff;
+    opacity: 0.9;
+    position: relative;
+    display: block;
+    margin: 5px auto 10px;
+    background-color: #072A24;
+    width: 98%;
+    height: 50px;
+    line-height: 50px;
+    min-width: 320px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold; }
+  .menu_box--order_history__drink {
+    color: #ffffff;
+    opacity: 0.9;
+    position: relative;
+    display: block;
+    margin: 5px auto 10px;
+    background-color: #072A24;
+    width: 98%;
+    height: 50px;
+    line-height: 50px;
+    min-width: 320px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold; }
+  .menu_box--order_history__class_2 {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    line-height: 25px;
+    max-width: 100%;
+    padding: 0 5px;
+    background-color: #072A24; }
+  .menu_box--order_history__class_3 {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    line-height: 50px;
+    padding: 0 5px;
+    border-bottom: dashed 3px #ffffff; }
+  .menu_box--order_history__price {
+    display: inline-block;
+    width: calc(100% - 215px);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 16px;
+    line-height: 50px;
+    padding: 0 5px; }
+  .menu_box--order_history__quantity_label {
+    width: 50px;
+    font-size: 16px;
+    line-height: 50px;
+    text-align: center; }
+  .menu_box--order_history__quantity {
+    width: 30px;
+    height: 30px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    border: solid 2px #FFA500;
+    border-radius: 5px;
+    font-size: 18px;
+    text-align: center;
+    padding: 3px; }
+  .menu_box--order_history__subtotal {
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    line-height: 25px;
+    max-width: 100%;
+    padding: 0 5px;
+    background-color: #BF7900; }
+  .menu_box--order_history__table {
+    position: relative;
+    right: 0;
+    display: inline-block;
+    text-align: center;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    width: 50%;
+    padding: auto; }
+  .menu_box--order_history__order_check {
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    background: url("../img/check.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    opacity: .75;
+    -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    background-color: #072A24;
+    border: solid 5px #072A24; }
+
 .menu_box--class_2:hover {
   background: #111111; }
 
@@ -659,7 +758,7 @@ blockのインポート
   font-size: 30px;
   position: fixed;
   bottom: 25px; }
-  .button__delete {
+  .button__order_history {
     display: inline-block;
     text-decoration: none;
     color: #ffffff;
@@ -677,6 +776,32 @@ blockのインポート
     position: fixed;
     bottom: 25px;
     right: 2vh;
+    background-color: #7AB300;
+    -webkit-box-shadow: 0px 0px 0px 5px #7AB300;
+    box-shadow: 0px 0px 0px 5px #7AB300;
+    background-image: url("../img/order_history.svg"); }
+    .button__order_history:hover {
+      background-color: #111111;
+      -webkit-box-shadow: 0px 0px 0px 5px #111111;
+      box-shadow: 0px 0px 0px 5px #111111; }
+  .button__delete {
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    position: fixed;
+    bottom: 25px;
+    right: calc(2vh + 75px);
     background: #FFA500;
     -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
     box-shadow: 0px 0px 0px 5px #FFA500; }
@@ -697,7 +822,7 @@ blockのインポート
       font-size: 30px;
       position: fixed;
       bottom: 25px;
-      right: 2vh;
+      right: calc(2vh + 75px);
       background: #DC3B00;
       -webkit-box-shadow: 0px 0px 0px 5px #DC3B00;
       box-shadow: 0px 0px 0px 5px #DC3B00; }
@@ -722,7 +847,7 @@ blockのインポート
     font-size: 30px;
     position: fixed;
     bottom: 25px;
-    right: calc(2vh + 75px);
+    right: calc(2vh + 150px);
     background: #FFA500;
     -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
     box-shadow: 0px 0px 0px 5px #FFA500; }
@@ -747,7 +872,7 @@ blockのインポート
     font-size: 30px;
     position: fixed;
     bottom: 25px;
-    right: calc(2vh + 150px);
+    right: calc(2vh + 225px);
     background: #FFA500;
     -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
     box-shadow: 0px 0px 0px 5px #FFA500; }
@@ -768,7 +893,7 @@ blockのインポート
       font-size: 30px;
       position: fixed;
       bottom: 25px;
-      right: calc(2vh + 150px);
+      right: calc(2vh + 225px);
       background: #DC3B00;
       -webkit-box-shadow: 0px 0px 0px 5px #DC3B00;
       box-shadow: 0px 0px 0px 5px #DC3B00; }
@@ -784,168 +909,197 @@ blockのインポート
 /*テキストの大きさ*/
 /*色関係*/
 /*ブレイクポイント*/
-.wrapper__header {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: #FFA500;
+.wrapper--header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 50px;
   position: absolute;
-  width: 100vw;
-  z-index: 1000;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  align-items: center; }
+  background-color: #FFA500;
+  width: 100vw;
+  height: 50px;
+  z-index: 1000; }
 
-.wrapper__side {
-  padding-left: 0;
-  display: block;
+.wrapper--side {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column;
+  flex-flow: column;
   position: absolute;
   width: 0;
   height: calc(100vh - 50px);
   background: #FFA500;
   -webkit-box-shadow: rgba(100, 100, 100, 0.5) 10px 0px 10px;
   box-shadow: rgba(100, 100, 100, 0.5) 10px 0px 10px;
-  z-index: 999;
   overflow-y: scroll;
   overflow-x: hidden;
   left: 0vw;
-  top: 50px; }
+  top: 50px;
+  z-index: 999; }
 
-.wrapper__main {
+.wrapper--main {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   position: absolute;
-  width: 100vw;
-  height: calc(100vh - 50px);
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  -ms-flex-flow: wrap;
+  flex-flow: wrap;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100vw;
+  height: calc(100vh - 50px);
   top: 50px; }
-  .wrapper__main--multi {
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: row wrap;
-    flex-flow: row wrap;
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    overflow: scroll;
-    font-size: 0; }
 
-.wrapper__100p {
+.wrapper--login {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  position: relative;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column;
+  flex-flow: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center; }
+
+.wrapper--index {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column;
+  flex-flow: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   width: 100%;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap;
-  overflow: scroll; }
-  .wrapper__100p--v_h_center {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: column nowrap;
-    flex-flow: column nowrap;
-    overflow: scroll;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    /*コンテンツの上下中央揃え*/
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    /*左右中央揃え*/ }
-
-.wrapper__50p {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  position: relative;
-  width: 50%;
   height: 100%;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap;
-  overflow: scroll; }
-  .wrapper__50p--v_h_center {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    position: relative;
-    width: 50%;
-    height: 100%;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: column nowrap;
-    flex-flow: column nowrap;
-    overflow: scroll;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    /*コンテンツの上下中央揃え*/
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    /*左右中央揃え*/ }
+  background-color: rgba(7, 42, 36, 0.3); }
 
-.wrapper__25p {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  position: relative;
-  width: 25%;
-  height: 100%;
+.wrapper--show_menu {
+  display: inline-block;
   -ms-flex-flow: wrap;
   flex-flow: wrap;
-  overflow: scroll; }
-  .wrapper__25p--v_h_center {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    position: relative;
-    width: 25%;
-    height: 100%;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: column nowrap;
-    flex-flow: column nowrap;
-    overflow: scroll;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    /*コンテンツの上下中央揃え*/
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    /*左右中央揃え*/ }
+  width: 100%;
+  height: 100%;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  overflow-y: scroll;
+  font-size: 0; }
+
+.wrapper--class_3 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: wrap;
+  flex-flow: wrap;
+  overflow-y: scroll;
+  width: 100%;
+  margin-top: 60px;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -ms-flex-line-pack: start;
+  align-content: flex-start; }
+
+.wrapper--add_menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column;
+  flex-flow: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%; }
+
+.wrapper--cart {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: wrap;
+  flex-flow: wrap;
+  width: 100%;
+  height: 100%;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  overflow-y: scroll; }
+
+.wrapper--order_history {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: wrap;
+  flex-flow: wrap;
+  width: 100%;
+  height: 100%;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  overflow-y: scroll; }
+
+.wrapper--activate {
+  display: inline-block;
+  -ms-flex-flow: wrap;
+  flex-flow: wrap;
+  width: 100%;
+  height: 100%;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  overflow-y: scroll;
+  font-size: 0; }
+
+.wrapper--qrcode {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column;
+  flex-flow: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%; }
+
+.sortable_wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow-y: scroll;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  width: 100%; }
 
 .table_activate__wrap {
   display: -webkit-box;
@@ -956,10 +1110,14 @@ blockのインポート
   overflow: scroll; }
 
 .order_list__wrap {
-  display: none;
   -ms-flex-flow: wrap;
   flex-flow: wrap;
-  overflow: scroll; }
+  overflow: scroll;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: start;
+  align-content: flex-start; }
 
 /*====================
 サイトの基本設定
@@ -1171,6 +1329,22 @@ blockのインポート
 /*テキストの大きさ*/
 /*色関係*/
 /*ブレイクポイント*/
+.fadein {
+  -webkit-animation: fadeIn 2s ease 0s 1 normal;
+  animation: fadeIn 2s ease 0s 1 normal; }
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
 .vibration {
   -webkit-animation: vibration .3s  infinite;
   animation: vibration .3s  infinite; }
@@ -1208,6 +1382,56 @@ blockのインポート
   100% {
     -webkit-transform: translate(0px, 0px) rotateZ(0deg);
     transform: translate(0px, 0px) rotateZ(0deg); } }
+
+.bound {
+  -webkit-animation: vibration .75s  infinite;
+  animation: vibration .75s  infinite; }
+
+@-webkit-keyframes keyframes {
+  0% {
+    top: 100px;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out; }
+  25% {
+    top: 50px;
+    height: 60px;
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in; }
+  50% {
+    top: 150px;
+    height: 50px;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out; }
+  75% {
+    top: 50px;
+    height: 60px;
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in; }
+  100% {
+    top: 100px; } }
+
+@keyframes keyframes {
+  0% {
+    top: 100px;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out; }
+  25% {
+    top: 50px;
+    height: 60px;
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in; }
+  50% {
+    top: 150px;
+    height: 50px;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out; }
+  75% {
+    top: 50px;
+    height: 60px;
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in; }
+  100% {
+    top: 100px; } }
 
 /*====================
 サイトの基本設定
@@ -1325,8 +1549,8 @@ blockのインポート
     position: absolute;
     top: 0;
     left: 0;
-    width: 250px;
-    height: 50px;
+    width: 100%;
+    height: 100%;
     line-height: 50px;
     text-align: center;
     -webkit-transition: all .2s;
@@ -1387,12 +1611,6 @@ blockのインポート
   background: rgba(7, 42, 36, 0.3);
   -webkit-animation: fadeIn 2s ease 0s 1 normal;
   animation: fadeIn 2s ease 0s 1 normal; }
-
-@-webkit-keyframes fadeIn {
-  0% {
-    opacity: 0; }
-  100% {
-    opacity: 1; } }
 
 @keyframes fadeIn {
   0% {
@@ -1483,7 +1701,7 @@ blockのインポート
   -ms-transform: translateX(100%);
   transform: translateX(100%);
   /* BOXを右に移動      */
-  background: #78bd78;
+  background: #7AB300;
   /* 背景色             */ }
 
 /*====================
@@ -1576,3 +1794,38 @@ blockのインポート
   line-height: 150%;
   text-align: center;
   padding: auto; }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.total--order {
+  background-color: #FFA500;
+  color: #ffffff;
+  display: inline-block;
+  position: relative;
+  width: 250px;
+  height: 50px;
+  margin: 10px calc(50% - 125px) 10px calc(50% - 125px);
+  border-radius: 5px;
+  border-style: none;
+  text-align: center;
+  font-size: 18px;
+  line-height: 50px; }
+
+.total--order_history {
+  background-color: #FFA500;
+  color: #ffffff;
+  display: inline-block;
+  position: relative;
+  width: 250px;
+  height: 50px;
+  margin: 10px calc(50% - 125px) 10px calc(50% - 125px);
+  border-radius: 5px;
+  border-style: none;
+  text-align: center;
+  font-size: 18px;
+  line-height: 50px; }

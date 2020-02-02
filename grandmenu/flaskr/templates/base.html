@@ -20,7 +20,7 @@
 
 <body>
   <div class="background_color">
-    <div class="wrapper__header">
+    <div class="wrapper--header">
       <div class="header__menu js-header__menu icon_menu">
         <!-- メニューの三本線に使う -->
       <span></span>
@@ -31,7 +31,7 @@
   </div>
 
 <!-- サイドメニュー -->
-    <ul class="wrapper__side">
+    <ul class="wrapper--side">
 
       <li class="side_menu_1">
         <div class="side_menu_1__content">オーダーシステム</div>
@@ -64,10 +64,9 @@
     </ul>
 
 <!-- メインメニュー -->
-    <div class="wrapper__main">
+    <div class="wrapper--main">
     <div class="picture--base"></div>
-
-  {% block global_navi %}{% endblock %}
+      {% block global_navi %}{% endblock %}
     </div>
   </div>
 </div>

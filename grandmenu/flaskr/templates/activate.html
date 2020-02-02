@@ -1,17 +1,19 @@
 {% extends "base--kitchin.html" %}
 {% block global_navi %}
-<div class="wrapper__main--multi">
+<div class="wrapper--activate">
+
 	<div class="radio_button--activate_order">
-    <input type="radio" id="activate" class="js-activate radio_button--activate_order__radio" name="activate_order" value="activate" checked="true">
+    <input type="radio" id="activate" class="js-show__container radio_button--activate_order__radio" name="activate_order" value="activate" checked="true" data-container="table_activate">
       <label for="activate">Activate</label>
-    <input type="radio" id="order" class="js-order radio_button--activate_order__radio" name="activate_order" value="order">
+    <input type="radio" id="order" class="js-show__container radio_button--activate_order__radio" name="activate_order" value="order" data-container="order_list">
       <label for="order">Order</label>
-  	</div>
-    <div class="table_activate__wrap">
-		{% for tables in tables %}
-		<div class="table_activate">
-		<div class="table_activate__table_number">Table {{tables[0]}}</div>
-		<div class="table_activate__checkbox_aera">
+  </div>
+
+  <div class="table_activate__wrap" data-target="table_activate">
+	  {% for tables in tables %}
+	    <div class="table_activate">
+	    <div class="table_activate__table_number">Table {{tables[0]}}</div>
+	    <div class="table_activate__checkbox_aera">
 			<!-- アクティベートされているかをチェック -->
 			{% if tables[1] == 0 %}
   			<input type="checkbox" id="table_{{tables[0]}}" class="table_activate__checkbox">
@@ -23,27 +25,31 @@
    			</label>
    		</div>
       {% if tables[1] == 0 %}
-   		<div class="text__body js-show_qrcode" style="visibility:hidden;">
+   		<div class="text__body js-show__lightbox js-show__qrcode" data-show="qrcode" style="visibility:hidden;" data-qrcode="qrcode_{{tables[0]}}">
    			QR確認 >
    		</div>
       {% else %}
-      <div class="text__body js-show_qrcode">
+      <div class="text__body js-show__lightbox js-show__qrcode" data-show="qrcode" data-qrcode="qrcode_{{tables[0]}}">
         QR確認 >
       </div>
       {% endif %}
    		</div>
-		{% endfor %}
-    </div>
+	  {% endfor %}
+  </div>
 
-    <div class="order_list__wrap">
+  <div class="order_list__wrap" data-target="order_list" style= display:none;>
+  </div>
+
+  <div class="lightbox">
+    <div class="wrapper--qrcode" data-target="qrcode">
+      {% for tables in tables %}
+        {% if tables[1] == 1 %}
+          <div id="container_qrcode_{{tables[0]}}" data-target="qrcode_{{tables[0]}}" data-one_time_password="{{tables[2]}}">
+            <div class="text__title">Table {{tables[0]}}</div>
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
-    {% for tables in tables %}
-    {% if tables[1] == 1 %}
-        <div class="lightbox--qrcode" id="qrcode_{{tables[0]}}_wrap" value="{{tables[2]}}" style="left:100%; display:none;">
-          <div class="text__title">Table {{tables[0]}}</div>
-          <div class="lightbox__back">></div>
-        </div>
-    {% endif %}
-    {% endfor %}
-</div>
+    <div class="lightbox__back" data-target="lightbox_always_show">></div>
+  </div>
 {% endblock %}

@@ -60,5 +60,5 @@
  /* === ON側のチェックボックスの移動BOX（ONのとき） ========= */
 .table_activate__checkbox:checked + label > .table_activate__checkbox_decoration {
   transform      : translateX(100%);    /* BOXを右に移動      */
-  background     : #78bd78;             /* 背景色             */
+  background     : $color-accent;             /* 背景色             */
 }

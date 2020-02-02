@@ -2,101 +2,122 @@
 
 .wrapper{
 	// 中身を中央揃えしたくないので、@include column;は行わない
-	&__header{
-		align-items: center;
-		background-color: $color-main;
+	&--header{
 		display: flex;
-		height: 50px;
 		position: absolute;
-		width:100vw;
-		z-index:1000;
+		align-items: center;
 		justify-content: center;
-    	align-items: center;
+		background-color: $color-main;
+		width: 100vw;
+		height: 50px;
+		z-index: 1000;
 	}
-	&__side{
-		padding-left: 0;
-	    display: block;
+	&--side{
+	    display: flex;
+	    flex-flow: column;
 	    position: absolute;
 	    width: 0;
 	    height: calc(100vh - 50px);
 	    background: $color-main;
 	    box-shadow: rgba(100,100,100,0.5) 10px 0px 10px;
-	    z-index: 999;
 	    overflow-y: scroll;
 	    overflow-x: hidden;
 	    left: 0vw;
 	    top: 50px;
+	   	z-index: 999;
 	}
-	&__main{
+	&--main{
 		display: flex;
 		position: absolute;
+		flex-flow: wrap;
+		align-items: center;
+    	justify-content: center;
 		width: 100vw;
 		height: calc(100vh - 50px);
-		flex-flow: column nowrap;
-    	justify-content: center;
-    	align-items: center;
     	top: 50px;
-    	&--multi{	//main要素は基本的に1カラムだが、マルチカラムにする場合に掛けるwrapper
-    		display: inline-block;
-			position: absolute;
-			top:0;
-			left:0;
-			width: 100%;
-			height: 100%;
-			flex-flow: row wrap;
-    		justify-content: flex-start;
-    		overflow:scroll;
-    		font-size: 0;	//子要素間の隙間を0にするために必要
-    	}
+    }
+    &--login{
+    	display: flex;
+		flex-flow: column;
+		align-items: center;
 	}
-	&__100p{
-		@include wrapper;
+	&--index{
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		justify-content: center;
 		width: 100%;
-		// height: 100%;
-		flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
-		overflow:scroll;
-		&--v_h_center{
-			@include wrapper;
-			width: 100%;
-			height: 100%;
-			flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
-			overflow:scroll;
-			align-items: center;     /*コンテンツの上下中央揃え*/
-			justify-content: center; /*左右中央揃え*/
-		}
-	}
-	&__50p{
-		@include wrapper;
-		width: 50%;
 		height: 100%;
-		flex-flow: column nowrap;
-		overflow:scroll;
-		&--v_h_center{
-			@include wrapper;
-			width: 50%;
-			height: 100%;
-			flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
-			overflow:scroll;
-			align-items: center;     /*コンテンツの上下中央揃え*/
-			justify-content: center; /*左右中央揃え*/
-		}
+		background-color: rgba(7, 42, 36, 0.3);
 	}
-	&__25p{
-		@include wrapper;
-		width: 25%;
-		height: 100%;
+	&--show_menu{
+		display: inline-block;
 		flex-flow: wrap;
-		overflow:scroll;
-		&--v_h_center{
-			@include wrapper;
-			width: 25%;
-			height: 100%;
-			flex-flow: column nowrap;	//カラム内のコンテンツを1列で表示
-			overflow:scroll;
-			align-items: center;     /*コンテンツの上下中央揃え*/
-			justify-content: center; /*左右中央揃え*/
-		}
+		width: 100%;
+		height: 100%;
+		align-content: flex-start;
+		overflow-y: scroll;
+		font-size: 0;	//子要素間の隙間を0にするために必要
 	}
+	&--class_3{
+		display: flex;
+		flex-flow: wrap;
+		overflow-y: scroll;
+		width: 100%;
+		margin-top: 60px;
+		align-items: baseline;
+		align-content: flex-start;
+	}
+	&--add_menu{
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+	}
+	&--cart{
+		display: flex;
+		flex-flow: wrap;
+		width: 100%;
+		height: 100%;
+		align-content: flex-start;
+		overflow-y: scroll;
+	}
+	&--order_history{
+		display: flex;
+		flex-flow: wrap;
+		width: 100%;
+		height: 100%;
+		align-content: flex-start;
+		overflow-y: scroll;
+	}
+	&--activate{
+		display: inline-block;
+		flex-flow: wrap;
+		width: 100%;
+		height: 100%;
+		align-content: flex-start;
+		overflow-y: scroll;
+		font-size: 0;	//子要素間の隙間を0にするために必要
+	}
+	&--qrcode{
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+
+.sortable_wrap{
+	display: flex;
+	overflow-y:scroll;
+	flex-flow: row wrap;
+	align-items: baseline;
+	width: 100%;
 }
 
 .table_activate__wrap{
@@ -106,9 +127,11 @@
 }
 
 .order_list__wrap{
-	display: none;
+	// display: none;
 	flex-flow: wrap;
 	overflow:scroll;
+	display: flex;
+	align-content: flex-start;
 }
 	// &--content{
 	// 	&__100p{

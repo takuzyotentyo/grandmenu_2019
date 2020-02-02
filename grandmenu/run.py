@@ -9,7 +9,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, ro
 #modelの読み込み
 from flaskr.models import Store, Staff, Menu, Table, Order
 #sqlalchemyでfuncを使う(maxやminなどが使えるようになる)
-from sqlalchemy import func
+from sqlalchemy import func, or_
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -23,127 +23,82 @@ db=SQLAlchemy(app)
 socketio=SocketIO(app, async_mode=None)
 
 # クライアント側と繋がった場合に、注文中のメニューを返す
-@socketio.on("cart_information")
-def cart_information(msg):
-	# 受け取ったMessageを表示
-	print(msg)
-
-	# store_id → table_number → group_id → room(そのテーブルに座っている人にだけ送るチャットルームみたいなもの)の順に変数を設定していく
-	store_id=session['store_id']
-
-	# 店舗の場合はsessionにtable_numberを持っていないので、0を代入
-	if 'table_number' not in session:
-		session['table_number']=0
-	table_number=session['table_number']
-
-	# 決済が完了しているグループのgroup_idをgroup_id_maxとして取得
+@socketio.on('cart')
+def cart(cart):
+	print(cart)
+	# store_id, table_number, group_idを設定
+	store_id = session['store_id']
+	table_number = session['table_number']
 	group_id_max=db.session.query(func.max(Order.GROUP_ID)).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, ORDER_STATUS=7).scalar()
-	# group_id_maxに対して+1した数字が現在のgroup_id(group_id_maxがNoneの場合、その店のそのテーブルで注文する初めての客)
 	if group_id_max is None:
 		group_id=1
 	else:
 		group_id=group_id_max + 1
 	session['group_id']=group_id
-
-	# roomをセッションに持たせる
-	session['room']=str(session['store_id']) + "_" + str(session['table_number']) + "_" + str(session['group_id'])
-	session['store']=str(session['store_id'])
-	room=session['room']
-	# roomというチャットスペースみたいなところに入る
-	join_room(room)
-
-	# カートの中身を見たいので、order_status=0を設定
-	order_status=0
-	# カートに入っている商品数を求める(order_statusの値を変更すれば、カートに入っているものや、注文済みのもの、決済が完了したものを見ることができる)
-	total_quantity=FlaskAPI.total_quantity(store_id, table_number, group_id, order_status)
-	# カートに入っている商品情報を求める(order_statusの値を変更すれば、カートに入っているものや、注文済みのもの、決済が完了したものを見ることができる)
-	order_list=FlaskAPI.order_list(store_id, table_number, group_id, order_status)
-
-	# その人だけに返す
-	emit("cart_information",{'total_quantity': total_quantity, 'order_list': order_list})
+	group_id = session['group_id']
+	if cart['action'] == 'show':
+		# roomをセッションに持たせる
+		session['room'] = str(session['store_id']) + '_' + str(session['table_number']) + '_' + str(session['group_id'])
+		session['store'] = str(session['store_id'])
+		room=session['room']
+		# roomというチャットスペースみたいなところに入る
+		join_room(room)
+		# カートに入っている商品数を求める
+		total_quantity = FlaskAPI.total_quantity()
+		# カートに入っている商品情報を求める
+		order_status = 0
+		order_list = FlaskAPI.order_list(order_status)
+		order_history = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY).\
+		    join(Order, Order.MENU_ID==Menu.MENU_ID).\
+		    filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, or_(Order.ORDER_STATUS==2 ,Order.ORDER_STATUS==3)).\
+		    all()
+		# その人だけに返す
+		emit('cart',{'action':'show', 'total_quantity': total_quantity, 'order_list': order_list})
+		emit('order_history',{'action':'show', 'order_history': order_history})
+	else:
+		room = session['room']
+		if cart['action'] == 'add':
+			menu_id = cart['menu_id']
+			order_quantity = cart['order_quantity']
+			order_status = 0
+			try:
+				existing_order=db.session.query(Order).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=order_status, MENU_ID=menu_id).one()
+				existing_order.ORDER_QUANTITY=existing_order.ORDER_QUANTITY + int(order_quantity)
+				db.session.commit()
+				order_id = existing_order.ORDER_ID
+				db.session.close()
+			except:
+				add_infomation = Order(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=order_status, MENU_ID=menu_id, ORDER_QUANTITY=order_quantity)
+				db.session.add(add_infomation)
+				db.session.commit()
+				order_id = add_infomation.ORDER_ID
+				db.session.close()
+			total_quantity=FlaskAPI.total_quantity()
+			order_list=FlaskAPI.order_item(order_id)
+			emit('cart',{'action':'add', 'total_quantity': total_quantity, 'order_list': order_list}, room=room)
+		elif cart['action'] == 'change':
+			order_id=cart['order_id']
+			order_quantity=cart['order_quantity']
+			# カートに加えられるアイテムが正しいか判定エラーが出ればexceptに飛ばす
+			order_item=db.session.query(Order).filter_by(ORDER_ID=order_id).one()
+			# 注文数量が0の時、カートのステータスをカゴ落ち(1)に変更する
+			if order_quantity<=0:
+				order_item.ORDER_STATUS=1
+			# 数量の変更
+			order_item.ORDER_QUANTITY=order_quantity
+			print(order_item)
+			db.session.commit()
+			db.session.close()
+			total_quantity=FlaskAPI.total_quantity()
+			order_list=FlaskAPI.order_item(order_id)
+			emit('cart',{'action':'change', 'total_quantity': total_quantity, 'order_list': order_list}, room=room)
 
 # サーバー側からもコネクトする処理。特に意味無し
 @socketio.on('connect')
 def server_to_client_connection():
 	emit("server_to_client_connection","server has connected", broadcast=True)
 
-# 送られてくる情報はmenu_id,quantity
-@socketio.on("add_to_cart")
-def add_to_cart(add_to_cart):
-	try:
-		print("メニューIDは" + add_to_cart["menu_id"])
-		print("注文数量は" + add_to_cart["order_quantity"])
-
-		store_id=session['store_id']
-		table_number=session['table_number']
-		group_id=session['group_id']
-
-		menu_id=add_to_cart["menu_id"]
-		order_quantity=add_to_cart["order_quantity"]
-
-		# カートに加えられるアイテムが正しいか判定
-		store_id==db.session.query(Menu.STORE_ID).filter_by(STORE_ID=store_id, MENU_ID=menu_id).one()
-
-		#order_status=0はかごに入ってる状態を示す
-		order_status=0
-
-		# 既にオーダーされている種類であれば数量追加、なければ新規登録
-		try:
-			existing_order=db.session.query(Order).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=order_status, MENU_ID=menu_id).one()
-			existing_order.ORDER_QUANTITY=existing_order.ORDER_QUANTITY + int(order_quantity)
-			db.session.commit()
-			db.session.close()
-		except:
-			db.session.add(Order(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=order_status, MENU_ID=menu_id, ORDER_QUANTITY=order_quantity))
-			db.session.commit()
-			db.session.close()
-
-		total_quantity=FlaskAPI.total_quantity(store_id, table_number, group_id, order_status)
-		order_item=FlaskAPI.order_item(store_id, table_number, group_id, order_status, menu_id)
-		print(order_item)
-		print(type(order_item))
-		room=session['room']
-		emit("add_to_cart",{'total_quantity': total_quantity, 'order_item': order_item}, room=room)
-	except:
-		room=session['room']
-		emit("server_to_client_connection","false", room=room)
-
-@socketio.on("change_cart")
-def change_quantity(change_cart):
-	try:
-		print("注文IDは" + change_cart["order_id"])
-		print("注文数量が" + str(change_cart["order_quantity"]) + "になりました")
-
-		store_id=session['store_id']
-		table_number=session['table_number']
-		group_id=session['group_id']
-		order_id=change_cart["order_id"]
-		order_quantity=change_cart["order_quantity"]
-		order_status=0
-
-		# カートに加えられるアイテムが正しいか判定エラーが出ればexceptに飛ばす
-		order_item=db.session.query(Order).\
-		filter_by(ORDER_ID=order_id, STORE_ID=store_id).one()
-		menu_id=order_item.MENU_ID
-
-		# 注文数量が0の時、カートのステータスをカゴ落ち(1)に変更する
-		if order_quantity<=0:
-			order_item.ORDER_STATUS=1
-		print(order_item)
-
-		# 数量の変更
-		order_item.ORDER_QUANTITY=order_quantity
-		print(order_item)
-		db.session.commit()
-		db.session.close()
-
-		total_quantity=FlaskAPI.total_quantity(store_id, table_number, group_id, order_status)
-		room=session['room']
-		emit("change_cart",{'total_quantity': total_quantity, 'order_id': order_id, 'order_quantity':order_quantity}, room=room)
-	except:
-		 room=session['room']
-		 emit("server_to_client_connection","false", room=room)
-
+# オーダーを飛ばす処理
 @socketio.on("order_submit")
 def order_submit():
 	print("オーダー決定")
@@ -154,13 +109,14 @@ def order_submit():
 
 	order_status=0
 	order_list=FlaskAPI.order_item_for_kitchin(store_id, table_number, group_id, order_status)
-	print("テスト")
-	print(order_list)
+	order_history=FlaskAPI.order_list(order_status)
 	order_status=2
 	order_timestamp = datetime.now()
 
 
-	db.session.query(Order).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=0).update({Order.ORDER_STATUS: order_status, Order.ORDER_TIMESTAMP: order_timestamp})
+	orders=db.session.query(Order).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=0).update({Order.ORDER_STATUS: order_status, Order.ORDER_TIMESTAMP: order_timestamp})
+	# print("print orders")
+	print(order_history)
 	db.session.commit()
 	db.session.close()
 
@@ -168,7 +124,8 @@ def order_submit():
 	print(order_list)
 
 	emit("show_order", {'action':'add', 'order_list':order_list}, room=store_id)
-	emit("cart_information", {'total_quantity': 0, 'order_list': []}, room=room)
+	emit("cart", {'action':'submit', 'total_quantity': 0, 'order_list': []}, room=room)
+	emit("order_history",{'action': 'add', 'order_history': order_history}, room=room)
 
 # テーブルアクティベートの処理
 @socketio.on("table_activate")
@@ -204,7 +161,7 @@ def kitchin_infomation(msg):
 	# カートに入っている商品情報を求める(order_statusの値を変更すれば、カートに入っているものや、注文済みのもの、決済が完了したものを見ることができる)
 	order_list=FlaskAPI.order_list_for_kitchin(store_id, order_status)
 	# roomのメンバーに情報を送信
-	emit("show_order",{'action':'load', 'order_list':order_list})
+	emit("show_order",{'action':'show', 'order_list':order_list})
 
 @socketio.on("order_check")
 def order_check(order_id):

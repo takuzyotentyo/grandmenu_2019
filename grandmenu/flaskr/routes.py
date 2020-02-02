@@ -95,11 +95,11 @@ def login():
 # /に飛んだ時
 @app.route('/')
 def index():
-    # sessionに'login'がなければlogout処理
-    login_check = FlaskAPI.login_check()
-    # 店舗名が登録されてなければ、store_settingに飛ばす
     try:
+        # sessionに'login'がなければlogout処理
+        login_check = FlaskAPI.login_check()
         store_id = session['store_id']
+        # 店舗名が登録されてなければ、store_settingに飛ばす
         store_name = db.session.query(Store.STORE_NAME).filter(Store.STORE_ID==store_id, Store.STORE_NAME != "", Store.TABLES != None).one()
         return render_template('index.html',store_name=store_name)
     except:

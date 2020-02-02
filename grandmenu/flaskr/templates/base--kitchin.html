@@ -96,10 +96,11 @@
 
     // table_activateを反映する処理
     socket.on('table_activate', function(table_status){
+      console.log("table_activateを実行します")
       var table_number = table_status['table_number']
       var table_number_obj = $("#table_" + table_status['table_number'])
       var activate_status = table_status['activate_status']
-      var one_time_password = "http://127.0.0.1:5000/qrcode/" + table_status['one_time_password']
+      var one_time_password =  table_status['one_time_password']
       // 実際にチェックを入れたユーザーをorigin_userとする(origin_userの場合、前の工程でチェックを入れているので、trueが入る)
       var origin_user = table_number_obj.prop("checked")
       console.log(origin_user)
@@ -107,40 +108,52 @@
       if(activate_status == 1){
         table_number_obj.prop("checked", true);
         table_number_obj.parent().next(".text__body").css("visibility","visible")
-        $('<div class="lightbox--qrcode" id =  "qrcode_' + table_number + '_wrap"></div>').insertAfter(".table_activate__wrap");
-        if(origin_user == false){
-          $('#qrcode_' + table_number + '_wrap').css("left","100%");
-        };
-        $('<div class="text__title">Table ' + table_number + '</div>').appendTo("#qrcode_" + table_number + "_wrap");
-        $('<span id="qrcode_' + table_number +'"></span>').appendTo("#qrcode_" + table_number + "_wrap");
+        $('.wrapper--qrcode').append('<div id="container_qrcode_'+table_number+'" data-target="qrcode_'+table_number+'" data-one_time_password="'+one_time_password+'"></div>')
+        $("#container_qrcode_" + table_number)
+          .append('<div class="text__title">Table ' + table_number + '</div>')
+          .append('<span id="qrcode_' + table_number +'"></span>')
         $("#qrcode_" + table_number).qrcode(one_time_password);
-        $('<div class="lightbox__back">></div>').appendTo("#qrcode_" + table_number + "_wrap");
         console.log(one_time_password)
+        if(origin_user == true){
+          console.log("origin_userは"+origin_user)
+          $(".lightbox").children().css("display","none");
+          $(".wrapper--qrcode").children().css("display", "none")
+          $(".wrapper--qrcode").css("display","");
+          $("#container_qrcode_" + table_number).css("display", "")
+          $(".lightbox").css("display","flex")
+          $('[data-target="lightbox_always_show"]').css("display", "");
+          $(".lightbox").animate({left:"0%"}, 250);
+        };
       }else{
         table_number_obj.prop("checked", false);
         table_number_obj.parent().next(".text__body").css("visibility","hidden")
-        $("#qrcode_" + table_number + "_wrap").remove();
+        $("#container_qrcode_" + table_number).remove();
       };
     });
 
     socket.on('show_order', function(data){
-      if(data['action']=="load"){
-      // 一度消して、再度表示させる処理は、websocketが意図せず切れたときのために必要
-        $(".order_list__wrap").remove();
-        $('<div class="order_list__wrap"></div>').insertAfter(".table_activate__wrap").css("display", "none");
+      if(data['action']=="show"){
+        $(".order_list__wrap").empty();
       };
-      console.log("オーダーリスト表示まではきてるよー")
       var len = data['order_list'].length;
-      order_list = data['order_list']
+      var order_list = data['order_list']
       // 以下の処理で、order_listをHTML内に組み込む
       for (var i=0; i<len; i++) {
-          $('<li class="menu_box--order"></li>').appendTo(".order_list__wrap").attr('id','order_id_' + (order_list[i][0]));
-          $('<span class="menu_box--order__class_2"></span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][2]);
-          $('<span class="menu_box--order__class_3"></span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][3]);
-          $('<span class="menu_box--order__table"></span>').appendTo('#order_id_' + order_list[i][0]).text("Table "+order_list[i][4]);
-          $('<span class="menu_box--order__quantity_label"></span>').appendTo('#order_id_' + order_list[i][0]).text("数量");
-          $('<span class="menu_box--order__quantity"><span>').appendTo('#order_id_' + order_list[i][0]).text(order_list[i][5]);
-          $('<span class="menu_box--order__order_check"></span>').appendTo('#order_id_' + order_list[i][0]);
+        var order_id = order_list[i][0]
+        var class_1 = order_list[i][1]
+        var class_2 = order_list[i][2]
+        var class_3 = order_list[i][3]
+        var table_number = order_list[i][4]
+        var quantity = order_list[i][5]
+        $(".order_list__wrap")
+          .append('<li class="menu_box--order" id="order_id_'+order_id+'"></li>');
+        $('#order_id_' + order_id)
+        .append('<span class="menu_box--order__class_2">'+class_2+'</span>')
+        .append('<span class="menu_box--order__class_3">'+class_3+'</span>')
+        .append('<span class="menu_box--order__table">Table '+table_number+'</span>')
+        .append('<span class="menu_box--order__quantity_label">数量</span>')
+        .append('<span class="menu_box--order__quantity">'+quantity+'<span>')
+        .append('<span class="menu_box--order__order_check"></span>')
         console.log(order_list[i][3]);
       };
     });
@@ -172,7 +185,7 @@
 </script>
 
   <div class="background_color">
-    <div class="wrapper__header">
+    <div class="wrapper--header">
       <div class="header__menu js-header__menu icon_menu">
         <!-- メニューの三本線に使う -->
       <span></span>
@@ -183,7 +196,7 @@
   </div>
 
 <!-- サイドメニュー -->
-    <ul class="wrapper__side">
+    <ul class="wrapper--side">
 
       <li class="side_menu_1">
         <div class="side_menu_1__content">オーダーシステム</div>
@@ -216,7 +229,7 @@
     </ul>
 
 <!-- メインメニュー -->
-    <div class="wrapper__main">
+    <div class="wrapper--main">
     <div class="picture--base"></div>
   {% block global_navi %}{% endblock %}
     <div class="lightbox--ws_error">
@@ -225,7 +238,6 @@
     </div>
     </div>
   </div>
-</div>
 </body>
 
 </html>

@@ -26,29 +26,30 @@ $(document).on('click', '.js-header__menu', function(){
     if($(this).hasClass("js-header__menu--doing")){
       $(this).removeClass("js-header__menu--doing");
       $("body").removeClass("overflow-hidden"); //サイドメニューが表示されることで起こるレイアウトの崩れのhiddenを解除
-      $(".wrapper__side").animate({width:"0vw"}, 250);
-      $(".wrapper__main").animate({width:"100vw"},250);
-      $(".wrapper__main").animate({left:"0vw"}, 250);
+      $(".wrapper--side").animate({width:"0vw"}, 250);
+      $(".wrapper--main").animate({width:"100vw"},250);
+      $(".wrapper--main").animate({left:"0vw"}, 250);
     }else{
 // サイドメニューを表示する処理
       $(this).addClass("js-header__menu--doing");
       $("body").addClass("overflow-hidden"); //サイドメニューが表示されることで起こるレイアウトの崩れをhiddenで回避
 // ディスプレイサイズによって、どこまで表示するかを選択する
     if(device_width < 768){
-      $(".wrapper__side").animate({width:"100vw"}, 250);
-      $(".wrapper__main").animate({width:"0vw"},250);
-      $(".wrapper__main").animate({left:"100vw"}, 250);
+      $(".wrapper--side").animate({width:"100vw"}, 250);
+      $(".wrapper--main").animate({width:"0vw"},250);
+      $(".wrapper--main").animate({left:"100vw"}, 250);
     }else if(device_width < 1024){
-      $(".wrapper__side").animate({width:"50vw"}, 250);
-      $(".wrapper__main").animate({width:"50vw"},250);
-      $(".wrapper__main").animate({left:"50vw"}, 250);
+      $(".wrapper--side").animate({width:"50vw"}, 250);
+      $(".wrapper--main").animate({width:"50vw"},250);
+      $(".wrapper--main").animate({left:"50vw"}, 250);
     }else{
-      $(".wrapper__side").animate({width:"25vw"}, 250);
-      $(".wrapper__main").animate({width:"75vw"},250);
-      $(".wrapper__main").animate({left:"25vw"}, 250);
+      $(".wrapper--side").animate({width:"25vw"}, 250);
+      $(".wrapper--main").animate({width:"75vw"},250);
+      $(".wrapper--main").animate({left:"25vw"}, 250);
     };
   };
 });
+
 //グローバルナビの小メニュー表示に関するjs
 $(document).on('click', '.js-side_menu_1__opener', function(){
   if($(this).hasClass("js-icon_pulus--doing")){
@@ -62,32 +63,18 @@ $(document).on('click', '.js-side_menu_1__opener', function(){
   };
 });
 
-
-// メニュー追加のためのLightboxを表示
-// $(function() {
-//   $(".button__add").click(function(){
-//     $.when($(".lightbox--add").css("display", "flex")).done(function(){
-//      $(".lightbox--add").animate({left:"0%"}, 250);
-//     });
-//   });
-// });
-
 // 中分類類メニュー表示
-$(function(){
-  $(".js-food").click(function(){
-    $.when($(".js-sortable_class_2--drink").slideUp()
-      ).done(function() {
-    $(".js-sortable_class_2--food").slideDown();
-    });
-  });
-});
-
-$(function(){
-  $(".js-drink").click(function(){
-    $.when($(".js-sortable_class_2--food").slideUp()
-      ).done(function() {
-    $(".js-sortable_class_2--drink").slideDown();
-    });
+$(document).on("click", ".js-show__container", function () {
+  var show = $(this).data('container');
+  var target = $('[data-target="' + show + '"]').attr("class")
+  var siblings = $('[data-target="' + show + '"]').siblings('[data-target]').attr("class")
+  console.log(show)
+  console.log(target)
+  console.log(siblings)
+  $.when(
+    $('[data-target="' + show + '"]').siblings('[data-target]').slideUp())
+  .done(function(){
+    $('[data-target="' + show + '"]').slideDown()
   });
 });
 
@@ -96,12 +83,10 @@ $(function() {
   $(".js-show__menu_box").click(function(){
     var menu_box = $(this).data('menu_box');
     console.log(menu_box)
-    $(".menu_box--class_3").css("display", "none");
-    $("." + menu_box).css("display", "flex");
-    // $(".lightbox--class_3__back").css("display", "inline-block");
-    // $.when($(".lightbox--class_3").css("display", "flex")).done(function(){
-    //   $(".lightbox--class_3").animate({left:"0%"}, 250);
-    // });
+    // $(".menu_box--class_3").css("display", "none");
+    $('[data-target="' + menu_box + '"]').siblings().css("display", "none");
+    console.log("siblingsを消したよ")
+    $('[data-target="' + menu_box + '"]').css("display", "flex");
   });
 });
 
@@ -193,81 +178,86 @@ $(document).on("click", ".menu_box--class_3__decrease", function () {
   };
 });
 
-//  カート内を確認する
-// $(document).on("click", ".header__cart", function () {
-//   if($(".lightbox--order").css("display") == "none"){
-//     $.when($(".lightbox--order").css("display", "block")).done(function(){
-//       $(".lightbox--order").animate({left:"0%"}, 250)
+// テーブルアクティベートのテーブル状況と、オーダー状況に関する記述
+// $(function(){
+//   $(".js-order").click(function(){
+//     $.when(
+//     $(".table_activate__wrap").slideUp()
+//       ).done(function() {
+//     $(".order_list__wrap").slideDown().css("display", "flex");
 //     });
-//   }else{
-//     $.when($(".lightbox--order").animate({left:"100%"}, 250)).done(function(){
-//       $(".lightbox--order").css("display", "none");
-//     });
-//   };
+//   });
 // });
 
-// テーブルアクティベートのテーブル状況と、オーダー状況に関する記述
-$(function(){
-  $(".js-order").click(function(){
-    $.when(
-    $(".table_activate__wrap").slideUp()
-      ).done(function() {
-    $(".order_list__wrap").slideDown().css("display", "flex");
-    });
-  });
-});
+// $(function(){
+//   $(".js-activate").click(function(){
+//     $.when(
+//     $(".order_list__wrap").slideUp()
+//       ).done(function() {
+//     $(".table_activate__wrap").slideDown();
+//     });
+//   });
+// });
 
-$(function(){
-  $(".js-activate").click(function(){
-    $.when(
-    $(".order_list__wrap").slideUp()
-      ).done(function() {
-    $(".table_activate__wrap").slideDown();
-    });
-  });
-});
-
+// lightboxを表示する処理
 $(document).on("click", ".js-show__lightbox", function () {
-  var lightbox = $(this).data('lightbox');
+  var show = $(this).data('show');
+  var lightbox = $(".lightbox").css("display")
+  var wrapper = $('[data-target="' + show + '"]').css("display")
   console.log(lightbox)
-  if($("." + lightbox).css("display") == "none"){
-    $.when($("." + lightbox).css("display", "flex")).done(function(){
-      $("." + lightbox).animate({left:"0%"}, 250)
+  console.log(wrapper)
+  $(".lightbox").children().css("display", "none");
+  if(lightbox == "none"){
+    $.when($(".lightbox").css("display", "flex")).done(function(){
+      $(".lightbox").animate({left:"0%"}, 250)
+      $('[data-target="' + show + '"]').css("display", "");
+      $('[data-target="lightbox_always_show"]').css("display", "");
+    });
+  }else if (lightbox != "none" && wrapper  == "none"){
+    $.when(
+      $(".lightbox").animate({left:"100%"}, 250))
+    .done(function(){
+      $(".lightbox").children().css("display", "none");
+      $('[data-target="' + show + '"]').css("display", "");
+      $('[data-target="lightbox_always_show"]').css("display", "");
+      $(".lightbox").animate({left:"0%"}, 250)
     });
   }else{
-    $.when($("." + lightbox).animate({left:"100%"}, 250)).done(function(){
-      $("." + lightbox).css("display", "none");
+    $.when(
+      $(".lightbox").animate({left:"100%"}, 250))
+    .done(function(){
+      $(".lightbox").css("display", "none");
+      $(".lightbox").children().css("display", "none");
     });
   };
 });
 
+// 表示されているライトボックスを消す処理
 $(document).on("click", ".lightbox__back", function () {
-  $.when($(this).parent().animate({left:"100%"}, 250)).done(function(){
-    $(this).css("display", "none");
+  $.when($(".lightbox").animate({left:"100%"}, 250)).done(function(){
+    $(".lightbox").css("display", "none");
+    $(".lightbox").children().css("display", "none");
   });
 });
 
-$(document).on("click", ".js-show_qrcode", function () {
-  var table_number = $(this).siblings('.table_activate__table_number').text().replace("Table ","")
-  var one_time_password = $('#qrcode_' + table_number + '_wrap').val()
-  console.log(table_number)
-
-  test = $("#qrcode_" + table_number + "_wrap").children('span').children()
+// QRコードがなかった場合に、QRコードを生成する処理
+$(document).on("click", ".js-show__qrcode", function () {
+  var qrcode = $(this).data('qrcode');
+  var qrcode_obj = $('[data-target="' + qrcode + '"]')
+  var one_time_password = $('[data-target="' + qrcode + '"]').data('one_time_password');
+  console.log(qrcode)
+  console.log(one_time_password)
+  var test = "container_"+qrcode
   console.log(test)
-  if($("#qrcode_" + table_number).length){
+
+  $(".wrapper--qrcode").children().css("display", "none")
+  $("#container_" + qrcode).css("display", "block")
+
+  if($("#" + qrcode).length){
     console.log('キャンパスは存在するよ')
   }else{
     console.log('キャンパスは存在しないよ')
-    $('<span id="qrcode_' + table_number +'"></span>').appendTo("#qrcode_" + table_number + "_wrap");
-    $("#qrcode_" + table_number).qrcode("http://127.0.0.1:5000/qrcode/" + one_time_password);
+    $("#container_" + qrcode).append('<span id="' + qrcode +'"></span>');
+    $("#" + qrcode).qrcode(one_time_password);
   };
-  $.when($("#qrcode_" + table_number + "_wrap").css("display", "flex")).done(function(){
-    $(this).animate({left:"0"}, 250);
-  });
 });
-
-
-
-
-
-

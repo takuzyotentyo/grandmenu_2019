@@ -1,0 +1,51 @@
+@import "../setting/setting.scss";
+
+.fadein{
+	animation: fadeIn 2s ease 0s 1 normal;
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+
+.vibration {
+    animation: vibration .3s  infinite;
+}
+
+@keyframes vibration {
+    0% {transform: translate(0px, 0px) rotateZ(0deg)}
+    25% {transform: translate(1px, 0px) rotateZ(0.25deg)}
+    50% {transform: translate(1px, 1px) rotateZ(0deg)}
+    75% {transform: translate(1px, 0px) rotateZ(-0.25deg)}
+    100% {transform: translate(0px, 0px) rotateZ(0deg)}
+}
+
+.bound {
+    animation: vibration .75s  infinite;
+}
+
+@keyframes keyframes {
+	0% {
+		top: 100px;
+		animation-timing-function: ease-out;
+	}
+	25% {
+		top: 50px;
+		height: 60px;
+        animation-timing-function: ease-in;
+	}
+	50% {
+		top: 150px;
+		height: 50px;
+        animation-timing-function: ease-out;
+	}
+	75% {
+		top: 50px;
+		height: 60px;
+        animation-timing-function: ease-in;
+	}
+	100% {
+		top: 100px;
+	}
+}
