@@ -14,11 +14,9 @@ from flaskr import FlaskAPI
 # このファイルで必要なモジュール
 from sqlalchemy.orm.exc import NoResultFound
 import os
-# websocketに関するモジュール
-from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, rooms, disconnect, send
 
 #sqlalchemyでfuncを使う(maxやminなどが使えるようになる)
-from sqlalchemy import func
+from sqlalchemy import func, or_
 
 #会員情報を登録
 @app.route('/create_account', methods = ['POST'])
@@ -329,4 +327,26 @@ def test(one_time_password):
     # session['table_number'] = table_number
     return render_template("order.html")
 # ここまで
+
+@app.route('/order_check')
+def order_check():
+    store_id = session['store_id']
+    table_number = session['table_number']
+    group_id = FlaskAPI.group_id()
+    print("order_checkに飛んだ")
+
+    db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, or_(Order.ORDER_STATUS==2, Order.ORDER_STATUS==3)).update({Order.ORDER_STATUS: 5})
+    db.session.commit()
+    total_element = db.session.query(Menu.PRICE, Order.ORDER_QUANTITY).\
+        join(Order, Order.MENU_ID==Menu.MENU_ID).\
+        filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=5).\
+        all()
+    db.session.close()
+    total = 0
+    for i in range(0, len(total_element)):
+        price = total_element[i][0]
+        order_quantity = total_element[i][1]
+        total = total + price*order_quantity
+    print(total)
+    return render_template('order_check.html', total=total)
 

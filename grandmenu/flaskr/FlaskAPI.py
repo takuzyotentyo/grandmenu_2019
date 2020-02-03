@@ -30,6 +30,18 @@ def login_check():
     else:
         return redirect('/logout')
 
+def group_id():
+    store_id = session['store_id']
+    table_number = session['table_number']
+    group_id_max=db.session.query(func.max(Order.GROUP_ID)).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, ORDER_STATUS=5).scalar()
+    if group_id_max is None:
+        group_id=1
+    else:
+        group_id=group_id_max + 1
+    session['group_id']=group_id
+    group_id = session['group_id']
+    return group_id
+
 # 商品数を求める関数、oder_statusの値によって、カートの中身や、注文済み、決済済みなどの値を求められる
 def total_quantity():
     store_id = session['store_id']

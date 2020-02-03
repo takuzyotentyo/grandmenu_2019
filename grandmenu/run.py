@@ -22,20 +22,15 @@ db=SQLAlchemy(app)
 # async_mode...よくわからん。
 socketio=SocketIO(app, async_mode=None)
 
-# クライアント側と繋がった場合に、注文中のメニューを返す
+# クライアント側と繋がった場合に、注文中のメニューと、注文履歴を返す
 @socketio.on('cart')
 def cart(cart):
 	print(cart)
 	# store_id, table_number, group_idを設定
 	store_id = session['store_id']
 	table_number = session['table_number']
-	group_id_max=db.session.query(func.max(Order.GROUP_ID)).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, ORDER_STATUS=7).scalar()
-	if group_id_max is None:
-		group_id=1
-	else:
-		group_id=group_id_max + 1
-	session['group_id']=group_id
-	group_id = session['group_id']
+	group_id = FlaskAPI.group_id()
+	print('グループIDは'+str(session['group_id']))
 	if cart['action'] == 'show':
 		# roomをセッションに持たせる
 		session['room'] = str(session['store_id']) + '_' + str(session['table_number']) + '_' + str(session['group_id'])
@@ -48,9 +43,9 @@ def cart(cart):
 		# カートに入っている商品情報を求める
 		order_status = 0
 		order_list = FlaskAPI.order_list(order_status)
-		order_history = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY).\
+		order_history = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY, Order.ORDER_STATUS).\
 		    join(Order, Order.MENU_ID==Menu.MENU_ID).\
-		    filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, or_(Order.ORDER_STATUS==2 ,Order.ORDER_STATUS==3)).\
+		    filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, or_(Order.ORDER_STATUS==2, Order.ORDER_STATUS==3, Order.ORDER_STATUS==4)).\
 		    all()
 		# その人だけに返す
 		emit('cart',{'action':'show', 'total_quantity': total_quantity, 'order_list': order_list})
@@ -109,11 +104,13 @@ def order_submit():
 
 	order_status=0
 	order_list=FlaskAPI.order_item_for_kitchin(store_id, table_number, group_id, order_status)
-	order_history=FlaskAPI.order_list(order_status)
+	order_history = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY, Order.ORDER_STATUS).\
+		    join(Order, Order.MENU_ID==Menu.MENU_ID).\
+		    filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, Order.ORDER_STATUS==0).\
+		    all()
+
 	order_status=2
 	order_timestamp = datetime.now()
-
-
 	orders=db.session.query(Order).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=0).update({Order.ORDER_STATUS: order_status, Order.ORDER_TIMESTAMP: order_timestamp})
 	# print("print orders")
 	print(order_history)
@@ -163,19 +160,25 @@ def kitchin_infomation(msg):
 	# roomのメンバーに情報を送信
 	emit("show_order",{'action':'show', 'order_list':order_list})
 
-@socketio.on("order_check")
-def order_check(order_id):
-	# order_status = 3は調理完了を示す
-	print("ここまでOK")
-	order_id = order_id
-	order_status = 3
+@socketio.on("order_status_change")
+def order_status_change(order_status_change):
+	# order_status = 3は調理完了を示し、4は調理キャンセルを示す
 	store_id = session['store_id']
+	order_id = order_status_change['order_id']
+	order_status = order_status_change['order_status']
 	# オーダーステータスのアップデート
-	db.session.query(Order).filter_by(ORDER_ID=order_id).update({Order.ORDER_STATUS: order_status})
+	order = db.session.query(Order).filter_by(STORE_ID=store_id,ORDER_ID=order_id).one()
+	order.ORDER_STATUS = order_status
 	db.session.commit()
+	print('orderオブジェクトの中身は')
+	print(order)
+	table_number = order.TABLE_NUMBER
+	group_id = order.GROUP_ID
 	db.session.close()
+	room = str(store_id) + '_' + str(table_number) + '_' + str(group_id)
 	# roomのメンバーに情報を送信
 	emit("order_check",order_id, room=store_id)
+	emit("order_history",{'action':'change', 'order_id': order_id, 'order_status': order_status}, room=room)
 
 @socketio.on("reload")
 def reload():

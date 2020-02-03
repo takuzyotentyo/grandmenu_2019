@@ -213,15 +213,11 @@
 		}
 		&__quantity{
 	        width:30px;
-	        height:30px;
-	        box-sizing: border-box;
 	        display: block;
 	        position: relative;
-	        border:solid 2px #FFA500;
 	        border-radius: 5px;
 	        font-size: $text-subtitle;
 	        text-align:center;
-	        padding: 3px;
     	}
 		&__increase{
 			width: 30px;
@@ -282,22 +278,31 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 			font-size: $text-body;
-			width: 50%;
+			width: 45%;
 			padding: auto;
 		}
 		&__order_check{
-			text-align: center;
 			width: 30px;
 			height: 30px;
 			margin: auto;
 			background: url('../img/check.svg');
-	    	background-size: cover;
-	    	background-repeat: no-repeat;
 	    	border-radius: 5px;
 	    	opacity: .75;
 	    	filter:drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
 	    	background-color: $color-sub;
 	    	border: solid 5px $color-sub;
+		}
+		&__order_cansel{
+			width: 30px;
+			height: 30px;
+			position: absolute;
+			top: -20px;
+			right: 0px;
+			background: url('../img/cansel.svg');
+	    	border-radius: 5px;
+	    	filter:drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+	    	background-color: $color-alart;
+	    	border: solid 5px $color-alart;
 		}
 	}
 	&--order_history{
@@ -416,9 +421,25 @@
 			text-overflow: ellipsis;
 			font-size: $text-body;
 			line-height: 25px;
-			max-width: 100%;
+			max-width: 50%;
 			padding: 0 5px;
 			background-color: $color-doing;
+		}
+		&__order_status{
+			position: absolute;
+			top: -20px;
+			right: 0;
+			display: inline-block;
+			text-align:center;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			font-size: $text-body;
+			line-height: 25px;
+			max-width: 50%;
+			padding: 0 5px;
+			background-color: $color-sub;
+			// transform :rotate(15deg);
 		}
 		&__table{
 			position: relative;

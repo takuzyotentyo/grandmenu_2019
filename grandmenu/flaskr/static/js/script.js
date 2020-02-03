@@ -85,7 +85,6 @@ $(function() {
     console.log(menu_box)
     // $(".menu_box--class_3").css("display", "none");
     $('[data-target="' + menu_box + '"]').siblings().css("display", "none");
-    console.log("siblingsを消したよ")
     $('[data-target="' + menu_box + '"]').css("display", "flex");
   });
 });
@@ -178,26 +177,13 @@ $(document).on("click", ".menu_box--class_3__decrease", function () {
   };
 });
 
-// テーブルアクティベートのテーブル状況と、オーダー状況に関する記述
-// $(function(){
-//   $(".js-order").click(function(){
-//     $.when(
-//     $(".table_activate__wrap").slideUp()
-//       ).done(function() {
-//     $(".order_list__wrap").slideDown().css("display", "flex");
-//     });
-//   });
-// });
-
-// $(function(){
-//   $(".js-activate").click(function(){
-//     $.when(
-//     $(".order_list__wrap").slideUp()
-//       ).done(function() {
-//     $(".table_activate__wrap").slideDown();
-//     });
-//   });
-// });
+// 会計完了の処理
+$(document).on("click", "#order_check", function () {
+  console.log("test")
+  if(confirm("お会計を行いますか？")){
+    window.location.href = "/order_check";
+  };
+});
 
 // lightboxを表示する処理
 $(document).on("click", ".js-show__lightbox", function () {

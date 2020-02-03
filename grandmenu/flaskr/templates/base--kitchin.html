@@ -113,9 +113,7 @@
           .append('<div class="text__title">Table ' + table_number + '</div>')
           .append('<span id="qrcode_' + table_number +'"></span>')
         $("#qrcode_" + table_number).qrcode(one_time_password);
-        console.log(one_time_password)
         if(origin_user == true){
-          console.log("origin_userは"+origin_user)
           $(".lightbox").children().css("display","none");
           $(".wrapper--qrcode").children().css("display", "none")
           $(".wrapper--qrcode").css("display","");
@@ -148,26 +146,39 @@
         $(".order_list__wrap")
           .append('<li class="menu_box--order" id="order_id_'+order_id+'"></li>');
         $('#order_id_' + order_id)
-        .append('<span class="menu_box--order__class_2">'+class_2+'</span>')
-        .append('<span class="menu_box--order__class_3">'+class_3+'</span>')
-        .append('<span class="menu_box--order__table">Table '+table_number+'</span>')
-        .append('<span class="menu_box--order__quantity_label">数量</span>')
-        .append('<span class="menu_box--order__quantity">'+quantity+'<span>')
-        .append('<span class="menu_box--order__order_check"></span>')
-        console.log(order_list[i][3]);
+          .append('<span class="menu_box--order__class_2">'+class_2+'</span>')
+          .append('<span class="menu_box--order__class_3">'+class_3+'</span>')
+          .append('<span class="menu_box--order__table">Table '+table_number+'</span>')
+          .append('<span class="menu_box--order__quantity_label">数量</span>')
+          .append('<span class="menu_box--order__quantity">'+quantity+'<span>')
+          .append('<span class="menu_box--order__order_check"></span>')
+          .append('<span class="menu_box--order__order_cansel">キャンセル</span>')
       };
     });
 
     $(document).on("click", ".menu_box--order__order_check", function () {
-      // var menu_box = $(this).parent()
       var menu = $(this).siblings(".menu_box--order__class_3").text()
       var quantity = $(this).siblings(".menu_box--order__quantity").text()
       var order_id = $(this).parent().attr("id").replace("order_id_", "")
-      console.log(order_id)
+      var order_status = 3
       // アラートを出して、調理完了を確認
       if(confirm(menu + quantity + "個の調理を完了しましたか？")){
         // OKの時の処理
-        socket.emit("order_check", order_id);
+        socket.emit("order_status_change", {'order_id': order_id, 'order_status':order_status});
+      }else{
+        // キャンセルの時の処理(何もしない)
+      };
+    });
+
+    $(document).on("click", ".menu_box--order__order_cansel", function () {
+      var menu = $(this).siblings(".menu_box--order__class_3").text()
+      var quantity = $(this).siblings(".menu_box--order__quantity").text()
+      var order_id = $(this).parent().attr("id").replace("order_id_", "")
+      var order_status = 4
+      // アラートを出して、キャンセルするかを確認
+      if(confirm("本当に" + menu + quantity + "個の調理をキャンセルしますか？")){
+        // OKの時の処理
+        socket.emit("order_status_change", {'order_id': order_id, 'order_status':order_status});
       }else{
         // キャンセルの時の処理(何もしない)
       };
