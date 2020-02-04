@@ -177,14 +177,6 @@ $(document).on("click", ".menu_box--class_3__decrease", function () {
   };
 });
 
-// 会計完了の処理
-$(document).on("click", "#order_check", function () {
-  console.log("test")
-  if(confirm("お会計を行いますか？")){
-    window.location.href = "/order_check";
-  };
-});
-
 // lightboxを表示する処理
 $(document).on("click", ".js-show__lightbox", function () {
   var show = $(this).data('show');

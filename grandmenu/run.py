@@ -180,6 +180,29 @@ def order_status_change(order_status_change):
 	emit("order_check",order_id, room=store_id)
 	emit("order_history",{'action':'change', 'order_id': order_id, 'order_status': order_status}, room=room)
 
+@socketio.on("checkout")
+def order_check():
+    store_id = session['store_id']
+    table_number = session['table_number']
+    room = session['room']
+    group_id = FlaskAPI.group_id()
+
+    db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, or_(Order.ORDER_STATUS==2, Order.ORDER_STATUS==3)).update({Order.ORDER_STATUS: 5})
+    db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, Order.ORDER_STATUS==0).update({Order.ORDER_STATUS: 1})
+    db.session.commit()
+    total_element = db.session.query(Menu.PRICE, Order.ORDER_QUANTITY).\
+        join(Order, Order.MENU_ID==Menu.MENU_ID).\
+        filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=5).\
+        all()
+    db.session.close()
+    total_fee = 0
+    for i in range(0, len(total_element)):
+        price = total_element[i][0]
+        order_quantity = total_element[i][1]
+        total_fee = total_fee + price*order_quantity
+    emit('checkout', total_fee, room=room)
+    emit('checkout_for_kitchin', {'table_number': table_number, 'total_fee': total_fee}, room=store_id)
+
 @socketio.on("reload")
 def reload():
 	emit("reload")

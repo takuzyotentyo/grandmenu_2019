@@ -35,11 +35,12 @@
 		width: 100vw;
 		height: calc(100vh - 50px);
     	top: 50px;
+    	background: url('../img/top.jpg');
+    	background-size: cover;
     }
     &--login{
     	display: flex;
 		flex-flow: column;
-		align-items: center;
 	}
 	&--index{
 		display: flex;
@@ -52,10 +53,8 @@
 	}
 	&--show_menu{
 		display: inline-block;
-		flex-flow: wrap;
 		width: 100%;
 		height: 100%;
-		align-content: flex-start;
 		overflow-y: scroll;
 		font-size: 0;	//子要素間の隙間を0にするために必要
 	}
@@ -64,17 +63,15 @@
 		flex-flow: wrap;
 		overflow-y: scroll;
 		width: 100%;
-		margin-top: 60px;
+		height: 100%;
+		padding-top: 60px;
 		align-items: baseline;
 		align-content: flex-start;
+		overflow-y: scroll;
 	}
 	&--add_menu{
 		display: flex;
 		flex-flow: column;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
 	}
 	&--cart{
 		display: flex;
@@ -109,13 +106,14 @@
 		width: 100%;
 		height: 100%;
 	}
-	&--order_check{
+	&--checkout{
 		display: flex;
 		flex-flow: column;
 		align-items: center;
 		justify-content: center;
 		width: 100%;
 		height: 100%;
+		background-color: rgba(7, 42, 36, 0.3)
 	}
 	&--qrcode_zipdownload{
 		display: flex;

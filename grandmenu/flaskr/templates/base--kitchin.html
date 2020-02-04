@@ -124,7 +124,10 @@
         };
       }else{
         table_number_obj.prop("checked", false);
-        table_number_obj.parent().next(".text__body").css("visibility","hidden")
+        table_number_obj.parent().next(".text__body")
+          .css("visibility","hidden")
+          .text('QR確認 >')
+        table_number_obj.parent().parent().removeClass('bound')
         $("#container_qrcode_" + table_number).remove();
       };
     });
@@ -185,7 +188,20 @@
     });
 
     socket.on('order_check', function(order_id){
-    $('#order_id_' + order_id).remove()
+      $('#order_id_' + order_id).remove()
+    });
+
+    socket.on('checkout_for_kitchin', function(checkout){
+      console.log('test')
+      // var table_number = checkout['table_number']
+      var table_number = 1
+      var total_fee = checkout['total_fee']
+      var table_number_obj = $('#table_' + table_number).parent().parent()
+      var change_text_obj = $('#table_' + table_number).parent().siblings('.js-show__qrcode')
+      table_number_obj.addClass('bound')
+      change_text_obj.text('会計表示 >')
+      $('#container_qrcode_' + table_number).append('<div class="text__title">会計 ¥ ' + total_fee + '</div>')
+
     });
 
     socket.on('error', function(){
@@ -241,7 +257,6 @@
 
 <!-- メインメニュー -->
     <div class="wrapper--main">
-    <div class="picture--base"></div>
   {% block global_navi %}{% endblock %}
     <div class="lightbox--ws_error">
       <div class="lightbox--ws_error__wi-fi"></div>

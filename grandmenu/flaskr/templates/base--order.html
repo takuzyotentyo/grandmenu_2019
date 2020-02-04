@@ -221,6 +221,23 @@
       };
     });
 
+    // 会計完了の処理
+    $(document).on("click", "#order_check", function () {
+      console.log("test")
+      if(confirm("お会計を行いますか？")){
+        socket.emit("checkout");
+      };
+    });
+
+    socket.on('checkout', function(total_fee){
+      $('.wrapper--main').children().remove();
+      $('.header__cart').remove();
+      $('.wrapper--main').append('<div class="wrapper--checkout fadein"></div>')
+      $('.wrapper--checkout')
+        .append('<div class="text__subtitle">お客様のお会計は</div>')
+        .append('<div class="text__title">' + total_fee + ' 円です</div>')
+        .append('<div class="text__subtitle">レジにお進みください</div>');
+    });
 
     socket.on('error', function(){
       console.log("接続エラー")
@@ -282,7 +299,6 @@
 
 <!-- メインメニュー -->
     <div class="wrapper--main">
-    <div class="picture--base"></div>
   {% block global_navi %}{% endblock %}
     <div class="lightbox--ws_error">
       <div class="lightbox--ws_error__wi-fi"></div>

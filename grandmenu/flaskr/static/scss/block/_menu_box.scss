@@ -1,15 +1,13 @@
 @import "../setting/setting.scss";
 .menu_box{
 	&--class_2{
-		@include menu_box;
 		display: inline-block;
 		color: $text-color-main;
 		opacity: 0.9;
 		position: relative;
-		line-height:50px;
-		flex-flow: row wrap;
-		font-size:$text-body;
-		margin:5px 1% 5px 1%;
+		line-height: 50px;
+		font-size: $text-body;
+		margin: 5px 1% 5px 1%;
 		text-align: center;
 		height: 50px;
 		background-color: $color-main;
@@ -58,11 +56,8 @@
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
-			margin-left:0;
-			margin-right:0;
+			margin-left: auto;
 			font-size: $text-body;
-			line-height: 50px;
-			margin-right: auto;
 		}
 		&__quantity_label{
 			width: 50px;
@@ -107,7 +102,7 @@
 			text-align: center;
 			width: 30px;
 			height: 30px;
-			margin: auto 30px auto 5px;
+			margin: auto auto auto 5px;
 			background: url('../img/add_to_cart.svg');
 	    	background-size: cover;
 	    	background-repeat: no-repeat;

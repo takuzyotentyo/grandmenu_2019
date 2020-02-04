@@ -11,7 +11,8 @@
 	flex-flow: row wrap;
 	overflow-y: scroll;
 	padding:5px 0 100px 0;
-	align-content: flex-start;
+	align-content: center;
+	justify-content: center;
 }
 
 .lightbox--ws_error{
@@ -34,19 +35,6 @@
     	background-repeat: no-repeat;
     	filter:drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
 	}
-}
-
-.lightbox--qrcode{
-	justify-content: center; /*左右中央揃え*/
-    align-items: center;     /*上下中央揃え*/
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: rgba($color-sub,0.3);
-	top: 0;
-	left: 0;
-	display: flex;
-	flex-flow: column nowrap;
 }
 
 .lightbox__back{

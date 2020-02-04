@@ -94,8 +94,11 @@ blockのインポート
   flex-flow: row wrap;
   overflow-y: scroll;
   padding: 5px 0 100px 0;
-  -ms-flex-line-pack: start;
-  align-content: flex-start; }
+  -ms-flex-line-pack: center;
+  align-content: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
 
 .lightbox--ws_error {
   position: absolute;
@@ -123,29 +126,6 @@ blockのインポート
     background-repeat: no-repeat;
     -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
     filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5)); }
-
-.lightbox--qrcode {
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  /*左右中央揃え*/
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  /*上下中央揃え*/
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(7, 42, 36, 0.3);
-  top: 0;
-  left: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap; }
 
 .lightbox__back {
   display: inline-block;
@@ -261,22 +241,10 @@ blockのインポート
 /*ブレイクポイント*/
 .menu_box--class_2 {
   display: inline-block;
-  vertical-align: middle;
   color: #ffffff;
   opacity: 0.9;
   position: relative;
   line-height: 50px;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  display: inline-block;
-  color: #ffffff;
-  opacity: 0.9;
-  position: relative;
-  line-height: 50px;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: row wrap;
-  flex-flow: row wrap;
   font-size: 16px;
   margin: 5px 1% 5px 1%;
   text-align: center;
@@ -336,11 +304,8 @@ blockのインポート
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    margin-left: 0;
-    margin-right: 0;
-    font-size: 16px;
-    line-height: 50px;
-    margin-right: auto; }
+    margin-left: auto;
+    font-size: 16px; }
   .menu_box--class_3__quantity_label {
     width: 50px;
     font-size: 16px;
@@ -383,7 +348,7 @@ blockのインポート
     text-align: center;
     width: 30px;
     height: 30px;
-    margin: auto 30px auto 5px;
+    margin: auto auto auto 5px;
     background: url("../img/add_to_cart.svg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -979,7 +944,9 @@ blockのインポート
   justify-content: center;
   width: 100vw;
   height: calc(100vh - 50px);
-  top: 50px; }
+  top: 50px;
+  background: url("../img/top.jpg");
+  background-size: cover; }
 
 .wrapper--login {
   display: -webkit-box;
@@ -988,10 +955,7 @@ blockのインポート
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-flow: column;
-  flex-flow: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center; }
+  flex-flow: column; }
 
 .wrapper--index {
   display: -webkit-box;
@@ -1013,12 +977,8 @@ blockのインポート
 
 .wrapper--show_menu {
   display: inline-block;
-  -ms-flex-flow: wrap;
-  flex-flow: wrap;
   width: 100%;
   height: 100%;
-  -ms-flex-line-pack: start;
-  align-content: flex-start;
   overflow-y: scroll;
   font-size: 0; }
 
@@ -1030,12 +990,14 @@ blockのインポート
   flex-flow: wrap;
   overflow-y: scroll;
   width: 100%;
-  margin-top: 60px;
+  height: 100%;
+  padding-top: 60px;
   -webkit-box-align: baseline;
   -ms-flex-align: baseline;
   align-items: baseline;
   -ms-flex-line-pack: start;
-  align-content: flex-start; }
+  align-content: flex-start;
+  overflow-y: scroll; }
 
 .wrapper--add_menu {
   display: -webkit-box;
@@ -1044,15 +1006,7 @@ blockのインポート
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-flow: column;
-  flex-flow: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%; }
+  flex-flow: column; }
 
 .wrapper--cart {
   display: -webkit-box;
@@ -1106,7 +1060,7 @@ blockのインポート
   width: 100%;
   height: 100%; }
 
-.wrapper--order_check {
+.wrapper--checkout {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1121,7 +1075,8 @@ blockのインポート
   -ms-flex-pack: center;
   justify-content: center;
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  background-color: rgba(7, 42, 36, 0.3); }
 
 .wrapper--qrcode_zipdownload {
   display: -webkit-box;
@@ -1228,29 +1183,6 @@ blockのインポート
   -webkit-transform: translateY(-9px) rotate(-135deg);
   -ms-transform: translateY(-9px) rotate(-135deg);
   transform: translateY(-9px) rotate(-135deg); }
-
-/*「_」抜きの名前でインポートする
- 変数を定義しているsetting.scssのインポートは必須事項*/
-/*====================
-サイトの基本設定
-====================*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-.picture--base {
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: url("../img/top.jpg");
-  background-size: cover;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  z-index: -1000; }
 
 /*====================
 サイトの基本設定
@@ -1437,54 +1369,36 @@ blockのインポート
     transform: translate(0px, 0px) rotateZ(0deg); } }
 
 .bound {
-  -webkit-animation: vibration .75s  infinite;
-  animation: vibration .75s  infinite; }
+  -webkit-animation: bound 1s  infinite;
+  animation: bound 1s  infinite; }
 
-@-webkit-keyframes keyframes {
+@-webkit-keyframes bound {
   0% {
-    top: 100px;
-    -webkit-animation-timing-function: ease-out;
-    animation-timing-function: ease-out; }
-  25% {
-    top: 50px;
-    height: 60px;
-    -webkit-animation-timing-function: ease-in;
-    animation-timing-function: ease-in; }
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    background-color: #FFA500; }
   50% {
-    top: 150px;
-    height: 50px;
-    -webkit-animation-timing-function: ease-out;
-    animation-timing-function: ease-out; }
-  75% {
-    top: 50px;
-    height: 60px;
-    -webkit-animation-timing-function: ease-in;
-    animation-timing-function: ease-in; }
+    -webkit-transform: translateY(-7.5px);
+    transform: translateY(-7.5px);
+    background-color: #072A24; }
   100% {
-    top: 100px; } }
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    background-color: #FFA500; } }
 
-@keyframes keyframes {
+@keyframes bound {
   0% {
-    top: 100px;
-    -webkit-animation-timing-function: ease-out;
-    animation-timing-function: ease-out; }
-  25% {
-    top: 50px;
-    height: 60px;
-    -webkit-animation-timing-function: ease-in;
-    animation-timing-function: ease-in; }
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    background-color: #FFA500; }
   50% {
-    top: 150px;
-    height: 50px;
-    -webkit-animation-timing-function: ease-out;
-    animation-timing-function: ease-out; }
-  75% {
-    top: 50px;
-    height: 60px;
-    -webkit-animation-timing-function: ease-in;
-    animation-timing-function: ease-in; }
+    -webkit-transform: translateY(-7.5px);
+    transform: translateY(-7.5px);
+    background-color: #072A24; }
   100% {
-    top: 100px; } }
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    background-color: #FFA500; } }
 
 /*====================
 サイトの基本設定
@@ -1639,19 +1553,6 @@ blockのインポート
   color: #ffffff;
   text-align: center;
   line-height: 30px; }
-
-/*====================
-サイトの基本設定
-====================*/
-/*フォント関係*/
-/*テキストの大きさ*/
-/*色関係*/
-/*ブレイクポイント*/
-.sortable_class_2--food {
-  width: 100%; }
-
-.sortable_class_2_--drink {
-  width: 100%; }
 
 /*====================
 サイトの基本設定
