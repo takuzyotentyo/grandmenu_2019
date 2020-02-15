@@ -328,3 +328,7 @@ def test(one_time_password):
     return render_template("order.html")
 # ここまで
 
+@app.route("/store_management")
+def store_management():
+    print("sales")
+    return render_template("store_management.html")

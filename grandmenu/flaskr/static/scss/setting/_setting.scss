@@ -27,6 +27,8 @@ $color-interaction: #B7282E;
 $text-color-main: #ffffff;
 $text-color-sub: #999999;
 
+$gradation: linear-gradient(135deg, #FFA500, #FFDB0D);
+
 /*ブレイクポイント*/
 $breakpoints:(
 	sp:"screen and (max-width:599px)",

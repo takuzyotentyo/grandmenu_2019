@@ -25,6 +25,14 @@
             display: none;
         }
     }
+    &--calendar{
+        width: 250px;
+        display: flex;
+        justify-content: center;
+        &__radio{
+            display: none;
+        }
+    }
 }
 
 .radio_button--login__radio + label {
@@ -33,8 +41,8 @@
     background-color: $color-sub;
     width: 125px;
     text-align: center;
-    border-radius: 5px 5px 0 0;
-    transition: .4s;
+    border-radius: 5px 5px 5px 5px;
+    transition: .25s;
 }
 
 .radio_button--login__radio:checked + label {
@@ -46,15 +54,16 @@
     vertical-align: middle;
     position: relative;
     margin: 10px 0 5px 0;
+    height: 50px;
     line-height:50px;
     color: $text-color-main;
     font-size:$text-body;
     text-align: center;
-    height: 50px;
     background-color: $color-sub;
     font-weight: bold;
     width: 49%;
-    border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 10px 10px;
+    transition: .25s;
 }
 
 .radio_button--food_drink__radio:checked + label {
@@ -78,5 +87,26 @@
 }
 
 .radio_button--activate_order__radio:checked + label {
+    background-color: $color-main;
+}
+
+.radio_button--calendar__radio + label{
+    display: block;
+    vertical-align: middle;
+    position: relative;
+    margin: 10px 0 5px 0;
+    height: 50px;
+    line-height:50px;
+    color: $text-color-main;
+    font-size:$text-body;
+    text-align: center;
+    background-color: $color-sub;
+    font-weight: bold;
+    width: 50%;
+    border-radius: 10px 10px 10px 10px;
+    transition: .25s;
+}
+
+.radio_button--calendar__radio:checked + label {
     background-color: $color-main;
 }

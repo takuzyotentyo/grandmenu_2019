@@ -1095,6 +1095,21 @@ blockのインポート
   width: 100%;
   height: 100%; }
 
+.wrapper--sotore_manager {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column;
+  flex-flow: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+
 .sortable_wrap {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1443,16 +1458,27 @@ blockのインポート
   .radio_button--activate_order__radio {
     display: none; }
 
+.radio_button--calendar {
+  width: 250px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+  .radio_button--calendar__radio {
+    display: none; }
+
 .radio_button--login__radio + label {
   line-height: 30px;
   color: #ffffff;
   background-color: #072A24;
   width: 125px;
   text-align: center;
-  border-radius: 5px 5px 0 0;
-  -webkit-transition: .4s;
-  -o-transition: .4s;
-  transition: .4s; }
+  border-radius: 5px 5px 5px 5px;
+  -webkit-transition: .25s;
+  -o-transition: .25s;
+  transition: .25s; }
 
 .radio_button--login__radio:checked + label {
   background-color: #FFA500; }
@@ -1462,15 +1488,18 @@ blockのインポート
   vertical-align: middle;
   position: relative;
   margin: 10px 0 5px 0;
+  height: 50px;
   line-height: 50px;
   color: #ffffff;
   font-size: 16px;
   text-align: center;
-  height: 50px;
   background-color: #072A24;
   font-weight: bold;
   width: 49%;
-  border-radius: 10px 10px 0 0; }
+  border-radius: 10px 10px 10px 10px;
+  -webkit-transition: .25s;
+  -o-transition: .25s;
+  transition: .25s; }
 
 .radio_button--food_drink__radio:checked + label {
   background-color: #FFA500; }
@@ -1491,6 +1520,27 @@ blockのインポート
   border-radius: 10px 10px 0 0; }
 
 .radio_button--activate_order__radio:checked + label {
+  background-color: #FFA500; }
+
+.radio_button--calendar__radio + label {
+  display: block;
+  vertical-align: middle;
+  position: relative;
+  margin: 10px 0 5px 0;
+  height: 50px;
+  line-height: 50px;
+  color: #ffffff;
+  font-size: 16px;
+  text-align: center;
+  background-color: #072A24;
+  font-weight: bold;
+  width: 50%;
+  border-radius: 10px 10px 10px 10px;
+  -webkit-transition: .25s;
+  -o-transition: .25s;
+  transition: .25s; }
+
+.radio_button--calendar__radio:checked + label {
   background-color: #FFA500; }
 
 /*====================
@@ -1783,3 +1833,182 @@ blockのインポート
   text-align: center;
   font-size: 18px;
   line-height: 50px; }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.container--datepicker_day {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
+
+.container--datepicker_period {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap; }
+
+.container--calendar {
+  display: none;
+  width: 280px;
+  -ms-flex-flow: wrap;
+  flex-flow: wrap;
+  text-size: 0px;
+  overflow: hidden;
+  -webkit-filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5)); }
+
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.carender__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 50px;
+  background-color: #ffffff;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+
+.carender__today {
+  position: relative;
+  width: 50px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+  color: #ffffff;
+  background: -webkit-linear-gradient(315deg, #FFA500, #FFDB0D);
+  background: -o-linear-gradient(315deg, #FFA500, #FFDB0D);
+  background: linear-gradient(135deg, #FFA500, #FFDB0D);
+  border-radius: 10px;
+  text-align: center;
+  -webkit-filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid; }
+
+.carender__last_month {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  left: -30px;
+  top: -30px;
+  font-size: 24px;
+  color: #ffffff;
+  background: -webkit-linear-gradient(315deg, #FFA500, #FFDB0D);
+  background: -o-linear-gradient(315deg, #FFA500, #FFDB0D);
+  background: linear-gradient(135deg, #FFA500, #FFDB0D);
+  border-radius: 50%;
+  text-align: right;
+  padding-right: 20px;
+  padding-top: 35px;
+  -webkit-filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid; }
+
+.carender__next_month {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  right: -30px;
+  top: -30px;
+  font-size: 24px;
+  color: #ffffff;
+  background: -webkit-linear-gradient(315deg, #FFA500, #FFDB0D);
+  background: -o-linear-gradient(315deg, #FFA500, #FFDB0D);
+  background: linear-gradient(135deg, #FFA500, #FFDB0D);
+  border-radius: 50%;
+  text-align: left;
+  padding-left: 20px;
+  padding-top: 35px;
+  -webkit-filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 2px solid; }
+
+.carender__year_month {
+  display: inline-block;
+  width: 280px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 18px;
+  color: #111111;
+  background-color: #ffffff;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: center;
+  flex-flow: center; }
+
+.carender__week {
+  display: inline-block;
+  width: 40px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 18px;
+  color: #111111;
+  background-color: #ffffff; }
+
+.carender__days {
+  display: inline-block;
+  font-size: 16px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 16px;
+  color: #111111;
+  background-color: #ffffff; }
+  .carender__days--other_month {
+    display: inline-block;
+    font-size: 16px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 16px;
+    color: #d3d3d3;
+    background-color: #ffffff; }
+
+.carender__select_day {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  background: -webkit-linear-gradient(315deg, #FFA500, #FFDB0D);
+  background: -o-linear-gradient(315deg, #FFA500, #FFDB0D);
+  background: linear-gradient(135deg, #FFA500, #FFDB0D);
+  border-radius: 50%;
+  color: #ffffff;
+  line-height: 30px;
+  -webkit-filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid; }
