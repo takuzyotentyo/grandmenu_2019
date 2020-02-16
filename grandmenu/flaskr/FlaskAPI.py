@@ -14,6 +14,7 @@ from flaskr.models import Store, Staff, Menu, Table, Order
 from flask_sqlalchemy import SQLAlchemy
 from flaskr import db
 from sqlalchemy import func
+import datetime, re
 
 
 #ハッシュパスワードを作成する関数
@@ -145,3 +146,13 @@ def qrfix(baseimg_path, qrimg_path, store_name):
     baseimg_backup.paste(qrimg, (int(w), int(h)))
 
     baseimg_backup.save(qrimg_path)
+
+def str_to_date(day):
+    try:
+        day = re.sub('\(日\)|\(月\)|\(火\)|\(水\)|\(木\)|\(金\)|\(土\)',"",day)
+        day = re.sub('年|月',"/",day)
+        day = re.sub('日',"",day)
+        day = datetime.datetime.strptime(day, '%Y/%m/%d')
+        return day
+    except:
+        return "error"

@@ -332,3 +332,7 @@ def test(one_time_password):
 def store_management():
     print("sales")
     return render_template("store_management.html")
+
+@app.route("/chart_sample")
+def chart_sample():
+    return render_template("chart_sample.html")

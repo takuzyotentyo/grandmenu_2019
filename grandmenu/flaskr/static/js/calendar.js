@@ -124,23 +124,52 @@ $(document).on("click", ".carender__days", function (){
 
 $(function(){
   // Ajax button click
-  $('#js-calender_submit_period').on('click',function(){
-    console.log('kkk')
+  $('#js-calender_submit_day').on('click',function(){
+    var period_day = $('#period_day').val()
+    var data ={'period_day':period_day}
+    console.log(data)
+    var a = window.sessionStorage.getItem(['store_id']);
+    console.log(a);
     $.ajax({
-        url:'/period_sales_data',
+        url:'/store_management/day_sales_data',
         type:'POST',
-        data:{
-            'period_start':$('#period_start').val(),
-            'period_end':$('#period_end').val()
-        }
+        data:JSON.stringify(data),
+        contentType:'application/json',
     })
-    // $.ajax({
-    //   url: "/activate_json",
-    //   type: 'post',
-    //   data: JSON.stringify(data),
-    //   dataType: 'json',
-    //   contentType: 'application/json',
+  // Ajaxリクエストが成功した時発動
+    .done( (data) => {
+        // $('.result').html(data);
+        console.log(data);
+        console.log('done');
+    })
+    // Ajaxリクエストが失敗した時発動
+    .fail( (data) => {
+        // $('.result').html(data);
+        console.log(data);
+        console.log('fail');
+    })
+    // Ajaxリクエストが成功・失敗どちらでも発動
+    .always( (data) => {
+      console.log('always');
+    });
+  });
+});
 
+$(function(){
+  // Ajax button click
+  $('#js-calender_submit_period').on('click',function(){
+    var period_start = $('#period_start').val()
+    var period_end = $('#period_end').val()
+    var data ={'period_start':period_start, 'period_end':period_end}
+    console.log(period_start)
+    console.log(period_end)
+    console.log(data)
+    $.ajax({
+        url:'/store_management/period_sales_data',
+        type:'POST',
+        data:JSON.stringify(data),
+        contentType:'application/json',
+    })
   // Ajaxリクエストが成功した時発動
     .done( (data) => {
         // $('.result').html(data);

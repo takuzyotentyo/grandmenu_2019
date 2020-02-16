@@ -8,9 +8,9 @@
 			<label for="period">期間</label>
 		</div>
 		<form class='container--datepicker_day' data-target="day">
-			<input class="text_box--small js-datepicker" id='day' placeholder="抽出日を選択" required>
+			<input class="text_box--small js-datepicker" id='period_day' placeholder="抽出日を選択" required>
 			<div class="container--calendar"></div>
-			<button class="form__button" id="js-calender_submit_day">
+			<button type="button" class="form__button js-show__lightbox" id="js-calender_submit_day" data-show="sales_chart">
 				<span>開始</span>
 				<span>抽出</span>
 			</button>
@@ -21,10 +21,14 @@
 			<div class="container--calendar"></div>
 			<input class="text_box--small js-datepicker" id='period_end' placeholder="抽出終了日を入力" required>
 			<div class="container--calendar"></div>
-			<button class="form__button" id="js-calender_submit_period">
+			<button type="button" class="form__button js-show__lightbox" id="js-calender_submit_period" data-show="sales_chart">
 				<span>開始</span>
 				<span>抽出</span>
 			</button>
 		</form>
+</div>
+<div class="lightbox">
+	<div class='wrapper--sales_chart' data-target="sales_chart"></div>
+	<div class="lightbox__back" data-target="lightbox_always_show">></div>
 </div>
 {% endblock %}
