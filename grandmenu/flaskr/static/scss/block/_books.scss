@@ -1,0 +1,67 @@
+@import "./setting/setting.scss";
+
+@mixin stagger-anim-delay($i, $initial-delay, $stagger-delay) {
+  @while $i > 0 {
+    &:nth-of-type(#{$i}) {
+      animation-delay: $initial-delay + $stagger-delay * $i;
+    }
+    $i: $i - 1;
+  }
+}
+
+.sales_book{
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 256px;
+  &--header{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 256px;
+    border-bottom: double 3px $text-color-main;
+  }
+  &--total{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 256px;
+    border-top: solid 3px $text-color-main;
+  }
+  &__item{
+    white-space: nowrap;
+    padding-left: 10px;
+    line-height: 30px;
+    color: $text-color-main;
+    animation: 1s anim-lightspeed-in ease forwards;
+    &--center{
+      white-space: nowrap;
+      padding-left: 10px;
+      line-height: 30px;
+      color: $text-color-main;
+      margin: 0 auto;
+      animation: 1.5s anim-lightspeed-in ease forwards;
+    }
+    &--left{
+      white-space: nowrap;
+      padding-left: 10px;
+      line-height: 30px;
+      color: $text-color-main;
+      margin-left: auto;
+      animation: 1s anim-lightspeed-in ease forwards;
+    }
+  }
+}
+
+
+//Keyframes
+@keyframes anim-lightspeed-in {
+  0% {
+    transform: translateX(-200%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

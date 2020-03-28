@@ -186,7 +186,6 @@ def order_check():
     table_number = session['table_number']
     room = session['room']
     group_id = FlaskAPI.group_id()
-
     db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, or_(Order.ORDER_STATUS==2, Order.ORDER_STATUS==3)).update({Order.ORDER_STATUS: 5})
     db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, Order.ORDER_STATUS==0).update({Order.ORDER_STATUS: 1})
     db.session.commit()

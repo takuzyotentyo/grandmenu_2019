@@ -65,7 +65,7 @@ class Order(db.Model):
 
     ORDER_ID = db.Column(Integer, primary_key=True)
     ORDER_TIMESTAMP = Column(DateTime)
-    ORDER_STATUS = db.Column(Integer)   #0はかごに入ってる,1はオーダーされた,2はかごから削除された,3は決済完了
+    ORDER_STATUS = db.Column(Integer)   #0はかごに入ってる,1はかごから削除された,2はオーダーされた,3は調理完了.4は料理キャンセル,5は会計完了
     STORE_ID = db.Column(Integer)
     TABLE_NUMBER = db.Column(Integer)
     GROUP_ID = db.Column(Integer)   #オーダーをしたグループを特定

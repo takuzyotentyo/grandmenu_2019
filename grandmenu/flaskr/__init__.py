@@ -25,8 +25,8 @@ from flaskr.app_qrcode import qr_code_api  #QRコード関連のモジュール
 #他モジュール(.py)から呼び出す
 app.register_blueprint(qr_code_api)
 
-from flaskr.app_store_management import store_management_api
-app.register_blueprint(store_management_api)
+from flaskr.app_sales_management import sales_management_api
+app.register_blueprint(sales_management_api)
 
 #設定反映後に読み込む
 from flaskr import routes

@@ -328,11 +328,6 @@ def test(one_time_password):
     return render_template("order.html")
 # ここまで
 
-@app.route("/store_management")
-def store_management():
-    print("sales")
-    return render_template("store_management.html")
-
-@app.route("/chart_sample")
-def chart_sample():
-    return render_template("chart_sample.html")
+@app.route("/sales_management")
+def sales_management():
+    return render_template("sales_management.html")

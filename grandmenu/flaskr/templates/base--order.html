@@ -134,6 +134,7 @@
           var price = parseInt(order_history[i][4])
           var order_quantity = parseInt(order_history[i][5])
           var order_status = parseInt(order_history[i][6])
+          console.log(order_status)
           $(".menu_box--order_history__" + class_1).after('<li class="menu_box--order_history" id="order_id_' + order_id + '"></li>');
           $('#order_id_' + order_id)
             .append('<span class="menu_box--order_history__class_2">' + class_2 + '</span>')
@@ -163,8 +164,12 @@
         console.log(order_history['action'])
         console.log(order_id)
         console.log(order_status)
-        $('#order_id_'+order_id).children('.menu_box--order_history__order_status').text('キャンセル')
-        $('#order_id_'+order_id).children('.menu_box--order_history__subtotal').text('小計 ¥ 0')
+        if(order_status==3){
+            $('#order_id_'+order_id).children('.menu_box--order_history__order_status').text('調理完了');
+          }else{
+            $('#order_id_'+order_id).children('.menu_box--order_history__order_status').text('キャンセル')
+            $('#order_id_'+order_id).children('.menu_box--order_history__subtotal').text('小計 ¥ 0')
+          };
       };
       var total_int = 0
       $(".menu_box--order_history__subtotal").each(function () {
@@ -292,6 +297,7 @@
       <ul class="side_menu_2">
         <li><a class="side_menu_2__content" href="/store_setting">店舗情報</a></li>
         <li><a class="side_menu_2__content" href="#">従業員情報</a></li>
+        <li><a class="side_menu_2__content" href="/sales_management">売上管理</a></li>
       </ul>
 
       <a class="side_menu__logout" href="/logout">ログアウト</a>
