@@ -53,7 +53,7 @@
       if($(this).prop("checked") == true) {
         if(confirm("テーブルアクティベートを行いますか？")){
           // OK時の処理
-          // チェックボックスが動いてしまうけど、その後の処理の流れで、他のユーザーのチェックボックスも動くので問題ない
+          // チェックボックスが先に動いてしまうけど、その後の処理の流れで、他のユーザーのチェックボックスも動くので問題ない
           var activate_status = 1
           // ランダムな文字列(one_time_password)を作成
           var str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -191,6 +191,7 @@
       $('#order_id_' + order_id).remove()
     });
 
+    // 会計依頼をキッチンで受け取る
     socket.on('checkout_for_kitchin', function(checkout){
       console.log('test')
       // var table_number = checkout['table_number']
@@ -198,10 +199,22 @@
       var total_fee = checkout['total_fee']
       var table_number_obj = $('#table_' + table_number).parent().parent()
       var change_text_obj = $('#table_' + table_number).parent().siblings('.js-show__qrcode')
-      table_number_obj.addClass('bound')
-      change_text_obj.text('会計表示 >')
-      $('#container_qrcode_' + table_number).append('<div class="text__title">会計 ¥ ' + total_fee + '</div>')
+      table_number_obj.addClass('bound');
+      change_text_obj.text('会計表示 >');
+      $('#container_qrcode_' + table_number).append(
+        '<div class="text__title">会計 ¥ ' + total_fee + '</div>' +
+        '<button class="form__button check__submit_for_kitchin" data-table_number="' + table_number + '">' +
+          '<span>確認</span>' +
+          '<span>会計</span>' +
+        '</button>'
+      );
+    });
 
+    // 会計を完了する(未実装)
+    $(document).on("click", ".check__submit_for_kitchin", function () {
+      var table_number = $(this).data('table_number')
+      console.log(table_number)
+      socket.emit("check__submit--kitchin", table_number);
     });
 
     socket.on('error', function(){

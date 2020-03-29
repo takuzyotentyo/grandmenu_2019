@@ -202,6 +202,12 @@ def order_check():
     emit('checkout', total_fee, room=room)
     emit('checkout_for_kitchin', {'table_number': table_number, 'total_fee': total_fee}, room=store_id)
 
+@socketio.on("check__submit_for_kitchin")
+def check__submit_for_kitchin():
+	store_id = session['store_id']
+	table_number = check__submit_for_kitchin['table_number']
+	print('table_number')
+
 @socketio.on("reload")
 def reload():
 	emit("reload")

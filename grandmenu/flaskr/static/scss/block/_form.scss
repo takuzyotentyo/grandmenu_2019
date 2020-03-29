@@ -26,10 +26,12 @@
         &:nth-child(1) {
             background-color: $color-sub;
             color: $text-color-main;
+            font-size:$text-body;
         }
         &:nth-child(2) {
             background-color: $color-main;
             color: $text-color-main;
+            font-size:$text-body;
             transform-origin: 50% 50% -30px;
         }
     }

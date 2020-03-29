@@ -1720,10 +1720,12 @@ blockのインポート
     border-radius: 5px; }
     .form__button > span:nth-child(1) {
       background-color: #072A24;
-      color: #ffffff; }
+      color: #ffffff;
+      font-size: 16px; }
     .form__button > span:nth-child(2) {
       background-color: #FFA500;
       color: #ffffff;
+      font-size: 16px;
       -webkit-transform-origin: 50% 50% -30px;
       -ms-transform-origin: 50% 50% -30px;
       transform-origin: 50% 50% -30px; }
@@ -2331,8 +2333,8 @@ blockのインポート
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  width: 80%;
-  max-width: 256px; }
+  width: 85%;
+  max-width: 350px; }
   .sales_book--header {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -2340,8 +2342,8 @@ blockのインポート
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    width: 80%;
-    max-width: 256px;
+    width: 85%;
+    max-width: 350px;
     border-bottom: double 3px #ffffff; }
   .sales_book--total {
     display: -webkit-box;
@@ -2350,8 +2352,8 @@ blockのインポート
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    width: 80%;
-    max-width: 256px;
+    width: 85%;
+    max-width: 350px;
     border-top: solid 3px #ffffff; }
   .sales_book__item {
     white-space: nowrap;
@@ -2360,6 +2362,8 @@ blockのインポート
     color: #ffffff;
     -webkit-animation: 1s anim-lightspeed-in ease forwards;
     animation: 1s anim-lightspeed-in ease forwards; }
+    .sales_book__item:last-child {
+      margin-left: auto; }
     .sales_book__item--center {
       white-space: nowrap;
       padding-left: 10px;
@@ -2368,14 +2372,6 @@ blockのインポート
       margin: 0 auto;
       -webkit-animation: 1.5s anim-lightspeed-in ease forwards;
       animation: 1.5s anim-lightspeed-in ease forwards; }
-    .sales_book__item--left {
-      white-space: nowrap;
-      padding-left: 10px;
-      line-height: 30px;
-      color: #ffffff;
-      margin-left: auto;
-      -webkit-animation: 1s anim-lightspeed-in ease forwards;
-      animation: 1s anim-lightspeed-in ease forwards; }
 
 @keyframes anim-lightspeed-in {
   0% {
