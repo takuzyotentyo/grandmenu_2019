@@ -12,20 +12,20 @@
 .sales_book{
   display: flex;
   justify-content: space-between;
-  width: 80%;
-  max-width: 256px;
+  width: 85%;
+  max-width: 350px;
   &--header{
     display: flex;
     justify-content: space-between;
-    width: 80%;
-    max-width: 256px;
+    width: 85%;
+    max-width: 350px;
     border-bottom: double 3px $text-color-main;
   }
   &--total{
     display: flex;
     justify-content: space-between;
-    width: 80%;
-    max-width: 256px;
+    width: 85%;
+    max-width: 350px;
     border-top: solid 3px $text-color-main;
   }
   &__item{
@@ -34,6 +34,9 @@
     line-height: 30px;
     color: $text-color-main;
     animation: 1s anim-lightspeed-in ease forwards;
+    &:last-child{
+      margin-left: auto;
+    }
     &--center{
       white-space: nowrap;
       padding-left: 10px;
@@ -41,14 +44,6 @@
       color: $text-color-main;
       margin: 0 auto;
       animation: 1.5s anim-lightspeed-in ease forwards;
-    }
-    &--left{
-      white-space: nowrap;
-      padding-left: 10px;
-      line-height: 30px;
-      color: $text-color-main;
-      margin-left: auto;
-      animation: 1s anim-lightspeed-in ease forwards;
     }
   }
 }
