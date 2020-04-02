@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block global_navi %}
+<div class='wrapper--sotore_manager'>
+		<div class='radio_button--calendar'>
+			<input type="radio" id="day" class="js-show__container radio_button--calendar__radio" name="day_period" value="day" checked="true" data-container="day">
+			<label for="day">1日</label>
+			<input type="radio" id="period" class="js-show__container radio_button--calendar__radio" name="day_period" value="period" data-container="period">
+			<label for="period">期間</label>
+		</div>
+		<form class='container--datepicker_day' data-target="day">
+			<input class="text_box--small js-datepicker" id='period_day' placeholder="抽出日を選択" required>
+			<div class="container--calendar"></div>
+			<button type="button" class="form__button js-show__lightbox" id="js-calender_submit_day" data-show="sales_chart">
+				<span>開始</span>
+				<span>抽出</span>
+			</button>
+		</form>
+
+		<form class='container--datepicker_period' data-target="period">
+			<input class="text_box--small js-datepicker" id='period_start' placeholder="抽出開始日を入力" required>
+			<div class="container--calendar"></div>
+			<input class="text_box--small js-datepicker" id='period_end' placeholder="抽出終了日を入力" required>
+			<div class="container--calendar"></div>
+			<button type="button" class="form__button js-show__lightbox" id="js-calender_submit_period" data-show="sales_chart">
+				<span>開始</span>
+				<span>抽出</span>
+			</button>
+		</form>
+</div>
+<div class="lightbox">
+	<div class='wrapper--sales_chart' data-target="sales_chart"></div>
+	<div class="lightbox__back" data-target="lightbox_always_show">></div>
+</div>
+{% endblock %}

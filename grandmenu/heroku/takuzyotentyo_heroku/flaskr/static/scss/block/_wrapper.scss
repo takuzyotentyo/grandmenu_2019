@@ -1,0 +1,181 @@
+@import "../setting/setting.scss";
+
+.wrapper{
+	// 中身を中央揃えしたくないので、@include column;は行わない
+	&--header{
+		display: flex;
+		position: absolute;
+		align-items: center;
+		justify-content: center;
+		background-color: $color-main;
+		width: 100vw;
+		height: 50px;
+		z-index: 1000;
+	}
+	&--side{
+	    display: flex;
+	    flex-flow: column;
+	    position: absolute;
+	    width: 0;
+	    height: calc(100vh - 50px);
+	    background: $color-main;
+	    box-shadow: rgba(100,100,100,0.5) 10px 0px 10px;
+	    overflow-y: scroll;
+	    overflow-x: hidden;
+	    left: 0vw;
+	    top: 50px;
+	   	z-index: 999;
+	}
+	&--main{
+		display: flex;
+		position: absolute;
+		flex-flow: wrap;
+		align-items: center;
+    	justify-content: center;
+		width: 100vw;
+		height: calc(100vh - 50px);
+    	top: 50px;
+    	background: url('../img/top.jpg');
+    	background-size: cover;
+    }
+    &--login{
+    	display: flex;
+		flex-flow: column;
+	}
+	&--index{
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(7, 42, 36, 0.3);
+	}
+	&--show_menu{
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		overflow-y: scroll;
+		font-size: 0;	//子要素間の隙間を0にするために必要
+	}
+	&--class_3{
+		display: flex;
+		flex-flow: wrap;
+		overflow-y: scroll;
+		width: 100%;
+		height: 100%;
+		padding-top: 60px;
+		align-items: baseline;
+		align-content: flex-start;
+		overflow-y: scroll;
+	}
+	&--add_menu{
+		display: flex;
+		flex-flow: column;
+	}
+	&--cart{
+		display: flex;
+		flex-flow: wrap;
+		width: 100%;
+		height: 100%;
+		align-content: flex-start;
+		overflow-y: scroll;
+	}
+	&--order_history{
+		display: flex;
+		flex-flow: wrap;
+		width: 100%;
+		height: 100%;
+		align-content: flex-start;
+		overflow-y: scroll;
+	}
+	&--activate{
+		display: inline-block;
+		flex-flow: wrap;
+		width: 100%;
+		height: 100%;
+		align-content: flex-start;
+		overflow-y: scroll;
+		font-size: 0;	//子要素間の隙間を0にするために必要
+	}
+	&--qrcode{
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+	}
+	&--checkout{
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(7, 42, 36, 0.3)
+	}
+	&--qrcode_zipdownload{
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+	}
+	&--sotore_manager{
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		justify-content: center;
+	}
+}
+
+
+.sortable_wrap{
+	display: flex;
+	overflow-y:scroll;
+	flex-flow: row wrap;
+	align-items: baseline;
+	width: 100%;
+}
+
+.table_activate__wrap{
+	display: flex;
+	flex-flow: wrap;
+	overflow:scroll;
+}
+
+.order_list__wrap{
+	// display: none;
+	flex-flow: wrap;
+	overflow:scroll;
+	display: flex;
+	align-content: flex-start;
+}
+	// &--content{
+	// 	&__100p{
+	// 		@include wrapper;
+	// 		width: 100%;
+	// 		flex-flow: row wrap;	//カラム内のコンテンツを1列で表示
+	// 		overflow:scroll;
+	// 		margin-top: 1%;
+	// 		margin-bottom: 1%;
+	// 	}
+	// 	&__50p{
+	// 		@include wrapper;
+	// 		width: 50%;
+	// 		flex-flow: row wrap;	//カラム内のコンテンツを1列で表示
+	// 		overflow:scroll;
+	// 		margin-top: 1%;
+	// 		margin-bottom: 1%;
+	// 	}
+	// 	&__25p{
+	// 		@include wrapper;
+	// 		width: 25%;
+	// 		flex-flow: row wrap;	//カラム内のコンテンツを1列で表示
+	// 		overflow:scroll;
+	// 		margin-top: 1%;
+	// 		margin-bottom: 1%;
+	// 	}
+	// }

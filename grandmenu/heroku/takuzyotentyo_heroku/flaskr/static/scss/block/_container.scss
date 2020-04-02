@@ -1,0 +1,20 @@
+@import "../setting/setting.scss";
+
+.container{
+	&--datepicker_day{
+		display: flex;
+		flex-flow: column nowrap;
+	}
+	&--datepicker_period{
+		display: none;
+		flex-flow: column nowrap;
+	}
+	&--calendar{
+		display: none;
+		width: 280px;
+		flex-flow: wrap;
+		text-size: 0px;
+		overflow: hidden;
+		filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+	}
+}
