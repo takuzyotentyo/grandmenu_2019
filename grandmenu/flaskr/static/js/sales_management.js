@@ -192,7 +192,7 @@ $(function(){
           '<div class="text__subtitle">'+ period_day +'の売上</div>');
         var total_sales = 0
         for (i=0; i<len_order_data; i++) {
-          if ($('.sales_data--' + i).data('order_status')== 5)
+          if ($('.sales_data--' + i).data('order_status')== 6)
             total_sales = total_sales + ($('.sales_data--' + i).data('price') * $('.sales_data--' + i).data('order_quantity'));
             console.log(total_sales)
         };
@@ -289,7 +289,7 @@ $(function(){
         );
         var total_sales = 0
         for (i=0; i<len_order_data; i++) {
-          if ($('.sales_data--' + i).data('order_status')== 5)
+          if ($('.sales_data--' + i).data('order_status')== 6)
             total_sales = total_sales + ($('.sales_data--' + i).data('price') * $('.sales_data--' + i).data('order_quantity'));
             console.log(total_sales)
         };
@@ -326,7 +326,7 @@ $(function(){
     quantity = 0
     price = $(element).data('price')
       $('.wrapper--sales_data').children().each(function(index, element){
-        if ($(element).data('menu_id') == menu_id && $(element).data('order_status')== 5){
+        if ($(element).data('menu_id') == menu_id && $(element).data('order_status')== 6){
           quantity = quantity + $(element).data('order_quantity')
         };
       });
@@ -362,7 +362,7 @@ $(function(){
   $('.button__books').on('click',function(){
     var orderArray = []
     $('.wrapper--sales_data').children().each(function(index, element){
-      if ($(element).data('order_status')== 5){
+      if ($(element).data('order_status')== 6){
         var menuObj = new Object()
         var class_3 = $(element).data('class_3')
         var quantity = $(element).data('order_quantity')

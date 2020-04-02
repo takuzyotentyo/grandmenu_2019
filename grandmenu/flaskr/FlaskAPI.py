@@ -14,7 +14,7 @@ from flaskr.models import Store, Staff, Menu, Table, Order
 from flask_sqlalchemy import SQLAlchemy
 from flaskr import db
 from sqlalchemy import func
-import datetime, re
+import datetime, re, random, string
 
 
 #ハッシュパスワードを作成する関数
@@ -31,16 +31,38 @@ def login_check():
     else:
         return redirect('/logout')
 
+def one_time_password():
+    one_time_password = ''.join([random.choice(string.ascii_letters + string.digits) for i in range(16)])
+    return one_time_password
+
 def group_id():
     store_id = session['store_id']
     table_number = session['table_number']
-    group_id_max=db.session.query(func.max(Order.GROUP_ID)).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, ORDER_STATUS=5).scalar()
+    group_id_max=db.session.query(func.max(Order.GROUP_ID)).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, ORDER_STATUS=6).scalar()
     if group_id_max is None:
         group_id=1
     else:
         group_id=group_id_max + 1
     session['group_id']=group_id
     group_id = session['group_id']
+    return group_id
+
+# どのグループの会計なのかを会計直前に判別するための
+def group_id_for_kitchin(table_number):
+    store_id = session['store_id']
+    print('table_numberは')
+    print(table_number)
+    print('store_idは')
+    print(store_id)
+    group_id_max=db.session.query(func.max(Order.GROUP_ID)).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, ORDER_STATUS=6).scalar()
+    if group_id_max is None:
+        group_id=1
+        print('group_idは')
+        print(group_id)
+    else:
+        group_id=group_id_max + 1
+        print('group_idは')
+        print(group_id)
     return group_id
 
 # 商品数を求める関数、oder_statusの値によって、カートの中身や、注文済み、決済済みなどの値を求められる

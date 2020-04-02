@@ -10,20 +10,24 @@
   </div>
 
   <div class="table_activate__wrap" data-target="table_activate">
+    <!-- 「Activate」エリアの表示 -->
 	  {% for tables in tables %}
 	    <div class="table_activate">
 	    <div class="table_activate__table_number">Table {{tables[0]}}</div>
 	    <div class="table_activate__checkbox_aera">
-			<!-- アクティベートされているかをチェック -->
+
+			<!-- チェックボックスの制御 -->
 			{% if tables[1] == 0 %}
   			<input type="checkbox" id="table_{{tables[0]}}" class="table_activate__checkbox">
   		{% else %}
   			<input type="checkbox" id="table_{{tables[0]}}" class="table_activate__checkbox" checked="true">
   		{% endif %}
-    		<label for="table_{{tables[0]}}" class="table_activate__checkbox_label">
+    		<label for="table_{{tables[0]}}" class="table_activate__checkbox_label js-show__qrcode">
       			<div class="table_activate__checkbox_decoration"></div>
    			</label>
    		</div>
+
+      <!-- チェックボックスの下の「QR確認」部分の制御 -->
       {% if tables[1] == 0 %}
    		<div class="text__body js-show__lightbox js-show__qrcode" data-show="qrcode" style="visibility:hidden;" data-qrcode="qrcode_{{tables[0]}}">
    			QR確認 >
@@ -37,9 +41,11 @@
 	  {% endfor %}
   </div>
 
+  <!-- 「Order」エリアの表示 -->
   <div class="order_list__wrap" data-target="order_list" style= display:none;>
   </div>
 
+  <!-- Lightboxの表示 -->
   <div class="lightbox">
     <div class="wrapper--qrcode" data-target="qrcode">
       {% for tables in tables %}

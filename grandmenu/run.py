@@ -13,6 +13,7 @@ from sqlalchemy import func, or_
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+
 #関数群ファイルの読み込み
 from flaskr import FlaskAPI
 
@@ -44,9 +45,9 @@ def cart(cart):
 		order_status = 0
 		order_list = FlaskAPI.order_list(order_status)
 		order_history = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY, Order.ORDER_STATUS).\
-		    join(Order, Order.MENU_ID==Menu.MENU_ID).\
-		    filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, or_(Order.ORDER_STATUS==2, Order.ORDER_STATUS==3, Order.ORDER_STATUS==4)).\
-		    all()
+			join(Order, Order.MENU_ID==Menu.MENU_ID).\
+			filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, or_(Order.ORDER_STATUS==2, Order.ORDER_STATUS==3, Order.ORDER_STATUS==4)).\
+			all()
 		# その人だけに返す
 		emit('cart',{'action':'show', 'total_quantity': total_quantity, 'order_list': order_list})
 		emit('order_history',{'action':'show', 'order_history': order_history})
@@ -105,9 +106,9 @@ def order_submit():
 	order_status=0
 	order_list=FlaskAPI.order_item_for_kitchin(store_id, table_number, group_id, order_status)
 	order_history = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY, Order.ORDER_STATUS).\
-		    join(Order, Order.MENU_ID==Menu.MENU_ID).\
-		    filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, Order.ORDER_STATUS==0).\
-		    all()
+			join(Order, Order.MENU_ID==Menu.MENU_ID).\
+			filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, Order.ORDER_STATUS==0).\
+			all()
 
 	order_status=2
 	order_timestamp = datetime.now()
@@ -126,23 +127,43 @@ def order_submit():
 
 # テーブルアクティベートの処理
 @socketio.on("table_activate")
-def table_activate(table_information):
+def table_activate(table_number):
 	# activate_statusをDBに書き込み、クライアント側に情報を戻して、反映する
-    # try:
-        store_id = session['store_id']
-        table_number = table_information["table_number"]
-        activate_status = table_information["activate_status"]
-        one_time_password = table_information["one_time_password"]
-        print("one_time_passwordは")
-        print(table_information["one_time_password"])
-        print(one_time_password)
-        db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE: activate_status, Table.ONE_TIME_PASSWORD: one_time_password})
-        db.session.commit()
-        db.session.close()
-        emit("table_activate", table_information, room=store_id)
-    # except:
-    #     result="false"
-    #     emit("server_to_client_connection", "error", room=store_id)
+	# try:
+	store_id = session['store_id']
+	table_number = table_number["table_number"]
+	activate_status_befor = db.session.query(Table.TABLE_ACTIVATE).\
+		filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).\
+		scalar()
+	print("activate_status_beforは")
+	print(activate_status_befor)
+	type(activate_status_befor)
+	if activate_status_befor == 0:
+		while True:
+			one_time_password = FlaskAPI.one_time_password()
+			# one_time_password = 'pKZEohKSoF2lDaWv' わざと無限ループを起こす場合に使用
+			one_time_password_exists = db.session.query(Table.ONE_TIME_PASSWORD).\
+				filter(Table.ONE_TIME_PASSWORD==one_time_password).\
+				scalar()
+			if one_time_password != one_time_password_exists:
+				activate_status_after = 1
+				break
+	else:
+		one_time_password = None
+		activate_status_after = 0
+
+	db.session.query(Table).\
+		filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).\
+		update({Table.TABLE_ACTIVATE: activate_status_after, Table.ONE_TIME_PASSWORD: one_time_password})
+	db.session.commit()
+	db.session.close()
+	table_information = {
+		'table_number': table_number,
+		'activate_status': activate_status_after,
+		'one_time_password': one_time_password
+	}
+	emit("table_activate", table_information, room=store_id)
+	emit("table_activate_origin", table_information)
 
 # 店舗側がオーダーを確認する仕組み
 @socketio.on("kitchin_infomation")
@@ -182,31 +203,38 @@ def order_status_change(order_status_change):
 
 @socketio.on("checkout")
 def order_check():
-    store_id = session['store_id']
-    table_number = session['table_number']
-    room = session['room']
-    group_id = FlaskAPI.group_id()
-    db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, or_(Order.ORDER_STATUS==2, Order.ORDER_STATUS==3)).update({Order.ORDER_STATUS: 5})
-    db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, Order.ORDER_STATUS==0).update({Order.ORDER_STATUS: 1})
-    db.session.commit()
-    total_element = db.session.query(Menu.PRICE, Order.ORDER_QUANTITY).\
-        join(Order, Order.MENU_ID==Menu.MENU_ID).\
-        filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=5).\
-        all()
-    db.session.close()
-    total_fee = 0
-    for i in range(0, len(total_element)):
-        price = total_element[i][0]
-        order_quantity = total_element[i][1]
-        total_fee = total_fee + price*order_quantity
-    emit('checkout', total_fee, room=room)
-    emit('checkout_for_kitchin', {'table_number': table_number, 'total_fee': total_fee}, room=store_id)
-
-@socketio.on("check__submit_for_kitchin")
-def check__submit_for_kitchin():
 	store_id = session['store_id']
-	table_number = check__submit_for_kitchin['table_number']
-	print('table_number')
+	table_number = session['table_number']
+	room = session['room']
+	group_id = FlaskAPI.group_id()
+	db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, or_(Order.ORDER_STATUS==2, Order.ORDER_STATUS==3)).update({Order.ORDER_STATUS: 5})
+	db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, Order.ORDER_STATUS==0).update({Order.ORDER_STATUS: 1})
+	db.session.commit()
+	total_element = db.session.query(Menu.PRICE, Order.ORDER_QUANTITY).\
+	join(Order, Order.MENU_ID==Menu.MENU_ID).\
+	filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=5).\
+	all()
+	db.session.close()
+	total_fee = 0
+	for i in range(0, len(total_element)):
+		price = total_element[i][0]
+		order_quantity = total_element[i][1]
+		total_fee = total_fee + price*order_quantity
+	emit('checkout', total_fee, room=room)
+	emit('checkout_for_kitchin', {'table_number': table_number, 'total_fee': total_fee}, room=store_id)
+
+@socketio.on("check__submit_for_kitchin_receive")
+def check__submit_for_kitchin(table_number):
+	store_id = session['store_id']
+	table_number = table_number['table_number']
+	# table_number = 0
+	group_id = FlaskAPI.group_id_for_kitchin(table_number)
+	print('グループIDは')
+	print(group_id)
+	db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, Order.ORDER_STATUS==5).update({Order.ORDER_STATUS: 6})
+	db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE:0, Table.ONE_TIME_PASSWORD: None})
+	db.session.commit()
+	emit("check__submit_for_kitchin_receive", {'table_number': table_number}, room=store_id)
 
 @socketio.on("reload")
 def reload():
