@@ -1,0 +1,119 @@
+@import "../setting/setting.scss";
+
+.carender{
+	&__header{
+		display: flex;
+		position: relative;
+		top: 0;
+		left: 0;
+		width: 280px;
+		height: 50px;
+		background-color: $text-color-main;
+		align-items: center;
+    	justify-content: center;
+	}
+	&__today{
+		position: relative;
+		width: 50px;
+    	height: 30px;
+    	line-height: 30px;
+    	font-size: $text-body;
+    	color: $text-color-main;
+		background: $gradation;
+    	border-radius: 10px;
+    	text-align: center;
+    	filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+    	box-sizing: border-box;
+		border: 1px solid;
+    	}
+	&__last_month{
+		position: absolute;
+		width: 80px;
+    	height: 80px;
+    	left: -30px;
+    	top: -30px;
+    	font-size: $text-title;
+    	color: $text-color-main;
+		background: $gradation;
+    	border-radius: 50%;
+    	text-align: right;
+    	padding-right: 20px;
+    	padding-top: 35px;
+    	filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+    	box-sizing: border-box;
+		border: 1px solid;
+    	}
+	&__next_month{
+		position: absolute;
+		width: 80px;
+    	height: 80px;
+    	right: -30px;
+    	top: -30px;
+    	font-size: $text-title;
+    	color: $text-color-main;
+		background: $gradation;
+    	border-radius: 50%;
+    	text-align: left;
+    	padding-left: 20px;
+    	padding-top: 35px;
+    	filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    	box-sizing: border-box;
+		border: 2px solid;
+	}
+	&__year_month{
+		display: inline-block;
+		width: 280px;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		font-size: $text-subtitle;
+		color: $color-active;
+		background-color: $text-color-main;
+		flex-flow: center;
+	}
+	&__week{
+		display: inline-block;
+		width: 40px;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		font-size: $text-subtitle;
+		color: $color-active;
+		background-color: $text-color-main;
+	}
+	&__days{
+		display: inline-block;
+		font-size: $text-body;
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
+		font-size: $text-body;
+		color: $color-active;
+		background-color: $text-color-main;
+		&--other_month{
+			display: inline-block;
+			font-size: $text-body;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+			font-size: $text-body;
+			color: #d3d3d3;
+			background-color: $text-color-main;
+		}
+	}
+	&__select_day{
+		display: inline-block;
+		width: 30px;
+		height: 30px;
+		font-size: $text-body;
+		background: $gradation;
+		border-radius: 50%;
+		color: $text-color-main;
+		line-height:30px;
+		filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+		box-sizing: border-box;
+		border: 1px solid;
+	}
+}
