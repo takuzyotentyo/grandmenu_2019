@@ -133,7 +133,7 @@ def store_information_add():
 @app.route('/show_menu' , methods = ['POST', 'GET'])
 def show_menu():
     if 'store_id' not in session:
-        return redirect("/logtout")
+        return redirect("/logout")
     else:
         store_id = session['store_id']
         class_2 = db.session.query(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).filter(Menu.STORE_ID==store_id).\
@@ -293,7 +293,10 @@ def sort_menu():
 @app.route('/activate')
 def activate():
     store_id = session['store_id']
-    tables = db.session.query(Table.TABLE_NUMBER, Table.TABLE_ACTIVATE, Table.ONE_TIME_PASSWORD).filter(Table.STORE_ID == store_id).order_by(Table.TABLE_NUMBER).all()
+    tables = db.session.query(Table.TABLE_NUMBER, Table.TABLE_ACTIVATE, Table.ONE_TIME_PASSWORD, Table.TOTAL_FEE).\
+        filter(Table.STORE_ID == store_id).\
+        order_by(Table.TABLE_NUMBER).\
+        all()
     print('tablesの中身は')
     print(tables)
     return render_template('activate.html', tables=tables)
@@ -322,9 +325,6 @@ def logout():
 def test(one_time_password):
     try:
         session.clear()
-        one_time_password_check = db.session.query(Table.ONE_TIME_PASSWORD).\
-                filter(Table.ONE_TIME_PASSWORD==one_time_password).\
-                one()
         tables = db.session.query(Table).\
                 filter(Table.ONE_TIME_PASSWORD==one_time_password).\
                 one()
@@ -332,6 +332,7 @@ def test(one_time_password):
         print(tables)
         print(tables.STORE_ID)
         session['store_id'] = tables.STORE_ID
+        session['one_time_password'] = tables.ONE_TIME_PASSWORD
         print("ここまでOK1.1")
         session['table_number'] = tables.TABLE_NUMBER
         print("ここまでOK1.2")
@@ -343,9 +344,11 @@ def test(one_time_password):
 # ここまで
 @app.route('/order_menu' , methods = ['POST', 'GET'])
 def order_menu():
-    if 'store_id' not in session:
-        return redirect("/logtout")
-    else:
+    try:
+        one_time_password = session['one_time_password']
+        one_time_password_check = db.session.query(Table.ONE_TIME_PASSWORD).\
+                filter(Table.ONE_TIME_PASSWORD==one_time_password).\
+                one()
         store_id = session['store_id']
         print("ここまでOK3")
         class_2 = db.session.query(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).filter(Menu.STORE_ID==store_id).\
@@ -358,6 +361,8 @@ def order_menu():
             all()
         print(class_3)
         return render_template('order.html',class_2=class_2, class_3=class_3)
+    except:
+        return redirect("/logout")
 
 @app.route("/sales_management")
 def sales_management():

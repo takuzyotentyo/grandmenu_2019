@@ -179,8 +179,11 @@
       var change_text_obj = $('#table_' + table_number).parent().siblings('.js-show__qrcode')
       table_number_obj.addClass('bound');
       change_text_obj.text('会計表示 >');
-      $('#container_qrcode_' + table_number).append(
-        '<div class="text__title">会計 ¥ ' + total_fee + '</div>' +
+      var check_out_obj = $('#container_qrcode_' + table_number)
+      check_out_obj.children('.total_fee').remove()
+      check_out_obj.children('.check__submit_for_kitchin_push').remove()
+      check_out_obj.append(
+        '<div class="text__title total_fee">会計 ¥ ' + total_fee + '</div>' +
         '<button class="form__button check__submit_for_kitchin_push" data-table_number="' + table_number + '">' +
           '<span>確認</span>' +
           '<span>会計</span>' +

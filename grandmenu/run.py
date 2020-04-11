@@ -104,7 +104,7 @@ def cart(cart):
 # サーバー側からもコネクトする処理。特に意味無し
 @socketio.on('connect')
 def server_to_client_connection():
-	emit("server_to_client_connection","server has connected", broadcast=True)
+	emit("server_to_client_connection","server has connected")
 
 # オーダーを飛ばす処理
 @socketio.on("order_submit")
@@ -200,11 +200,10 @@ def order_status_change(order_status_change):
 	order_id = order_status_change['order_id']
 	order_status = order_status_change['order_status']
 	# オーダーステータスのアップデート
-	order = db.session.query(Order).filter_by(STORE_ID=store_id,ORDER_ID=order_id).one()
-	order.ORDER_STATUS = order_status
+	order = db.session.query(Order).filter(Order.STORE_ID==store_id,Order.ORDER_ID==order_id).one()
+	if order.ORDER_STATUS <= order_status:
+		order.ORDER_STATUS = order_status
 	db.session.commit()
-	print('orderオブジェクトの中身は')
-	print(order)
 	table_number = order.TABLE_NUMBER
 	group_id = order.GROUP_ID
 	db.session.close()
@@ -221,17 +220,21 @@ def order_check():
 	group_id = FlaskAPI.group_id()
 	db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, or_(Order.ORDER_STATUS==2, Order.ORDER_STATUS==3)).update({Order.ORDER_STATUS: 5})
 	db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, Order.ORDER_STATUS==0).update({Order.ORDER_STATUS: 1})
+	db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE: 2})
 	db.session.commit()
 	total_element = db.session.query(Menu.PRICE, Order.ORDER_QUANTITY).\
-	join(Order, Order.MENU_ID==Menu.MENU_ID).\
-	filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=5).\
-	all()
+		join(Order, Order.MENU_ID==Menu.MENU_ID).\
+		filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=5).\
+		all()
 	db.session.close()
 	total_fee = 0
 	for i in range(0, len(total_element)):
 		price = total_element[i][0]
 		order_quantity = total_element[i][1]
 		total_fee = total_fee + price*order_quantity
+	db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TOTAL_FEE: total_fee})
+	db.session.commit()
+	db.session.close()
 	emit('checkout', total_fee, room=room)
 	emit('checkout_for_kitchin', {'table_number': table_number, 'total_fee': total_fee}, room=store_id)
 
@@ -244,7 +247,7 @@ def check__submit_for_kitchin(table_number):
 	print('グループIDは')
 	print(group_id)
 	db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, Order.ORDER_STATUS==5).update({Order.ORDER_STATUS: 6})
-	db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE:0, Table.ONE_TIME_PASSWORD: None})
+	db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE:0, Table.ONE_TIME_PASSWORD: None, Table.TOTAL_FEE: None})
 	db.session.commit()
 	emit("check__submit_for_kitchin_receive", {'table_number': table_number}, room=store_id)
 
