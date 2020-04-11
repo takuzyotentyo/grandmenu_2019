@@ -17,7 +17,19 @@ from datetime import datetime
 #関数群ファイルの読み込み
 from flaskr import FlaskAPI
 
+#admin管理
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
 db=SQLAlchemy(app)
+
+admin = Admin(app)
+admin.add_view(ModelView(Store, db.session))
+admin.add_view(ModelView(Staff, db.session))
+admin.add_view(ModelView(Menu, db.session))
+admin.add_view(ModelView(Table, db.session))
+admin.add_view(ModelView(Order, db.session))
+
 
 # websocketは、socketio.run(app, debug=True)で動くため(本ファイル最下部参照)、run.pyに書く(いい方法があったら書き直す)
 # async_mode...よくわからん。
