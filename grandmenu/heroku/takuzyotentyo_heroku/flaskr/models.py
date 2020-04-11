@@ -56,16 +56,17 @@ class Table(db.Model):
     TABLE_NUMBER = db.Column(Integer)
     TABLE_ACTIVATE = db.Column(Integer)
     ONE_TIME_PASSWORD = db.Column(String(16))
+    TOTAL_FEE = db.Column(Integer)
 
     def __repr__(self):
-        return "(TABLE_ID='%s', STORE_ID='%s', TABLE_NUMBER='%s', TABLE_ACTIVATE='%s', ONE_TIME_PASSWORD='%s')" % (self.TABLE_ID, self.STORE_ID, self.TABLE_NUMBER, self.TABLE_ACTIVATE, self.ONE_TIME_PASSWORD)
+        return "(TABLE_ID='%s', STORE_ID='%s', TABLE_NUMBER='%s', TABLE_ACTIVATE='%s', ONE_TIME_PASSWORD='%s', TOTAL_FEE='%s')" % (self.TABLE_ID, self.STORE_ID, self.TABLE_NUMBER, self.TABLE_ACTIVATE, self.ONE_TIME_PASSWORD, self.TOTAL_FEE)
 
 class Order(db.Model):
     __tablename__ = 'orders'
 
     ORDER_ID = db.Column(Integer, primary_key=True)
     ORDER_TIMESTAMP = Column(DateTime)
-    ORDER_STATUS = db.Column(Integer)   #0はかごに入ってる,1はオーダーされた,2はかごから削除された,3は決済完了
+    ORDER_STATUS = db.Column(Integer)   #0はかごに入ってる,1はかごから削除された,2はオーダーされた,3は調理完了.4は料理キャンセル,5は会計依頼,6は会計完了
     STORE_ID = db.Column(Integer)
     TABLE_NUMBER = db.Column(Integer)
     GROUP_ID = db.Column(Integer)   #オーダーをしたグループを特定

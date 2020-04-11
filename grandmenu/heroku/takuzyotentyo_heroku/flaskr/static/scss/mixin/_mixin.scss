@@ -2,6 +2,7 @@
 
 @mixin button{
  	display: inline-block;
+ 	position: relative;
  	text-decoration: none;
  	color: $text-color-main;
  	width: 50px;
@@ -13,6 +14,7 @@
  	border: dashed 2px #FFF;
  	transition: .4s;
  	font-size: $text-icon;
- 	position: fixed;
- 	bottom: 25px;
+ 	margin-right: 20px;
+ 	background-color: $color-main;
+ 	box-shadow: 0px 0px 0px 5px $color-main;
  }

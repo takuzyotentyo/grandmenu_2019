@@ -7,44 +7,15 @@
   }
 }
 
-//Demo
-.skills {
-  width: 80%;
-  max-width: 960px;
-  height: 780px;
-  margin: auto;
-
-  position: relative;
-}
-
 .lines {
+  display: flex;
   height: 100%;
-  position: relative;
-}
-.line {
-  height: inherit;
-  width: 2px;
-
+  width: 100%;
+  top: 0;
   position: absolute;
-
-  background: rgba(#eee, 0.6);
-
-  &.l--0 {
-    left: 0;
-  }
-  &.l--25 {
-    left: 25%;
-  }
-  &.l--50 {
-    left: 50%;
-  }
-  &.l--75 {
-    left: 75%;
-  }
-  &.l--100 {
-    left: calc(100% - 1px);
-  }
+  justify-content: space-between;
 }
+
 .line__label {
   display: block;
   width: 100px;
@@ -63,23 +34,26 @@
 .charts {
   width: 100%;
   height: 100%;
-  position: absolute;
+  position:  relative;
   top: 0;
   left: 0;
   z-index: 10;
+  overflow: scroll;
 }
 
-.chart {
-  margin: 30px 0 0;
+// .chart {
+//   margin: 30px 0 0;
 
-  &:first-child {
-    margin: 0;
-  }
-}
+//   &:first-child {
+//     margin: 0;
+//   }
+// }
 
 .chart__title {
   display: block;
   margin: 0 0 10px;
+  text-align: center;
+  color: $text-color-main;
 
   font-weight: bold;
 
@@ -87,39 +61,82 @@
 
   animation: 1s anim-lightspeed-in ease forwards;
 
-  .chart--dev & {}
-  .chart--prod & {
-    animation-delay: 3.3s;
-  }
-  .chart--design & {
-    animation-delay: 4.5s;
-  }
+  // .chart--dev & {}
+  // .chart--prod & {
+  //   animation-delay: 3.3s;
+  // }
+  // .chart--design & {
+  //   animation-delay: 4.5s;
+  // }
 }
 
-.chart--horiz {
-  overflow: hidden;
-}
-
-.chart__bar {
-  $border-rad: 4px;
-  height: 30px;
-  margin-bottom: 10px;
-
-  background: linear-gradient(to left, #4cb8c4, #3cd3ad);
-  border-top-right-radius: $border-rad;
-  border-bottom-right-radius: $border-rad;
-  opacity: 0;
-
-  animation: 1s anim-lightspeed-in ease forwards;
-
-  .chart--dev & {
-    @include stagger-anim-delay(11, 0.5s, 0.2s);
+.chart {
+  overflow: scroll;
+  position: relative;
+  height: calc(100% - 56px);
+  &__title{
+    display: block;
+    margin-bottom: 10px;
+    text-align: center;
+    color: $text-color-main;
+    font-weight: bold;
+    animation: 0.5s anim-lightspeed-in ease forwards;
+    font-size: $text-subtitle;
   }
-  .chart--prod & {
-    @include stagger-anim-delay(2, 3.8s, 0.2s);
+  &__lines{
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 56px);
+    justify-content: space-between;
+    animation: 1s anim-lightspeed-in ease forwards;
   }
-  .chart--design & {
-    @include stagger-anim-delay(3, 5s, 0.2s);
+  &__line {
+    width: 2px;
+    background: rgba(#eee, 0.6);
+  }
+  &__bars{
+    position: relative;
+    width: 100%;
+    height: calc(100% - 56px);
+    overflow: scroll;
+  }
+  &__bar{
+    $border-rad: 4px;
+    display: flex;
+    height: 30px;
+    margin: 10px 0;
+    list-style: none;
+    background: linear-gradient(to left, #4cb8c4, #3cd3ad);
+    border-top-right-radius: $border-rad;
+    border-bottom-right-radius: $border-rad;
+    animation: 2s anim-lightspeed-in ease forwards;
+  }
+  &__bar_label{
+    white-space: nowrap;
+    padding-left: 10px;
+    line-height: 30px;
+    color: white;
+  }
+  &__chart_labels{
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: space-between;
+    margin: 10px 0 0;
+    color: $text-color-main;
+    animation: 1.5s anim-lightspeed-in ease forwards;
+    font-size: $text-subtitle;
+    flex-flow: nowrap;
+  }
+  &__total{
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    color: $text-color-main;
+    font-weight: bold;
+    animation: 0.5s anim-lightspeed-in ease forwards;
+    font-size: $text-subtitle;
   }
 }
 

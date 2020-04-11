@@ -17,4 +17,17 @@
 		overflow: hidden;
 		filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
 	}
+	&--bar_chart {
+		width: 80%;
+		max-width: 960px;
+		height: 100%;
+		position: relative;
+	}
+	&--controller{
+		display: flex;
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		bottom: 20px;
+	}
 }
