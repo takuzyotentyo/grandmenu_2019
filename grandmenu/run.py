@@ -92,7 +92,7 @@ def cart(cart):
 # サーバー側からもコネクトする処理。特に意味無し
 @socketio.on('connect')
 def server_to_client_connection():
-	emit("server_to_client_connection","server has connected", broadcast=True)
+	emit("server_to_client_connection","server has connected")
 
 # オーダーを飛ばす処理
 @socketio.on("order_submit")
