@@ -6,15 +6,18 @@ from flaskr import app
 
 # websocketに関するモジュール
 from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, rooms, disconnect, send
+import eventlet
+eventlet.monkey_patch()
+
 #modelの読み込み
-from flaskr.models import Store, Staff, Menu, Table, Order
+from flaskr.models import *
+
 #sqlalchemyでfuncを使う(maxやminなどが使えるようになる)
 from sqlalchemy import func, or_
-
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
-#関数群ファイルの読み込み
+#APIファイルの読み込み
 from flaskr import FlaskAPI
 
 #admin管理
@@ -31,9 +34,10 @@ admin.add_view(ModelView(Table, db.session))
 admin.add_view(ModelView(Order, db.session))
 
 
-# websocketは、socketio.run(app, debug=True)で動くため(本ファイル最下部参照)、run.pyに書く(いい方法があったら書き直す)
-# async_mode...よくわからん。
-socketio=SocketIO(app, async_mode=None)
+# websocketは、socketio.run(app)で動くため(本ファイル最下部参照)、run.pyに書く(いい方法があったら書き直す)
+# async_modeは、eventlet,gevent,noneから選択可能で、websocketを利用するためのwebサーバーの選択
+async_mode = 'eventlet'
+socketio=SocketIO(app, async_mode=async_mode)
 
 # クライアント側と繋がった場合に、注文中のメニューと、注文履歴を返す
 @socketio.on('cart')
@@ -104,6 +108,7 @@ def cart(cart):
 # サーバー側からもコネクトする処理。特に意味無し
 @socketio.on('connect')
 def server_to_client_connection():
+	print('server has connected')
 	emit("server_to_client_connection","server has connected")
 
 # オーダーを飛ばす処理

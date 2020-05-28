@@ -22,7 +22,11 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
+    // ローカル用
     var socket = io.connect('http://127.0.0.1:5000');
+    // heroku用
+    // var socket = io.connect('https://groundmenucom.herokuapp.com/');
+
     socket.on('connect', function() {
       // lightbox--ws_errorがvisibleということは、一旦conecctが完了した後に、エラーで接続が切れ、再度connectの処理が必要になったということ
       if($(".lightbox--ws_error").is(':visible')) {

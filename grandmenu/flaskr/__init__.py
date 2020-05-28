@@ -9,9 +9,9 @@ import os
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret key'
 # ローカルのDBを使う場合
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://localhost/postgres"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://localhost/postgres"
 # herokuにデプロイする場合
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://lslaxpbuylrnkm:1586a4b3dbe51e0e80649099b55fdabc38004c49fe236304a96b2a8a19c2385f@ec2-54-147-209-121.compute-1.amazonaws.com:5432/dfidib9dgnc4t1"
+# app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://lfnrofxsjublyh:28fba4b4797005fcb5a60a666ff3bb038fab47e8bbfac7cefed66efcc38c5817@ec2-18-206-84-251.compute-1.amazonaws.com:5432/d8sm988s5nbbm7"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #bufディレクトリの設定
 app.config['BUF_DIR'] = os.path.dirname(os.path.abspath(__file__)) + "/buf"

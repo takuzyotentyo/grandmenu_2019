@@ -11,7 +11,7 @@ app.config['SECRET_KEY'] = 'secret key'
 # ローカルのDBを使う場合
 # app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://localhost/postgres"
 # herokuにデプロイする場合
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://lslaxpbuylrnkm:1586a4b3dbe51e0e80649099b55fdabc38004c49fe236304a96b2a8a19c2385f@ec2-54-147-209-121.compute-1.amazonaws.com:5432/dfidib9dgnc4t1"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://xvsejusgigycsu:35ad30fc1fb8e3f1a417bbe0da218d3dc20f725be43c63b60030b7b04354aed6@ec2-18-210-214-86.compute-1.amazonaws.com:5432/dbh6s0pfc599dl"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #bufディレクトリの設定
 app.config['BUF_DIR'] = os.path.dirname(os.path.abspath(__file__)) + "/buf"

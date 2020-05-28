@@ -20,6 +20,13 @@ from flaskr import FlaskAPI
 #admin管理
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+# import eventlet
+# eventlet.monkey_patch()
+
+# import gevent
+# from gevent import monkey
+# monkey.patch_all()
+# from geventwebsocket import WebSocketServer, WebSocketApplication, Resource
 
 db=SQLAlchemy(app)
 
@@ -30,10 +37,11 @@ admin.add_view(ModelView(Menu, db.session))
 admin.add_view(ModelView(Table, db.session))
 admin.add_view(ModelView(Order, db.session))
 
+async_mode='gevent'
 
 # websocketは、socketio.run(app, debug=True)で動くため(本ファイル最下部参照)、run.pyに書く(いい方法があったら書き直す)
-# async_mode...よくわからん。
-socketio=SocketIO(app, async_mode=None)
+socketio=SocketIO(app, async_mode=async_mode, manage_session=False)
+# socketio = SocketIO(app, logger=True, engineio_logger=True, ping_interval=10, ping_timeout=25, async_mode='eventlet', manage_session='true')
 
 # クライアント側と繋がった場合に、注文中のメニューと、注文履歴を返す
 @socketio.on('cart')
@@ -43,12 +51,10 @@ def cart(cart):
 	store_id = session['store_id']
 	table_number = session['table_number']
 	group_id = FlaskAPI.group_id()
+	# sessionをwebsocket上で持たせてもクライアントと共有できないため、都度設定
+	room = str(session['store_id']) + '_' + str(session['table_number']) + '_' + str(session['group_id'])
 	print('グループIDは'+str(session['group_id']))
 	if cart['action'] == 'show':
-		# roomをセッションに持たせる
-		session['room'] = str(session['store_id']) + '_' + str(session['table_number']) + '_' + str(session['group_id'])
-		session['store'] = str(session['store_id'])
-		room=session['room']
 		# roomというチャットスペースみたいなところに入る
 		join_room(room)
 		# カートに入っている商品数を求める
@@ -64,7 +70,6 @@ def cart(cart):
 		emit('cart',{'action':'show', 'total_quantity': total_quantity, 'order_list': order_list})
 		emit('order_history',{'action':'show', 'order_history': order_history})
 	else:
-		room = session['room']
 		if cart['action'] == 'add':
 			menu_id = cart['menu_id']
 			order_quantity = cart['order_quantity']
@@ -112,8 +117,8 @@ def order_submit():
 	print("オーダー決定")
 	store_id=session['store_id']
 	table_number=session['table_number']
-	group_id=session['group_id']
-	room=session['room']
+	group_id = FlaskAPI.group_id()
+	room = str(session['store_id']) + '_' + str(session['table_number']) + '_' + str(session['group_id'])
 
 	order_status=0
 	order_list=FlaskAPI.order_item_for_kitchin(store_id, table_number, group_id, order_status)
@@ -126,7 +131,6 @@ def order_submit():
 	order_timestamp = datetime.now()
 	orders=db.session.query(Order).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=0).update({Order.ORDER_STATUS: order_status, Order.ORDER_TIMESTAMP: order_timestamp})
 	# print("print orders")
-	print(order_history)
 	db.session.commit()
 	db.session.close()
 
@@ -147,6 +151,7 @@ def table_activate(table_number):
 	activate_status_befor = db.session.query(Table.TABLE_ACTIVATE).\
 		filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).\
 		scalar()
+	print('joinしているroomは' + str(store_id))
 	print("activate_status_beforは")
 	print(activate_status_befor)
 	type(activate_status_befor)
@@ -174,7 +179,11 @@ def table_activate(table_number):
 		'activate_status': activate_status_after,
 		'one_time_password': one_time_password
 	}
+	# print('ブロードキャストテスト')
+	# emit("server_to_client_connection","server has connected", broadcast=True)
+	print('アクティベート情報をroomに送信')
 	emit("table_activate", table_information, room=store_id)
+	print('アクティベート情報を本人のみに送信')
 	emit("table_activate_origin", table_information)
 
 # 店舗側がオーダーを確認する仕組み
@@ -188,8 +197,10 @@ def kitchin_infomation(msg):
 	join_room(store_id)
 	# カートの中身を見たいので、order_status=0を設定
 	order_status=2
+	print('OK1aaa')
 	# カートに入っている商品情報を求める(order_statusの値を変更すれば、カートに入っているものや、注文済みのもの、決済が完了したものを見ることができる)
 	order_list=FlaskAPI.order_list_for_kitchin(store_id, order_status)
+	print('order_listは' + str(order_list))
 	# roomのメンバーに情報を送信
 	emit("show_order",{'action':'show', 'order_list':order_list})
 
@@ -216,8 +227,8 @@ def order_status_change(order_status_change):
 def order_check():
 	store_id = session['store_id']
 	table_number = session['table_number']
-	room = session['room']
 	group_id = FlaskAPI.group_id()
+	room = str(session['store_id']) + '_' + str(session['table_number']) + '_' + str(session['group_id'])
 	db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, or_(Order.ORDER_STATUS==2, Order.ORDER_STATUS==3)).update({Order.ORDER_STATUS: 5})
 	db.session.query(Order).filter(Order.STORE_ID==store_id, Order.TABLE_NUMBER==table_number, Order.GROUP_ID==group_id, Order.ORDER_STATUS==0).update({Order.ORDER_STATUS: 1})
 	db.session.query(Table).filter(Table.STORE_ID==store_id, Table.TABLE_NUMBER==table_number).update({Table.TABLE_ACTIVATE: 2})
@@ -251,10 +262,17 @@ def check__submit_for_kitchin(table_number):
 	db.session.commit()
 	emit("check__submit_for_kitchin_receive", {'table_number': table_number}, room=store_id)
 
+@socketio.on("ping")
+def ping():
+	print('ping')
+	emit('ping', 'ping')
+
 @socketio.on("reload")
 def reload():
-	emit("reload")
+	print('リロードします')
+	emit("reload",'reload')
 
 if __name__ == '__main__':
 	# app.run(debug=True)
-	socketio.run(app, debug=True)
+	# socketio.run(app, debug=True)
+	socketio.run(app)

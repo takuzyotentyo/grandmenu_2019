@@ -22,8 +22,10 @@
 <body>
 <script type="text/javascript">
   $(document).ready(function() {
-
+    // ローカル用
     var socket = io.connect('http://127.0.0.1:5000');
+    // heroku用
+    // var socket = io.connect('https://groundmenucom.herokuapp.com/');
 
     // 'connect'はクライアント側からサーバー側と繋ぐための特別なイベントで、勝手に行われる
     socket.on('connect', function() {
