@@ -1,49 +1,46 @@
 @import "../setting/setting.scss";
+@import "../mixin/mixin.scss";
+
 
 .button{
  	@include button;
  	&__order_history{
  		@include button;
  		background-color: $color-accent;
- 		box-shadow: 0px 0px 0px 5px $color-accent;
- 		background-color: $color-accent;
  		background-image: url("../img/order_history.svg");
  		&:hover {
 			background-color: $color-active;
-			box-shadow: 0px 0px 0px 5px $color-active;
 		}
 	}
  	&__delete{
 		@include button;
+		background-color: $color-main;
 		&--active{
- 		@include button;
-	 		background: $color-alart;
-	 		box-shadow: 0px 0px 0px 5px $color-alart;
+ 			@include button;
+	 		background-color: $color-alart;
  		}
 		&:hover {
 			background: $color-active;
-			box-shadow: 0px 0px 0px 5px $color-active;
 		}
  	}
 
  	&__add{
  		@include button;
+ 		background-color: $color-main;
  		&:hover {
-			background: $color-active;
-			box-shadow: 0px 0px 0px 5px $color-active;
+			background-color: $color-active;
 		}
 	}
 
  	&__sortable{
  		@include button;
+ 		background-color: $color-main;
  		&--active{
  			@include button;
- 			background: $color-alart;
- 			box-shadow: 0px 0px 0px 5px $color-alart;
+ 			background-color: $color-alart;
  		}
  		&:hover {
-			background: $color-active;
-			box-shadow: 0px 0px 0px 5px $color-active;
+			background-color: $color-active;
 		}
  	}
  	&__books{
@@ -52,9 +49,9 @@
  		background-size: 60%;
  		background-repeat: no-repeat;
  		background-position: center;
+ 		background-color: $color-main;
  		&:hover {
 			background-color: $color-active;
-			box-shadow: 0px 0px 0px 5px $color-active;
 		}
  	}
  	&__bar_chart{
@@ -64,9 +61,9 @@
  		background-size: 60%;
  		background-repeat: no-repeat;
  		background-position: center;
+ 		background-color: $color-main;
  		&:hover {
 			background-color: $color-active;
-			box-shadow: 0px 0px 0px 5px $color-active;
 		}
  	}
 }

@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../static/css/reset.css">
   <link rel="stylesheet" href="../static/scss/style.css">
   <script src="../static/js/jquery-3.4.1.min.js"></script>
-  <script src="../static/js//jQuery UI - v1.11.3 - 2015-02-12.js"></script>
+  <script src="../static/js/jQuery_UI-v1.11.3.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
 
   <!-- スマホでsortableを実装するためのライブラリ -->
@@ -20,12 +20,17 @@
 
 <body>
 <script type="text/javascript">
-  $(document).ready(function() {
-
+  $(document).ready(function(){
     // ローカル用
-    var socket = io.connect('http://127.0.0.1:5000');
+    // var socket = io.connect('http://127.0.0.1:5000');
     // heroku用
-    // var socket = io.connect('https://groundmenucom.herokuapp.com/');
+    if (window.location.protocol == "https:") {
+      var ws_scheme = "wss://";
+    } else {
+      var ws_scheme = "ws://"
+    };
+
+    var socket = io.connect(ws_scheme + location.host);
 
     socket.on('connect', function() {
       // lightbox--ws_errorがvisibleということは、一旦conecctが完了した後に、エラーで接続が切れ、再度connectの処理が必要になったということ

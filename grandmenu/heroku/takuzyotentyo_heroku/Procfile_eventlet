@@ -1,4 +1,0 @@
-web: gunicorn run:app --log-file -
-heroku features:enable http-session-affinity
-gunicorn -k eventlet webhandler:app
-gunicorn --worker-class eventlet -w 1 run:app

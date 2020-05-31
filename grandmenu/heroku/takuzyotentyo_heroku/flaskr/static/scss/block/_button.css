@@ -1,0 +1,198 @@
+@charset "UTF-8";
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+/*====================
+サイトの基本設定
+====================*/
+/*フォント関係*/
+/*テキストの大きさ*/
+/*色関係*/
+/*ブレイクポイント*/
+.button {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  color: #ffffff;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  overflow: hidden;
+  border: dashed 2px #FFF;
+  -webkit-transition: .4s;
+  -o-transition: .4s;
+  transition: .4s;
+  font-size: 30px;
+  margin-right: 20px; }
+  .button__order_history {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    margin-right: 20px;
+    background-color: #7AB300;
+    background-image: url("../img/order_history.svg"); }
+    .button__order_history:hover {
+      background-color: #111111; }
+  .button__delete {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    margin-right: 20px;
+    background-color: #FFA500; }
+    .button__delete--active {
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: #ffffff;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 50%;
+      text-align: center;
+      overflow: hidden;
+      border: dashed 2px #FFF;
+      -webkit-transition: .4s;
+      -o-transition: .4s;
+      transition: .4s;
+      font-size: 30px;
+      margin-right: 20px;
+      background-color: #DC3B00; }
+    .button__delete:hover {
+      background: #111111; }
+  .button__add {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    margin-right: 20px;
+    background-color: #FFA500; }
+    .button__add:hover {
+      background-color: #111111; }
+  .button__sortable {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    margin-right: 20px;
+    background-color: #FFA500; }
+    .button__sortable--active {
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: #ffffff;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 50%;
+      text-align: center;
+      overflow: hidden;
+      border: dashed 2px #FFF;
+      -webkit-transition: .4s;
+      -o-transition: .4s;
+      transition: .4s;
+      font-size: 30px;
+      margin-right: 20px;
+      background-color: #DC3B00; }
+    .button__sortable:hover {
+      background-color: #111111; }
+  .button__books {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    margin-right: 20px;
+    background-image: url("../img/list.svg");
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #FFA500; }
+    .button__books:hover {
+      background-color: #111111; }
+  .button__bar_chart {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    margin-right: 20px;
+    margin-right: 25px;
+    background-image: url("../img/line_chart.svg");
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #FFA500; }
+    .button__bar_chart:hover {
+      background-color: #111111; }
