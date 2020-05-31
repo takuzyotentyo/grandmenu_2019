@@ -273,5 +273,5 @@ def reload():
 	emit("reload",'reload')
 
 if __name__ == '__main__':
-	socketio.run(app, debug=True)
-	# socketio.run(app)
+	# socketio.run(app, debug=True)
+	socketio.run(app)
