@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../static/css/reset.css">
   <link rel="stylesheet" href="../static/scss/style.css">
   <script src="../static/js/jquery-3.4.1.min.js"></script>
+  <script src="../static/js/jQuery_UI-v1.11.3.js"></script>
   <script src="../static/js/jquery.ui.touch-punch.min.js"></script>
   <script src="../static/js/script.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
@@ -19,20 +20,14 @@
 <body>
 <script type="text/javascript">
   $(document).ready(function(){
-    // ローカル用
-    // var socket = io.connect('http://127.0.0.1:5000');
-    // heroku用
+
     if (window.location.protocol == "https:") {
       var ws_scheme = "wss://";
     } else {
       var ws_scheme = "ws://"
     };
-    // 'http://' + document.domain + ':' + location.port + '/test'
 
     var socket = io(ws_scheme + location.host, {transports: ["websocket"]});
-    // var socket = io.connect(ws_scheme + document.domain, {transports: ["websocket"]});
-    // var socket = io.connect({transports: ["websocket"]});
-    // socket.heartbeatTimeout = 20000; //reconnect if not received heartbeat for 20 seconds
 
     // 'connect'はクライアント側からサーバー側と繋ぐための特別なイベントで、勝手に行われる
     socket.on('connect', function() {
@@ -45,16 +40,6 @@
         console.log('ソケットkitchin_infomation')
         socket.emit("kitchin_infomation","client has connected");
       };
-    });
-
-    $(function(){
-      setInterval(function(){
-        socket.emit('ping','ping');
-      },25000);
-    });
-
-    socket.on('pong', function(){
-      console.log('pong');
     });
 
     socket.on('reload', function(){
@@ -296,7 +281,7 @@
   {% block global_navi %}{% endblock %}
     <div class="lightbox--ws_error">
       <div class="lightbox--ws_error__wi-fi"></div>
-      <div class="lightbox--ws_error__msg text__subtitle">接続エラーが発生しました</div>
+      <div class="lightbox--ws_error__msg text__subtitle">再接続を実行しています</div>
     </div>
     </div>
   </div>

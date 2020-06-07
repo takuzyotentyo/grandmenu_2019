@@ -331,7 +331,7 @@ blockのインポート
     position: relative;
     border: solid 2px #FFA500;
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 12px;
     text-align: center; }
   .menu_box--class_3__decrease {
     width: 30px;
@@ -452,16 +452,18 @@ blockのインポート
     padding: 0 5px; }
   .menu_box--order__quantity_label {
     width: 50px;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 50px;
     text-align: center; }
   .menu_box--order__quantity {
     width: 30px;
-    display: block;
+    height: 30px;
+    line-height: 30px;
     position: relative;
     border-radius: 5px;
-    font-size: 18px;
-    text-align: center; }
+    font-size: 12px;
+    text-align: center;
+    background: #ffffff; }
   .menu_box--order__increase {
     width: 30px;
     height: 30px;

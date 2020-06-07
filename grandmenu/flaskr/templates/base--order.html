@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../static/scss/style.css">
   <script src="../static/js/jquery-3.4.1.min.js"></script>
   <script src="../static/js/jQuery_UI-v1.11.3.js"></script>
+  <script src="../static/js/jquery.ui.touch-punch.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
 
   <!-- スマホでsortableを実装するためのライブラリ -->
@@ -21,9 +22,7 @@
 <body>
 <script type="text/javascript">
   $(document).ready(function(){
-    // ローカル用
-    // var socket = io.connect('http://127.0.0.1:5000');
-    // heroku用
+
     if (window.location.protocol == "https:") {
       var ws_scheme = "wss://";
     } else {
@@ -317,7 +316,7 @@
   {% block global_navi %}{% endblock %}
     <div class="lightbox--ws_error">
       <div class="lightbox--ws_error__wi-fi"></div>
-      <div class="lightbox--ws_error__msg text__subtitle">接続エラーが発生しました</div>
+      <div class="lightbox--ws_error__msg text__subtitle">再接続を実行しています</div>
     </div>
     </div>
   </div>
