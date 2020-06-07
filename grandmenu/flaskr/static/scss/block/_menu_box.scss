@@ -84,7 +84,7 @@
 	        position: relative;
 	        border:solid 2px #FFA500;
 	        border-radius: 5px;
-	        font-size: $text-subtitle;
+	        font-size: $text-decoration;
 	        text-align:center;
     	}
 		&__decrease{
@@ -201,18 +201,19 @@
 		}
 		&__quantity_label{
 			width: 50px;
-			// margin-left: auto;
-			font-size: $text-body;
+			font-size: $text-decoration;
 			line-height:50px;
 			text-align:center;
 		}
 		&__quantity{
 	        width:30px;
-	        display: block;
+	        height: 30px;
+	        line-height: 30px;
 	        position: relative;
 	        border-radius: 5px;
-	        font-size: $text-subtitle;
+	        font-size: $text-decoration;
 	        text-align:center;
+	        background: $text-color-main;
     	}
 		&__increase{
 			width: 30px;

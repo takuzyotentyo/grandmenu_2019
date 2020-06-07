@@ -23,10 +23,10 @@ from flask_admin.contrib.sqla import ModelView
 # import eventlet
 # eventlet.monkey_patch()
 
-# import gevent
-# from gevent import monkey
-# monkey.patch_all()
-# from geventwebsocket import WebSocketServer, WebSocketApplication, Resource
+import gevent
+from gevent import monkey
+monkey.patch_all()
+from geventwebsocket import WebSocketServer, WebSocketApplication, Resource
 
 db=SQLAlchemy(app)
 
@@ -262,10 +262,6 @@ def check__submit_for_kitchin(table_number):
 	db.session.commit()
 	emit("check__submit_for_kitchin_receive", {'table_number': table_number}, room=store_id)
 
-@socketio.on("ping")
-def ping():
-	print('ping')
-	emit('ping', 'ping')
 
 @socketio.on("reload")
 def reload():
