@@ -1,8 +1,10 @@
 #__init__.pyから設定情報を引き継ぐ
 from flaskr import db
-
+from flaskr import app
 # このファイルでで必要なモジュール
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, func
+
+from flask_login import LoginManager, UserMixin
 
 #テーブル定義
 class Store(db.Model):
@@ -15,7 +17,7 @@ class Store(db.Model):
     def __repr__(self):
         return "(STORE_ID='%s', STORE_NAME='%s', TABLES='%s')" % (self.STORE_ID, self.STORE_NAME, self.TABLES)
 
-class Staff(db.Model):
+class Staff(UserMixin, db.Model):
     __tablename__ = 'staffs'
 
     STAFF_ID = db.Column(Integer, primary_key=True)
@@ -26,6 +28,9 @@ class Staff(db.Model):
     PASSWORD = db.Column(String(255))
     STAFF_CLASS_ID = db.Column(Integer)
     STAFF_CLASS = db.Column(String(32))
+
+    def get_id(self):
+        return self.STAFF_ID
 
     def __repr__(self):
         return "(STAFF_ID='%s', STORE_ID='%s', STAFF_NUMBER='%s', STAFF_NAME='%s', , E_MAIL='%s', PASSWORD='%s', STAFF_CLASS_ID='%s',STAFF_CLASS='%s')" % (self.STAFF_ID, self.STORE_ID, self.STAFF_NUMBER, self.STAFF_NAME, self.E_MAIL, self.PASSWORD, self.STAFF_CLASS_ID, self.STAFF_CLASS)
@@ -78,3 +83,8 @@ class Order(db.Model):
 
 #DBの作成をここで行う。
 db.create_all()
+login_manager = LoginManager()
+login_manager.init_app(app)
+@login_manager.user_loader
+def load_user(user_id):
+    return Staff.query.get(int(user_id))

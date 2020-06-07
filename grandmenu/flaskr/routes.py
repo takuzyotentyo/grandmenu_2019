@@ -18,6 +18,9 @@ import os
 #sqlalchemyでfuncを使う(maxやminなどが使えるようになる)
 from sqlalchemy import func, or_
 
+from flask_login import login_user, login_required, logout_user, current_user
+#デコレーター(@login_required)を使えばログインしていないユーザーのページ遷移を無効にできる。
+
 #会員情報を登録
 @app.route('/create_account', methods = ['POST'])
 def create_account():
@@ -60,34 +63,29 @@ def login():
     session.clear()     #エラーのセッションなどを持っている可能性があるので、クリアしている
     e_mail = request.form['e_mail']
     password = request.form['password']
-# メールアドレスが合致しているかで、アカウントがあるかを確認
-    try:
-        login_user = db.session.query(Staff).filter(Staff.E_MAIL==e_mail).one()
-        login_password = FlaskAPI.verify_password(login_user.PASSWORD, password)
-        if login_password == True:
-            #パスワードOKの処理
-            session['loggin'] = True
-            session['store_id'] = login_user.STORE_ID
-            session['staff_id'] = login_user.STAFF_ID
-            store_info = db.session.query(Store).filter(Store.STORE_ID==login_user.STORE_ID).one()
-            session['store_name'] = store_info.STORE_NAME
-            session['table_number'] = 0
-            session['tables'] = store_info.TABLES
-            username_session = login_user.STORE_ID#デバック用
+    user = Staff.query.filter_by(E_MAIL=e_mail).first()
+    if user is not None and FlaskAPI.verify_password(user.PASSWORD, password) == True:
+        #パスワードOKの処理
+        login_user(user)
+        session['loggin'] = True    #これは必要ないが、どこかで見ている可能性があるので残しておく。
+        session['store_id'] = user.STORE_ID
+        session['staff_id'] = user.STAFF_ID
+        store_info = db.session.query(Store).filter(Store.STORE_ID==user.STORE_ID).one()
+        session['store_name'] = store_info.STORE_NAME
+        session['table_number'] = 0
+        session['tables'] = store_info.TABLES
+        username_session = user.STORE_ID#デバック用
 
-            #bufへ店舗専用のディレクトリを作成する(初回ログインのみ)
-            store_dir_path = app.config['BUF_DIR'] + "/" + str(login_user.STORE_ID)
-            if (os.path.isdir(store_dir_path) == False):
-                os.makedirs(store_dir_path)
-                print("{} is CREATE".format(store_dir_path))
+        #bufへ店舗専用のディレクトリを作成する(初回ログインのみ)
+        store_dir_path = app.config['BUF_DIR'] + "/" + str(user.STORE_ID)
+        if (os.path.isdir(store_dir_path) == False):
+            os.makedirs(store_dir_path)
+            print("{} is CREATE".format(store_dir_path))
 
-            return redirect('/')
-        else:
-            #パスワードNGの処理
-            session['error'] = "メールアドレスもしくはパスワードが間違っています"
-            return render_template('login.html')
-    except:
-        session['error'] = "メールアドレスもしくはパスワードが間違っています"   #この処理はアカウントが存在しない場合に起こるが、エラー文を変えるとリスクがあるので、パスワードエラーと同一の文章にしている
+        return redirect('/')
+    else:
+        #パスワードNGの処理
+        session['error'] = "メールアドレスもしくはパスワードが間違っています"
         return render_template('login.html')
 
 # /に飛んだ時
@@ -131,6 +129,7 @@ def store_information_add():
 
 # メニューリスト表示
 @app.route('/show_menu' , methods = ['POST', 'GET'])
+@login_required
 def show_menu():
     if 'store_id' not in session:
         return redirect("/logout")
@@ -151,6 +150,7 @@ def show_menu():
 
 # メニュー登録
 @app.route('/create_menu', methods = ['POST', 'GET'])
+@login_required
 def create_menu():
     if request.method == 'POST':
         store_id = session['store_id']
@@ -211,6 +211,7 @@ def create_menu():
 
 # メニュー削除
 @app.route('/delete_menu' , methods = ['POST', 'GET'])
+@login_required
 def delete_menu():
     if request.method == 'POST':
         store_id = session['store_id']
@@ -231,6 +232,7 @@ def delete_menu():
 
 
 @app.route('/sort_menu' , methods = ['POST', 'GET'])
+@login_required
 def sort_menu():
     if request.method == 'POST':
         store_id = session['store_id']
@@ -291,6 +293,7 @@ def sort_menu():
 
 # テーブルのアクティベートと、注文メニューの表示
 @app.route('/activate')
+@login_required
 def activate():
     store_id = session['store_id']
     tables = db.session.query(Table.TABLE_NUMBER, Table.TABLE_ACTIVATE, Table.ONE_TIME_PASSWORD, Table.TOTAL_FEE).\
@@ -316,12 +319,13 @@ def store_setting():
 
 @app.route("/logout")
 def logout():
-    # session['logged_in'] = False
+    logout_user()
     session.clear()
     return render_template('login.html')
 
 # QRコードから復元する際のテスト
 @app.route("/qrcode/<one_time_password>")
+@login_required
 def test(one_time_password):
     try:
         session.clear()
@@ -343,6 +347,7 @@ def test(one_time_password):
         return redirect("/logout")
 # ここまで
 @app.route('/order_menu' , methods = ['POST', 'GET'])
+@login_required
 def order_menu():
     try:
         one_time_password = session['one_time_password']
@@ -365,5 +370,6 @@ def order_menu():
         return redirect("/logout")
 
 @app.route("/sales_management")
+@login_required
 def sales_management():
     return render_template("sales_management.html")
