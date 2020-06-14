@@ -6,7 +6,6 @@
  		@include button;
  		background-color: $color-accent;
  		box-shadow: 0px 0px 0px 5px $color-accent;
- 		background-color: $color-accent;
  		background-image: url("../img/order_history.svg");
  		&:hover {
 			background-color: $color-active;
@@ -15,39 +14,47 @@
 	}
  	&__delete{
 		@include button;
-		&--active{
- 		@include button;
-	 		background: $color-alart;
-	 		box-shadow: 0px 0px 0px 5px $color-alart;
- 		}
+		background-color: $color-main;
+ 		box-shadow: 0px 0px 0px 5px $color-main;
 		&:hover {
-			background: $color-active;
+			background-color: $color-active;
 			box-shadow: 0px 0px 0px 5px $color-active;
 		}
+		&--active{
+ 			@include button;
+	 		background-color: $color-alart;
+	 		box-shadow: 0px 0px 0px 5px $color-alart;
+ 		}
  	}
 
  	&__add{
  		@include button;
+ 		background-color: $color-main;
+ 		box-shadow: 0px 0px 0px 5px $color-main;
  		&:hover {
-			background: $color-active;
+			background-color: $color-active;
 			box-shadow: 0px 0px 0px 5px $color-active;
 		}
 	}
 
  	&__sortable{
  		@include button;
- 		&--active{
- 			@include button;
- 			background: $color-alart;
- 			box-shadow: 0px 0px 0px 5px $color-alart;
- 		}
+ 		background-color: $color-main;
+ 		box-shadow: 0px 0px 0px 5px $color-main;
  		&:hover {
-			background: $color-active;
+			background-color: $color-active;
 			box-shadow: 0px 0px 0px 5px $color-active;
 		}
+		&--active{
+ 			@include button;
+ 			background-color: $color-alart;
+ 			box-shadow: 0px 0px 0px 5px $color-alart;
+ 		}
  	}
  	&__books{
  		@include button;
+ 		background-color: $color-main;
+ 		box-shadow: 0px 0px 0px 5px $color-main;
  		background-image: url('../img/list.svg');
  		background-size: 60%;
  		background-repeat: no-repeat;
@@ -59,6 +66,8 @@
  	}
  	&__bar_chart{
  		@include button;
+ 		background-color: $color-main;
+ 		box-shadow: 0px 0px 0px 5px $color-main;
  		margin-right: 25px;
  		background-image: url('../img/line_chart.svg');
  		background-size: 60%;

@@ -201,7 +201,7 @@
 		}
 		&__quantity_label{
 			width: 50px;
-			font-size: $text-decoration;
+			font-size: $text-body;
 			line-height:50px;
 			text-align:center;
 		}
@@ -214,6 +214,15 @@
 	        font-size: $text-decoration;
 	        text-align:center;
 	        background: $text-color-main;
+    	}
+    	&__quantity--kitchen{
+	        width:30px;
+	        height: 30px;
+	        line-height: 30px;
+	        position: relative;
+	        border-radius: 5px;
+	        font-size: $text-body;
+	        text-align:center;
     	}
 		&__increase{
 			width: 30px;

@@ -452,7 +452,7 @@ blockのインポート
     padding: 0 5px; }
   .menu_box--order__quantity_label {
     width: 50px;
-    font-size: 12px;
+    font-size: 16px;
     line-height: 50px;
     text-align: center; }
   .menu_box--order__quantity {
@@ -464,6 +464,14 @@ blockのインポート
     font-size: 12px;
     text-align: center;
     background: #ffffff; }
+  .menu_box--order__quantity--kitchen {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center; }
   .menu_box--order__increase {
     width: 30px;
     height: 30px;
@@ -743,10 +751,7 @@ blockのインポート
   -o-transition: .4s;
   transition: .4s;
   font-size: 30px;
-  margin-right: 20px;
-  background-color: #FFA500;
-  -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
-  box-shadow: 0px 0px 0px 5px #FFA500; }
+  margin-right: 20px; }
   .button__order_history {
     display: inline-block;
     position: relative;
@@ -764,13 +769,9 @@ blockのインポート
     transition: .4s;
     font-size: 30px;
     margin-right: 20px;
-    background-color: #FFA500;
-    -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
-    box-shadow: 0px 0px 0px 5px #FFA500;
     background-color: #7AB300;
     -webkit-box-shadow: 0px 0px 0px 5px #7AB300;
     box-shadow: 0px 0px 0px 5px #7AB300;
-    background-color: #7AB300;
     background-image: url("../img/order_history.svg"); }
     .button__order_history:hover {
       background-color: #111111;
@@ -796,6 +797,10 @@ blockのインポート
     background-color: #FFA500;
     -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
     box-shadow: 0px 0px 0px 5px #FFA500; }
+    .button__delete:hover {
+      background-color: #111111;
+      -webkit-box-shadow: 0px 0px 0px 5px #111111;
+      box-shadow: 0px 0px 0px 5px #111111; }
     .button__delete--active {
       display: inline-block;
       position: relative;
@@ -813,16 +818,9 @@ blockのインポート
       transition: .4s;
       font-size: 30px;
       margin-right: 20px;
-      background-color: #FFA500;
-      -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
-      box-shadow: 0px 0px 0px 5px #FFA500;
-      background: #DC3B00;
+      background-color: #DC3B00;
       -webkit-box-shadow: 0px 0px 0px 5px #DC3B00;
       box-shadow: 0px 0px 0px 5px #DC3B00; }
-    .button__delete:hover {
-      background: #111111;
-      -webkit-box-shadow: 0px 0px 0px 5px #111111;
-      box-shadow: 0px 0px 0px 5px #111111; }
   .button__add {
     display: inline-block;
     position: relative;
@@ -844,7 +842,7 @@ blockのインポート
     -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
     box-shadow: 0px 0px 0px 5px #FFA500; }
     .button__add:hover {
-      background: #111111;
+      background-color: #111111;
       -webkit-box-shadow: 0px 0px 0px 5px #111111;
       box-shadow: 0px 0px 0px 5px #111111; }
   .button__sortable {
@@ -867,6 +865,10 @@ blockのインポート
     background-color: #FFA500;
     -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
     box-shadow: 0px 0px 0px 5px #FFA500; }
+    .button__sortable:hover {
+      background-color: #111111;
+      -webkit-box-shadow: 0px 0px 0px 5px #111111;
+      box-shadow: 0px 0px 0px 5px #111111; }
     .button__sortable--active {
       display: inline-block;
       position: relative;
@@ -884,16 +886,9 @@ blockのインポート
       transition: .4s;
       font-size: 30px;
       margin-right: 20px;
-      background-color: #FFA500;
-      -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
-      box-shadow: 0px 0px 0px 5px #FFA500;
-      background: #DC3B00;
+      background-color: #DC3B00;
       -webkit-box-shadow: 0px 0px 0px 5px #DC3B00;
       box-shadow: 0px 0px 0px 5px #DC3B00; }
-    .button__sortable:hover {
-      background: #111111;
-      -webkit-box-shadow: 0px 0px 0px 5px #111111;
-      box-shadow: 0px 0px 0px 5px #111111; }
   .button__books {
     display: inline-block;
     position: relative;
@@ -2024,10 +2019,10 @@ blockのインポート
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  position: absolute;
+  position: fixed;
   right: 0;
-  bottom: 0;
-  bottom: 20px; }
+  bottom: 20px;
+  height: 50px; }
 
 /*====================
 サイトの基本設定

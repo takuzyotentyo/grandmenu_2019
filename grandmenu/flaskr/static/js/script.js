@@ -236,6 +236,6 @@ $(document).on("click", ".js-show__qrcode", function () {
   }else{
     console.log('キャンパスは存在しないよ')
     $("#container_" + qrcode).append('<span id="' + qrcode +'"></span>');
-    $("#" + qrcode).qrcode("qrcode/"+one_time_password);
+    $("#" + qrcode).qrcode("http://groundmenucom.herokuapp.com/qrcode/"+one_time_password);
   };
 });

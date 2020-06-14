@@ -325,7 +325,7 @@ def logout():
 
 # QRコードから復元する際のテスト
 @app.route("/qrcode/<one_time_password>")
-@login_required
+# @login_required
 def test(one_time_password):
     try:
         session.clear()
@@ -346,8 +346,9 @@ def test(one_time_password):
     except:
         return redirect("/logout")
 # ここまで
+
 @app.route('/order_menu' , methods = ['POST', 'GET'])
-@login_required
+# @login_required
 def order_menu():
     try:
         one_time_password = session['one_time_password']
