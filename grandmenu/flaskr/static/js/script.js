@@ -36,16 +36,16 @@ $(document).on('click', '.js-header__menu', function(){
 // ディスプレイサイズによって、どこまで表示するかを選択する
     if(device_width < 768){
       $(".wrapper--side").animate({width:"100vw"}, 250);
-      $(".wrapper--main").animate({width:"0vw"},250);
       $(".wrapper--main").animate({left:"100vw"}, 250);
+      $(".wrapper--main").animate({width:"0vw"},250);
     }else if(device_width < 1024){
       $(".wrapper--side").animate({width:"50vw"}, 250);
-      $(".wrapper--main").animate({width:"50vw"},250);
       $(".wrapper--main").animate({left:"50vw"}, 250);
+      $(".wrapper--main").animate({width:"50vw"},250);
     }else{
       $(".wrapper--side").animate({width:"25vw"}, 250);
-      $(".wrapper--main").animate({width:"75vw"},250);
       $(".wrapper--main").animate({left:"25vw"}, 250);
+      $(".wrapper--main").animate({width:"75vw"},250);
     };
   };
 });
