@@ -6,6 +6,7 @@ from sqlalchemy import func, or_
 
 # websocketに関するモジュール
 from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, rooms, disconnect, send
+from datetime import datetime
 
 #モデルの読み込み
 from flaskr.models import Store, Staff, Menu, Table, Order
