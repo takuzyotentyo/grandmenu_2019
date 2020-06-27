@@ -7,12 +7,6 @@ from sqlalchemy import func, or_
 # websocketに関するモジュール
 from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, rooms, disconnect, send
 
-#これは消すか怪しい　動かなかったら切り戻す
-# import gevent
-# from gevent import monkey
-# monkey.patch_all()
-# from geventwebsocket import WebSocketServer, WebSocketApplication, Resource
-
 #モデルの読み込み
 from flaskr.models import Store, Staff, Menu, Table, Order
 

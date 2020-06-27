@@ -6,8 +6,7 @@ from flaskr import FlaskAPI
 import datetime, re
 
 #__init__.pyから設定情報を引き継ぐ
-from flaskr import app
-from flaskr import db
+from flaskr import app, db
 
 #modelの読み込み
 from flaskr.models import Store, Staff, Menu, Table, Order

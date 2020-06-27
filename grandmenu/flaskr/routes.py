@@ -1,15 +1,11 @@
 #Flask関連のモジュール
-from flask import render_template, session, redirect, url_for, flash, request, jsonify
+from flask import render_template, session, redirect, request
 
 #__init__.pyから設定情報を引き継ぐ
-from flaskr import app
-from flaskr import db
+from flaskr import app, db, FlaskAPI
 
 #modelの読み込み
 from flaskr.models import Store, Staff, Menu, Table, Order
-
-#関数群ファイルの読み込み
-from flaskr import FlaskAPI
 
 # このファイルで必要なモジュール
 from sqlalchemy.orm.exc import NoResultFound
@@ -18,7 +14,7 @@ import os
 #sqlalchemyでfuncを使う(maxやminなどが使えるようになる)
 from sqlalchemy import func, or_
 
-from flask_login import login_user, login_required, logout_user, current_user
+from flask_login import login_user, login_required, logout_user
 #デコレーター(@login_required)を使えばログインしていないユーザーのページ遷移を無効にできる。
 
 #会員情報を登録
@@ -31,11 +27,10 @@ def create_account():
     # メールアドレスとパスワードが両方ある場合既に登録されているので、.one()がエラーを吐きexceptに飛ぶ。(.first()だとエラーにならないので注意)
     try:
         double_create_check = db.session.query(Staff).filter(Staff.E_MAIL==e_mail, Staff.PASSWORD!="").one()
-        print(double_create_check.E_MAIL + "は既に存在しています")
+        (double_create_check.E_MAIL + "は既に存在しています")
         session['error'] = "そのメールアドレスは使用できません"
         return render_template('login.html')
     except NoResultFound as ex:
-        print(ex)
 # メールアドレスは存在するが、パスワードが存在しない場合、招待されているので、tryで処理する。(STAFF_CLASSは招待時に付与される想定)
         try:
             staff = db.session.query(Staff).filter(Staff.E_MAIL==e_mail, Staff.PASSWORD=="").one()
@@ -80,7 +75,6 @@ def login():
         store_dir_path = app.config['BUF_DIR'] + "/" + str(user.STORE_ID)
         if (os.path.isdir(store_dir_path) == False):
             os.makedirs(store_dir_path)
-            print("{} is CREATE".format(store_dir_path))
 
         return redirect('/')
     else:
@@ -139,11 +133,9 @@ def show_menu():
             group_by(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).\
             order_by(Menu.CLASS_2_ID).\
             all()
-        print(class_2)
         class_3 = db.session.query(Menu.MENU_ID, Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_3_ID, Menu.CLASS_3, Menu.PRICE).filter(Menu.STORE_ID==store_id).\
             order_by(Menu.CLASS_3_ID).\
             all()
-        print(class_3)
         return render_template('show_menu.html',class_2=class_2, class_3=class_3)
 
 
@@ -170,37 +162,19 @@ def create_menu():
         class_2_id_check = db.session.query(Menu.CLASS_2_ID).filter(Menu.STORE_ID==store_id, Menu.CLASS_1_ID==class_1_id, Menu.CLASS_2==class_2).first()    #登録内容と同一の中分類があれば、そのCLASS_2_IDを取得(なければNoneが返り値)
 # 値がない場合は「None」を使う。その際の比較は「==」ではなく「is」のほうが良い
         if class_2_id_max is None and class_2_id_check is None:
-            print("初めてのメニュー登録です")
             class_2_id = 1
-            print("class_2_idは")
-            print(class_2_id)
-            print("です")
         elif class_2_id_check is None:
-            print("同じ中分類はありませんでした")
-            print("class_2_idは")
             class_2_id = class_2_id_max[0] +1
-            print(class_2_id)
-            print("です")
         else:
-            print("同じ中分類がありました")
             class_2_id = class_2_id_check
-            print("class_2_idは")
-            print(class_2_id)
-            print("です")
 # 小分類のID決定
         class_3_id_max = db.session.query(Menu.CLASS_3_ID).filter(Menu.STORE_ID==store_id, Menu.CLASS_1_ID==class_1_id, Menu.CLASS_2_ID==class_2_id).order_by(Menu.CLASS_3_ID.desc()).first()
         class_3_id_check = db.session.query(Menu.CLASS_3_ID).filter(Menu.STORE_ID==store_id, Menu.CLASS_1_ID==class_1_id, Menu.CLASS_2_ID==class_2_id, Menu.CLASS_3==class_3).first()
         if class_3_id_max is None and class_3_id_check is None:
-            print("初めての中分類のメニューです")
             class_3_id = 1
         elif class_3_id_check is None:
-            print("同じメニューはありませんでした")
             class_3_id = class_3_id_max[0] +1
-            print("class_3_idは")
-            print(class_3_id)
-            print("です")
         else:
-            print("同じメニューがありました")
             return redirect('/show_menu')
         db.session.add(Menu(STORE_ID=store_id, STAFF_ID=staff_id, CLASS_1_ID=class_1_id, CLASS_1=class_1, CLASS_2_ID=class_2_id, CLASS_2=class_2, CLASS_3_ID=class_3_id, CLASS_3=class_3, PRICE=price))
         db.session.commit()
@@ -216,9 +190,6 @@ def delete_menu():
     if request.method == 'POST':
         store_id = session['store_id']
         menu_ids = request.form.getlist("menu_id")
-        print("消すmenu_idsは")
-        print(menu_ids)
-        print(len(menu_ids))
         try:
             for i in range(len(menu_ids)):
                 db.session.query(Menu).filter(Menu.STORE_ID==store_id, Menu.MENU_ID==menu_ids[i]).delete()  #store_idでもフィルターをかける事により、他人のメニューを削除することを阻止
@@ -240,17 +211,14 @@ def sort_menu():
         class_2_sort_result_food = request.form.getlist("class_2_sort_result_food")     #CLASS_1_ID,CLASS_2_ID,CLASS_2の順番で並んだ文字列を受け取る
         class_2_sort_result_drink = request.form.getlist("class_2_sort_result_drink")   #CLASS_1_ID,CLASS_2_ID,CLASS_2の順番で並んだ文字列を受け取る
         class_3_sort_result = request.form.getlist("class_3_sort_result")               #MENU_ID,CLASS_1_ID,CLASS_2_ID,CLASS_3_IDの順番で並んだ文字列を受け取る
-        print(class_3_sort_result)
         try:
             #受け取った文字列からリストを作成
             class_3_sort_result_list = class_3_sort_result[0].split(",")
-            print(class_3_sort_result_list)
             #CLASS_3から書き換え。理由は、クラス2を先に書き換えるとメニューの追跡が煩雑になるから
             #CLASS_3_IDを一旦全て0にする
             class_3_ids = db.session.query(Menu)
             class_3_ids = db.session.query(Menu).filter(Menu.STORE_ID==store_id).update({Menu.CLASS_3_ID: 0})
             for i in range(0, len(class_3_sort_result_list), 4):
-                print(i)
                 class_3_change_menu_id = class_3_sort_result_list[i]
                 class_3_change_class_1_id = class_3_sort_result_list[i+1]
                 class_3_change_class_2_id = class_3_sort_result_list[i+2]
@@ -300,8 +268,6 @@ def activate():
         filter(Table.STORE_ID == store_id).\
         order_by(Table.TABLE_NUMBER).\
         all()
-    print('tablesの中身は')
-    print(tables)
     return render_template('activate.html', tables=tables)
 
 
@@ -332,16 +298,10 @@ def test(one_time_password):
         tables = db.session.query(Table).\
                 filter(Table.ONE_TIME_PASSWORD==one_time_password).\
                 one()
-        print("ここまでOK1")
-        print(tables)
-        print(tables.STORE_ID)
         session['store_id'] = tables.STORE_ID
         session['one_time_password'] = tables.ONE_TIME_PASSWORD
-        print("ここまでOK1.1")
         session['table_number'] = tables.TABLE_NUMBER
-        print("ここまでOK1.2")
         group_id = FlaskAPI.group_id()
-        print("ここまでOK2")
         return redirect("/order_menu")
     except:
         return redirect("/logout")
@@ -356,16 +316,13 @@ def order_menu():
                 filter(Table.ONE_TIME_PASSWORD==one_time_password).\
                 one()
         store_id = session['store_id']
-        print("ここまでOK3")
         class_2 = db.session.query(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).filter(Menu.STORE_ID==store_id).\
             group_by(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).\
             order_by(Menu.CLASS_2_ID).\
             all()
-        print(class_2)
         class_3 = db.session.query(Menu.MENU_ID, Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_3_ID, Menu.CLASS_3, Menu.PRICE).filter(Menu.STORE_ID==store_id).\
             order_by(Menu.CLASS_3_ID).\
             all()
-        print(class_3)
         return render_template('order.html',class_2=class_2, class_3=class_3)
     except:
         return redirect("/logout")

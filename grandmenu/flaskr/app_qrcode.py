@@ -5,8 +5,7 @@ from flask import Blueprint, render_template, session, redirect, url_for, flash,
 from flaskr import FlaskAPI
 
 #__init__.pyから設定情報を引き継ぐ
-from flaskr import app
-from flaskr import db
+from flaskr import app, db
 
 #modelの読み込み
 from flaskr.models import Store, Staff, Menu, Table

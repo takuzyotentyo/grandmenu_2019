@@ -2,7 +2,7 @@
 from flaskr import db
 from flaskr import app
 # このファイルでで必要なモジュール
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, func
+from sqlalchemy import Column, Integer, String, DateTime
 
 from flask_login import LoginManager, UserMixin
 
