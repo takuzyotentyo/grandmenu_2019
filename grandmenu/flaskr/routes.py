@@ -292,9 +292,9 @@ def logout():
 # QRコードから復元する際のテスト
 @app.route("/qrcode/<one_time_password>")
 # @login_required
-def test(one_time_password):
+def one_time_password(one_time_password):
+    session.clear()
     try:
-        session.clear()
         tables = db.session.query(Table).\
                 filter(Table.ONE_TIME_PASSWORD==one_time_password).\
                 one()
@@ -316,6 +316,7 @@ def order_menu():
                 filter(Table.ONE_TIME_PASSWORD==one_time_password).\
                 one()
         store_id = session['store_id']
+        table_number = session['table_number']
         class_2 = db.session.query(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).filter(Menu.STORE_ID==store_id).\
             group_by(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).\
             order_by(Menu.CLASS_2_ID).\
@@ -323,7 +324,7 @@ def order_menu():
         class_3 = db.session.query(Menu.MENU_ID, Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_3_ID, Menu.CLASS_3, Menu.PRICE).filter(Menu.STORE_ID==store_id).\
             order_by(Menu.CLASS_3_ID).\
             all()
-        return render_template('order.html',class_2=class_2, class_3=class_3)
+        return render_template('order.html',class_2=class_2, class_3=class_3, table_number=table_number, one_time_password=one_time_password)
     except:
         return redirect("/logout")
 

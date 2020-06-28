@@ -80,7 +80,8 @@
       var table_number_obj = $("#table_" + table_number)
       var activate_status = table_status['activate_status']
       var one_time_password =  table_status['one_time_password']
-      var qrcode = 'http://groundmenucom.herokuapp.com/qrcode/'
+      // var qrcode = 'http://groundmenucom.herokuapp.com/qrcode/'
+      var qrcode_url = location.protocol + '//' + location.host + '/qrcode/'
       // チェックボックスを動かす処理
       if(activate_status == 1){
         table_number_obj.prop("checked", true);
@@ -92,7 +93,8 @@
             '<div class="text__title">Table ' + table_number + '</div>' +
             '<span id="qrcode_' + table_number +'"></span>'
           )
-        $("#qrcode_" + table_number).qrcode(qrcode + one_time_password);
+        $("#qrcode_" + table_number).qrcode(qrcode_url + one_time_password);
+        console.log(qrcode_url + one_time_password)
       }else{
         table_number_obj.prop("checked", false);
         table_number_obj.parent().next(".text__body")

@@ -223,10 +223,11 @@ $(document).on("click", ".js-show__qrcode", function () {
   var qrcode = $(this).data('qrcode');
   var qrcode_obj = $('[data-target="' + qrcode + '"]')
   var one_time_password = $('[data-target="' + qrcode + '"]').data('one_time_password');
+  var qrcode_url = location.protocol + '//' + location.host + '/qrcode/'
+
   console.log(qrcode)
   console.log(one_time_password)
-  var test = "container_"+qrcode
-  console.log(test)
+  console.log(qrcode_url)
 
   $(".wrapper--qrcode").children().css("display", "none")
   $("#container_" + qrcode).css("display", "block")
@@ -236,6 +237,7 @@ $(document).on("click", ".js-show__qrcode", function () {
   }else{
     console.log('キャンパスは存在しないよ')
     $("#container_" + qrcode).append('<span id="' + qrcode +'"></span>');
-    $("#" + qrcode).qrcode("http://groundmenucom.herokuapp.com/qrcode/"+one_time_password);
+    $("#" + qrcode).qrcode(qrcode_url + one_time_password);
+    console.log(qrcode_url + one_time_password)
   };
 });

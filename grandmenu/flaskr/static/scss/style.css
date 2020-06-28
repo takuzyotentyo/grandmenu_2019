@@ -845,6 +845,31 @@ blockのインポート
       background-color: #111111;
       -webkit-box-shadow: 0px 0px 0px 5px #111111;
       box-shadow: 0px 0px 0px 5px #111111; }
+  .button__invitation {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    overflow: hidden;
+    border: dashed 2px #FFF;
+    -webkit-transition: .4s;
+    -o-transition: .4s;
+    transition: .4s;
+    font-size: 30px;
+    margin-right: 20px;
+    background-color: #FFA500;
+    -webkit-box-shadow: 0px 0px 0px 5px #FFA500;
+    box-shadow: 0px 0px 0px 5px #FFA500;
+    background-image: url("../img/invitation.svg"); }
+    .button__invitation:hover {
+      background-color: #111111;
+      -webkit-box-shadow: 0px 0px 0px 5px #111111;
+      box-shadow: 0px 0px 0px 5px #111111; }
   .button__sortable {
     display: inline-block;
     position: relative;
@@ -1249,6 +1274,24 @@ blockのインポート
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center; }
+
+.wrapper--invitation {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column;
+  flex-flow: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 25px 0 100px 0; }
 
 .sortable_wrap {
   display: -webkit-box;
