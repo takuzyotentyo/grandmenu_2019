@@ -1004,7 +1004,7 @@ blockのインポート
   -ms-flex-flow: column;
   flex-flow: column;
   position: absolute;
-  width: 0;
+  width: 0px;
   height: calc(100vh - 50px);
   background: #FFA500;
   -webkit-box-shadow: rgba(100, 100, 100, 0.5) 10px 0px 10px;

@@ -22,6 +22,8 @@ $(function(){
 $(document).on('click', '.js-header__menu', function(){
 //レスポンシブ対応のための閾値
   var device_width = $(window).width();
+  console.log('location.pathname')
+  console.log(location.pathname)
 // サイドメニューを隠す処理は同じ
     if($(this).hasClass("js-header__menu--doing")){
       $(this).removeClass("js-header__menu--doing");
@@ -61,6 +63,19 @@ $(document).on('click', '.js-side_menu_1__opener', function(){
     $(this).parent("li").next(".side_menu_2").slideDown();
     $(this).parent("li").css("background-color","#072A24");
   };
+});
+
+// websocket.jsの読み込みに関するjs
+$(document).ready(function(){
+  var pathname = location.pathname
+  if (pathname === '/show') {
+    $.getScript("../static/js/websocket_order.js");
+  } else if (pathname === '/activate') {
+    $.getScript("../static/js/websocket_kitchin.js");
+  } else if (pathname === '/order') {
+    $.getScript("../static/js/websocket_order.js");
+  }else {
+  }
 });
 
 // 中分類類メニュー表示
