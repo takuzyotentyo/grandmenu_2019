@@ -72,7 +72,7 @@ $(document).ready(function(){
     $.getScript("../static/js/websocket_order.js");
   } else if (pathname === '/activate') {
     $.getScript("../static/js/websocket_kitchin.js");
-  } else if (pathname === '/order') {
+  } else if (pathname === '/order_menu') {
     $.getScript("../static/js/websocket_order.js");
   }else {
   }
@@ -256,3 +256,44 @@ $(document).on("click", ".js-show__qrcode", function () {
     console.log(qrcode_url + one_time_password)
   };
 });
+
+// スワイプされた場合の挙動
+$(function(){
+  $('.lightbox').on('touchstart', onTouchStart); //指が触れたか検知
+  $('.lightbox').on('touchmove', onTouchMove); //指が動いたか検知
+  $('.lightbox').on('touchend', onTouchEnd); //指が離れたか検知
+  var direction, position;
+  //スワイプ開始時の横方向の座標を格納
+  function onTouchStart(event) {
+    position = getPosition(event);
+    direction = ''; //一度リセットする
+  }
+  //スワイプの方向（left／right）を取得
+  function onTouchMove(event) {
+    if (position - getPosition(event) > 70) { // 70px以上移動しなければスワイプと判断しない
+      direction = 'left'; //左と検知
+    } else if (position - getPosition(event) < -70){  // 70px以上移動しなければスワイプと判断しない
+      direction = 'right'; //右と検知
+    }
+  }
+
+  function onTouchEnd(event) {
+    if (direction == 'right'){
+      $.when($(".lightbox").animate({left:"100%"}, 250)).done(function(){
+      $(".lightbox").css("display", "none");
+      $(".lightbox").children().css("display", "none");
+    });
+    } else if (direction == 'left'){
+      $.when($(".lightbox").animate({left:"-100%"}, 250)).done(function(){
+      $(".lightbox").css("display", "none");
+      $(".lightbox").children().css("display", "none");
+    });
+    }
+  }
+
+  //横方向の座標を取得
+  function getPosition(event) {
+    return event.originalEvent.touches[0].pageX;
+  }
+});
+

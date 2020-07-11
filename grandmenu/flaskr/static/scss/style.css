@@ -1072,7 +1072,8 @@ blockのインポート
   width: 100%;
   height: 100%;
   overflow-y: scroll;
-  font-size: 0; }
+  font-size: 0;
+  padding-bottom: 170px; }
 
 .wrapper--class_3 {
   display: -webkit-box;
@@ -1084,15 +1085,15 @@ blockのインポート
   flex-flow: wrap;
   overflow-y: scroll;
   width: 100%;
-  height: calc(100% - 105px);
+  height: 100%;
+  padding-bottom: 170px;
   padding-top: 60px;
   -webkit-box-align: baseline;
   -ms-flex-align: baseline;
   align-items: baseline;
   -ms-flex-line-pack: start;
   align-content: flex-start;
-  overflow-y: scroll;
-  padding: 65px 0 100px 0; }
+  overflow-y: scroll; }
 
 .wrapper--add_menu {
   display: -webkit-box;
@@ -1118,7 +1119,8 @@ blockのインポート
   -ms-flex-flow: wrap;
   flex-flow: wrap;
   width: 100%;
-  height: calc(100% - 105px);
+  height: 100%;
+  padding-bottom: 170px;
   -ms-flex-line-pack: start;
   align-content: flex-start;
   overflow-y: scroll; }
@@ -1132,7 +1134,8 @@ blockのインポート
   -ms-flex-flow: wrap;
   flex-flow: wrap;
   width: 100%;
-  height: calc(100% - 105px);
+  height: 100%;
+  padding-bottom: 170px;
   -ms-flex-line-pack: start;
   align-content: flex-start;
   overflow-y: scroll; }
@@ -2062,10 +2065,18 @@ blockのインポート
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
   position: fixed;
-  right: 0;
-  bottom: 20px;
-  height: 50px; }
+  right: 0px;
+  bottom: 0px;
+  height: 90px;
+  width: 100%;
+  padding-top: 20px;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px); }
 
 /*====================
 サイトの基本設定
