@@ -207,8 +207,11 @@ $(document).ready(function(){
   });
 
   socket.on('error', function(){
-  console.log("接続エラー")
-  $(".lightbox--ws_error").css('left','0')
+    console.log("接続エラー")
+    $(".lightbox--ws_error").css({
+      "left":"0%",
+      "visibility":"visible"
+    });
   });
 
 });

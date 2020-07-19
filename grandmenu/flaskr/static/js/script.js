@@ -17,20 +17,87 @@ $(function(){
   });
 });
 
+// 読み込んだあとのローカライズに関するjs
+$(document).ready(function(){
+  var pathname = location.pathname
+  var ws_order = "../static/js/websocket_order.js"
+  var ws_kitchin = "../static/js/websocket_kitchin.js"
+
+  if (pathname != '/order_menu'){
+    $('.wrapper--header').prepend(
+    '<div class="header__menu js-header__menu icon_menu">'+
+      '<span></span>'+
+      '<span></span>'+
+      '<span></span>'+
+    '</div>');
+    $('.wrapper--header').after(
+      '<ul class="wrapper--side">'+
+      '<li class="side_menu_1">'+
+        '<div class="side_menu_1__content">オーダーシステム</div>'+
+        '<div class="side_menu_1__opener icon_pulus">'+
+          '<span></span>'+
+          '<span></span>'+
+        '</div>'+
+      '</li>'+
+      '<ul class="side_menu_2">'+
+        '<li><a class="side_menu_2__content" href="/show_menu">メニュー表登録・修正</a></li>'+
+        '<li><a class="side_menu_2__content" href="/qrcode/generate">QRコード発行</a></li>'+
+        '<li><a class="side_menu_2__content" href="/activate">テーブルアクティベート</a></li>'+
+      '</ul>'+
+      '<li class="side_menu_1">'+
+        '<div class="side_menu_1__content">設定</div>'+
+        '<div class="side_menu_1__opener icon_pulus">'+
+          '<span></span>'+
+          '<span></span>'+
+        '</div>'+
+      '</li>'+
+      '<ul class="side_menu_2">'+
+        '<li><a class="side_menu_2__content" href="/store_setting">店舗情報</a></li>'+
+        '<li><a class="side_menu_2__content" href="#">従業員情報</a></li>'+
+        '<li><a class="side_menu_2__content" href="/sales_management">売上管理</a></li>'+
+      '</ul>'+
+      '<a class="side_menu__logout" href="/logout">ログアウト</a>'+
+    '</ul>')
+  };
+
+  if(pathname == '/order_menu' || pathname == '/show_menu'){
+    $('.wrapper--header').append(
+      '<div class="header__cart js-show__lightbox" data-show="cart">'+
+      '<div class="header__quantity"></div>'+
+    '</div>'
+    );
+  }
+
+  if(pathname == '/show_menu' || pathname == '/order_menu' || pathname == '/activate')
+    $('.wrapper--main').append(
+      '<div class="lightbox--ws_error">'+
+        '<div class="lightbox--ws_error__wi-fi"></div>'+
+        '<div class="lightbox--ws_error__msg text__subtitle">再接続を実行しています</div>'+
+      '</div>');
+
+  if (pathname == '/show_menu' || pathname == '/order_menu') {
+    $.getScript(ws_order);
+  } else if (pathname == '/activate') {
+    $.getScript(ws_kitchin);
+  }else {
+  }
+});
 
 //サイドメニュー表示に関するjs
 $(document).on('click', '.js-header__menu', function(){
 //レスポンシブ対応のための閾値
-  var device_width = $(window).width();
-  console.log('location.pathname')
-  console.log(location.pathname)
+  var device_width = $(window).width()
 // サイドメニューを隠す処理は同じ
     if($(this).hasClass("js-header__menu--doing")){
       $(this).removeClass("js-header__menu--doing");
       $("body").removeClass("overflow-hidden"); //サイドメニューが表示されることで起こるレイアウトの崩れのhiddenを解除
       $(".wrapper--side").animate({width:"0vw"}, 250);
-      $(".wrapper--main").animate({width:"100vw"},250);
-      $(".wrapper--main").animate({left:"0vw"}, 250);
+      $(".wrapper--main").animate({
+        'width':'100vw',
+        'left':'0vw'
+      },250);
+      // $(".wrapper--main").animate({width:"100vw"},250)
+      // $(".wrapper--main").animate({left:"0vw"}, 250);
     }else{
 // サイドメニューを表示する処理
       $(this).addClass("js-header__menu--doing");
@@ -38,44 +105,50 @@ $(document).on('click', '.js-header__menu', function(){
 // ディスプレイサイズによって、どこまで表示するかを選択する
     if(device_width < 768){
       $(".wrapper--side").animate({width:"100vw"}, 250);
-      $(".wrapper--main").animate({left:"100vw"}, 250);
-      $(".wrapper--main").animate({width:"0vw"},250);
+      $(".wrapper--main").animate({
+        left:"100vw",
+        width:"0vw"
+      }, 250);
     }else if(device_width < 1024){
       $(".wrapper--side").animate({width:"50vw"}, 250);
-      $(".wrapper--main").animate({left:"50vw"}, 250);
-      $(".wrapper--main").animate({width:"50vw"},250);
+      $(".wrapper--main").animate({
+        left:"50vw",
+        width:"50vw"
+      }, 250);
     }else{
       $(".wrapper--side").animate({width:"25vw"}, 250);
-      $(".wrapper--main").animate({left:"25vw"}, 250);
-      $(".wrapper--main").animate({width:"75vw"},250);
+      $(".wrapper--main").animate({
+        left:"25vw",
+        width:"75vw"
+      }, 250);
     };
   };
 });
 
 //グローバルナビの小メニュー表示に関するjs
-$(document).on('click', '.js-side_menu_1__opener', function(){
-  if($(this).hasClass("js-icon_pulus--doing")){
-    $(this).removeClass("js-icon_pulus--doing");
-    $(this).parent("li").css("background-color","#FFA500");
-    $(this).parent("li").next(".side_menu_2").slideUp();
-  }else{
-    $(this).addClass("js-icon_pulus--doing");
-    $(this).parent("li").next(".side_menu_2").slideDown();
-    $(this).parent("li").css("background-color","#072A24");
-  };
-});
+// $(document).on('click', '.js-side_menu_1__opener', function(){
+//   if($(this).hasClass("js-icon_pulus--doing")){
+//     $(this).removeClass("js-icon_pulus--doing");
+//     $(this).parent("li").css("background-color","#FFA500");
+//     $(this).parent("li").next(".side_menu_2").slideUp();
+//   }else{
+//     $(this).addClass("js-icon_pulus--doing");
+//     $(this).parent("li").next(".side_menu_2").slideDown();
+//     $(this).parent("li").css("background-color","#072A24");
+//   };
+// });
 
-// websocket.jsの読み込みに関するjs
-$(document).ready(function(){
-  var pathname = location.pathname
-  if (pathname === '/show') {
-    $.getScript("../static/js/websocket_order.js");
-  } else if (pathname === '/activate') {
-    $.getScript("../static/js/websocket_kitchin.js");
-  } else if (pathname === '/order_menu') {
-    $.getScript("../static/js/websocket_order.js");
-  }else {
-  }
+//グローバルナビの小メニュー表示に関するjs_テスト
+$(document).on('click', '.side_menu_1', function(){
+  if($(this).children('.icon_pulus').hasClass("js-icon_pulus--doing")){
+    $(this).children().removeClass("js-icon_pulus--doing");
+    $(this).css("background-color","#FFA500");
+    $(this).next(".side_menu_2").slideUp();
+  }else{
+    $(this).children('.icon_pulus').addClass("js-icon_pulus--doing");
+    $(this).next(".side_menu_2").slideDown();
+    $(this).css("background-color","#072A24");
+  };
 });
 
 // 中分類類メニュー表示
@@ -83,9 +156,6 @@ $(document).on("click", ".js-show__container", function () {
   var show = $(this).data('container');
   var target = $('[data-target="' + show + '"]').attr("class")
   var siblings = $('[data-target="' + show + '"]').siblings('[data-target]').attr("class")
-  console.log(show)
-  console.log(target)
-  console.log(siblings)
   $.when(
     $('[data-target="' + show + '"]').siblings('[data-target]').slideUp())
   .done(function(){
@@ -97,7 +167,6 @@ $(document).on("click", ".js-show__container", function () {
 $(function() {
   $(".js-show__menu_box").click(function(){
     var menu_box = $(this).data('menu_box');
-    console.log(menu_box)
     // $(".menu_box--class_3").css("display", "none");
     $('[data-target="' + menu_box + '"]').siblings().css("display", "none");
     $('[data-target="' + menu_box + '"]').css("display", "flex");
@@ -107,7 +176,7 @@ $(function() {
 // ドラック&ドロップでメニューの順番を並べ替える関数
 $(document).on('click', '.button__sortable', function() {
   $(this).remove();
-  $('<button form="sort_menu" id="sort_submit" class="button__sortable--active" type="button">⇅</button>').insertBefore(".button__add");
+  $('<button form="sort_menu" id="sort_submit" class="button__sortable--active" type="button">⇅</button>').insertAfter(".button__add");
   $(".menu_box--class_2").addClass("vibration");
   $(".menu_box--class_3").addClass("vibration");
   $(".menu_box--class_2").css(
@@ -140,7 +209,7 @@ $(function(){
   $(".button__delete").click(function(){
 // 一度ボタンを消した後に、同じ場所にsubmit属性を持ったボタンを追加する
   $(this).remove();
-  $('<button form="delete_menu" class="button__delete--active" type="submit">ー</button>').insertAfter(".button__add");
+  $('<button form="delete_menu" class="button__delete--active" type="submit">ー</button>').insertBefore(".button__add");
 // vibrationクラスを追加して震えさせる
   $(".menu_box--class_2").addClass("vibration");
   $(".menu_box--class_3").addClass("vibration");
@@ -197,8 +266,6 @@ $(document).on("click", ".js-show__lightbox", function () {
   var show = $(this).data('show');
   var lightbox = $(".lightbox").css("display")
   var wrapper = $('[data-target="' + show + '"]').css("display")
-  console.log(lightbox)
-  console.log(wrapper)
   $(".lightbox").children().css("display", "none");
   if(lightbox == "none"){
     $.when($(".lightbox").css("display", "flex")).done(function(){
@@ -240,20 +307,13 @@ $(document).on("click", ".js-show__qrcode", function () {
   var one_time_password = $('[data-target="' + qrcode + '"]').data('one_time_password');
   var qrcode_url = location.protocol + '//' + location.host + '/qrcode/'
 
-  console.log(qrcode)
-  console.log(one_time_password)
-  console.log(qrcode_url)
-
   $(".wrapper--qrcode").children().css("display", "none")
   $("#container_" + qrcode).css("display", "block")
 
   if($("#" + qrcode).length){
-    console.log('キャンパスは存在するよ')
   }else{
-    console.log('キャンパスは存在しないよ')
     $("#container_" + qrcode).append('<span id="' + qrcode +'"></span>');
     $("#" + qrcode).qrcode(qrcode_url + one_time_password);
-    console.log(qrcode_url + one_time_password)
   };
 });
 

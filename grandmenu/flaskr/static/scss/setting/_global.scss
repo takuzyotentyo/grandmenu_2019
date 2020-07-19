@@ -24,8 +24,22 @@ body {
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="submit"]{
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+
+input[type=submit], button{
   -webkit-appearance: none;
-  margin: 0;
+}
+
+input[type="button"],,input[type="text"]input[type="submit"] {
+   -webkit-appearance: none;
+   border-radius: 0;
 }
 
 select{
