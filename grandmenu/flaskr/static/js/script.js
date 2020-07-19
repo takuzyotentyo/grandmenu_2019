@@ -23,7 +23,7 @@ $(document).ready(function(){
   var ws_order = "../static/js/websocket_order.js"
   var ws_kitchin = "../static/js/websocket_kitchin.js"
 
-  if (pathname != '/order_menu'){
+  if (pathname != '/order_menu' && pathname != '/logout'){
     $('.wrapper--header').prepend(
     '<div class="header__menu js-header__menu icon_menu">'+
       '<span></span>'+
@@ -66,21 +66,21 @@ $(document).ready(function(){
       '<div class="header__quantity"></div>'+
     '</div>'
     );
-  }
+  };
 
-  if(pathname == '/show_menu' || pathname == '/order_menu' || pathname == '/activate')
+  if(pathname == '/show_menu' || pathname == '/order_menu' || pathname == '/activate'){
     $('.wrapper--main').append(
       '<div class="lightbox--ws_error">'+
         '<div class="lightbox--ws_error__wi-fi"></div>'+
         '<div class="lightbox--ws_error__msg text__subtitle">再接続を実行しています</div>'+
       '</div>');
+  };
 
   if (pathname == '/show_menu' || pathname == '/order_menu') {
     $.getScript(ws_order);
   } else if (pathname == '/activate') {
     $.getScript(ws_kitchin);
-  }else {
-  }
+  };
 });
 
 //サイドメニュー表示に関するjs
