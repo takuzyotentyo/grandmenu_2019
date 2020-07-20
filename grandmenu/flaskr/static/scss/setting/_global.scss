@@ -37,7 +37,7 @@ input[type=submit], button{
   -webkit-appearance: none;
 }
 
-input[type="button"],,input[type="text"]input[type="submit"] {
+input[type="button"],input[type="text"],input[type="submit"] {
    -webkit-appearance: none;
    border-radius: 0;
 }
@@ -62,3 +62,12 @@ button {
 }
 
 button:focus { outline:0; }
+
+::placeholder {
+    color: #757575;
+    font-size: $text-body;
+}
+
+input {
+    font-size: $text-body;
+}

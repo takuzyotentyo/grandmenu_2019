@@ -17,49 +17,52 @@ $(function(){
   });
 });
 
-// 読み込んだあとのローカライズに関するjs
-$(document).ready(function(){
-  var pathname = location.pathname
-  var ws_order = "../static/js/websocket_order.js"
-  var ws_kitchin = "../static/js/websocket_kitchin.js"
 
+// 読み込んだあとにローカライズに関するjs
+$(document).ready(function(){
+  var pathname = location.pathname,
+      ws_order = "../static/js/websocket_order.js",
+      ws_kitchin = "../static/js/websocket_kitchin.js"
+  // サイドメニューの表示
   if (pathname != '/order_menu' && pathname != '/logout'){
     $('.wrapper--header').prepend(
-    '<div class="header__menu js-header__menu icon_menu">'+
-      '<span></span>'+
-      '<span></span>'+
-      '<span></span>'+
-    '</div>');
+      '<div class="header__menu js-header__menu icon_menu">'+
+        '<span></span>'+
+        '<span></span>'+
+        '<span></span>'+
+      '</div>'
+    );
     $('.wrapper--header').after(
       '<ul class="wrapper--side">'+
-      '<li class="side_menu_1">'+
-        '<div class="side_menu_1__content">オーダーシステム</div>'+
-        '<div class="side_menu_1__opener icon_pulus">'+
-          '<span></span>'+
-          '<span></span>'+
-        '</div>'+
-      '</li>'+
-      '<ul class="side_menu_2">'+
-        '<li><a class="side_menu_2__content" href="/show_menu">メニュー表登録・修正</a></li>'+
-        '<li><a class="side_menu_2__content" href="/qrcode/generate">QRコード発行</a></li>'+
-        '<li><a class="side_menu_2__content" href="/activate">テーブルアクティベート</a></li>'+
-      '</ul>'+
-      '<li class="side_menu_1">'+
-        '<div class="side_menu_1__content">設定</div>'+
-        '<div class="side_menu_1__opener icon_pulus">'+
-          '<span></span>'+
-          '<span></span>'+
-        '</div>'+
-      '</li>'+
-      '<ul class="side_menu_2">'+
-        '<li><a class="side_menu_2__content" href="/store_setting">店舗情報</a></li>'+
-        '<li><a class="side_menu_2__content" href="#">従業員情報</a></li>'+
-        '<li><a class="side_menu_2__content" href="/sales_management">売上管理</a></li>'+
-      '</ul>'+
-      '<a class="side_menu__logout" href="/logout">ログアウト</a>'+
-    '</ul>')
+        '<li class="side_menu_1">'+
+          '<div class="side_menu_1__content">オーダーシステム</div>'+
+          '<div class="side_menu_1__opener icon_pulus">'+
+            '<span></span>'+
+            '<span></span>'+
+          '</div>'+
+        '</li>'+
+        '<ul class="side_menu_2">'+
+          '<li><a class="side_menu_2__content" href="/show_menu">メニュー表登録・修正</a></li>'+
+          '<li><a class="side_menu_2__content" href="/qrcode/generate">QRコード発行</a></li>'+
+          '<li><a class="side_menu_2__content" href="/activate">テーブルアクティベート</a></li>'+
+        '</ul>'+
+        '<li class="side_menu_1">'+
+          '<div class="side_menu_1__content">設定</div>'+
+          '<div class="side_menu_1__opener icon_pulus">'+
+            '<span></span>'+
+            '<span></span>'+
+          '</div>'+
+        '</li>'+
+        '<ul class="side_menu_2">'+
+          '<li><a class="side_menu_2__content" href="/store_setting">店舗情報</a></li>'+
+          '<li><a class="side_menu_2__content" href="#">従業員情報</a></li>'+
+          '<li><a class="side_menu_2__content" href="/sales_management">売上管理</a></li>'+
+        '</ul>'+
+        '<a class="side_menu__logout" href="/logout">ログアウト</a>'+
+      '</ul>'
+    );
   };
-
+  // カートの表示
   if(pathname == '/order_menu' || pathname == '/show_menu'){
     $('.wrapper--header').append(
       '<div class="header__cart js-show__lightbox" data-show="cart">'+
@@ -67,21 +70,23 @@ $(document).ready(function(){
     '</div>'
     );
   };
-
+  // websocketのエラー表示
   if(pathname == '/show_menu' || pathname == '/order_menu' || pathname == '/activate'){
     $('.wrapper--main').append(
       '<div class="lightbox--ws_error">'+
         '<div class="lightbox--ws_error__wi-fi"></div>'+
         '<div class="lightbox--ws_error__msg text__subtitle">再接続を実行しています</div>'+
-      '</div>');
+      '</div>'
+    );
   };
-
+  // websocketに関するモジュール
   if (pathname == '/show_menu' || pathname == '/order_menu') {
     $.getScript(ws_order);
   } else if (pathname == '/activate') {
     $.getScript(ws_kitchin);
   };
 });
+
 
 //サイドメニュー表示に関するjs
 $(document).on('click', '.js-header__menu', function(){
@@ -99,10 +104,10 @@ $(document).on('click', '.js-header__menu', function(){
       // $(".wrapper--main").animate({width:"100vw"},250)
       // $(".wrapper--main").animate({left:"0vw"}, 250);
     }else{
-// サイドメニューを表示する処理
+      // サイドメニューを表示する処理
       $(this).addClass("js-header__menu--doing");
       $("body").addClass("overflow-hidden"); //サイドメニューが表示されることで起こるレイアウトの崩れをhiddenで回避
-// ディスプレイサイズによって、どこまで表示するかを選択する
+    // ディスプレイサイズによって、どこまで表示するかを選択する
     if(device_width < 768){
       $(".wrapper--side").animate({width:"100vw"}, 250);
       $(".wrapper--main").animate({
@@ -125,18 +130,6 @@ $(document).on('click', '.js-header__menu', function(){
   };
 });
 
-//グローバルナビの小メニュー表示に関するjs
-// $(document).on('click', '.js-side_menu_1__opener', function(){
-//   if($(this).hasClass("js-icon_pulus--doing")){
-//     $(this).removeClass("js-icon_pulus--doing");
-//     $(this).parent("li").css("background-color","#FFA500");
-//     $(this).parent("li").next(".side_menu_2").slideUp();
-//   }else{
-//     $(this).addClass("js-icon_pulus--doing");
-//     $(this).parent("li").next(".side_menu_2").slideDown();
-//     $(this).parent("li").css("background-color","#072A24");
-//   };
-// });
 
 //グローバルナビの小メニュー表示に関するjs_テスト
 $(document).on('click', '.side_menu_1', function(){
@@ -146,16 +139,16 @@ $(document).on('click', '.side_menu_1', function(){
     $(this).next(".side_menu_2").slideUp();
   }else{
     $(this).children('.icon_pulus').addClass("js-icon_pulus--doing");
-    $(this).next(".side_menu_2").slideDown();
     $(this).css("background-color","#072A24");
+    $(this).next(".side_menu_2").slideDown();
   };
 });
 
 // 中分類類メニュー表示
 $(document).on("click", ".js-show__container", function () {
-  var show = $(this).data('container');
-  var target = $('[data-target="' + show + '"]').attr("class")
-  var siblings = $('[data-target="' + show + '"]').siblings('[data-target]').attr("class")
+  var show = $(this).data('container'),
+      target = $('[data-target="' + show + '"]').attr("class"),
+      siblings = $('[data-target="' + show + '"]').siblings('[data-target]').attr("class")
   $.when(
     $('[data-target="' + show + '"]').siblings('[data-target]').slideUp())
   .done(function(){
@@ -167,7 +160,6 @@ $(document).on("click", ".js-show__container", function () {
 $(function() {
   $(".js-show__menu_box").click(function(){
     var menu_box = $(this).data('menu_box');
-    // $(".menu_box--class_3").css("display", "none");
     $('[data-target="' + menu_box + '"]').siblings().css("display", "none");
     $('[data-target="' + menu_box + '"]').css("display", "flex");
   });
@@ -195,9 +187,9 @@ $(document).on('click', '.button__sortable', function() {
 });
 
 $(document).on("click", "#sort_submit", function () {
-  var class_2_sort_result_food = $(".js-sortable_class_2--food").sortable("toArray", { attribute: 'id'});
-  var class_2_sort_result_drink = $(".js-sortable_class_2--drink").sortable("toArray", { attribute: 'id'});
-  var class_3_sort_result = $(".js-sortable_class_3").sortable("toArray", { attribute: 'id'});
+  var class_2_sort_result_food = $(".js-sortable_class_2--food").sortable("toArray", { attribute: 'id'}),
+      class_2_sort_result_drink = $(".js-sortable_class_2--drink").sortable("toArray", { attribute: 'id'}).
+      class_3_sort_result = $(".js-sortable_class_3").sortable("toArray", { attribute: 'id'});
   $("#class_2_sort_result_food").val(class_2_sort_result_food);
   $("#class_2_sort_result_drink").val(class_2_sort_result_drink);
   $("#class_3_sort_result").val(class_3_sort_result);
@@ -263,9 +255,9 @@ $(document).on("click", ".menu_box--class_3__decrease", function () {
 
 // lightboxを表示する処理
 $(document).on("click", ".js-show__lightbox", function () {
-  var show = $(this).data('show');
-  var lightbox = $(".lightbox").css("display")
-  var wrapper = $('[data-target="' + show + '"]').css("display")
+  var show = $(this).data('show'),
+  lightbox = $(".lightbox").css("display"),
+  wrapper = $('[data-target="' + show + '"]').css("display")
   $(".lightbox").children().css("display", "none");
   if(lightbox == "none"){
     $.when($(".lightbox").css("display", "flex")).done(function(){
@@ -302,10 +294,10 @@ $(document).on("click", ".lightbox__back", function () {
 
 // QRコードがなかった場合に、QRコードを生成する処理
 $(document).on("click", ".js-show__qrcode", function () {
-  var qrcode = $(this).data('qrcode');
-  var qrcode_obj = $('[data-target="' + qrcode + '"]')
-  var one_time_password = $('[data-target="' + qrcode + '"]').data('one_time_password');
-  var qrcode_url = location.protocol + '//' + location.host + '/qrcode/'
+  var qrcode = $(this).data('qrcode'),
+      qrcode_obj = $('[data-target="' + qrcode + '"]'),
+      one_time_password = $('[data-target="' + qrcode + '"]').data('one_time_password'),
+      qrcode_url = location.protocol + '//' + location.host + '/qrcode/'
 
   $(".wrapper--qrcode").children().css("display", "none")
   $("#container_" + qrcode).css("display", "block")
