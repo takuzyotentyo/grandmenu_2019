@@ -1,23 +1,3 @@
-//ログイン時のフォームに関するjs
-$(function(){
-  $(".js-registration").click(function(){
-    $.when($(".js-form--login").slideUp()
-      ).done(function() {
-    $(".js-form--registration").slideDown();
-    });
-  });
-});
-
-$(function(){
-  $(".js-login").click(function(){
-    $.when($(".js-form--registration").slideUp()
-      ).done(function() {
-    $(".js-form--login").slideDown();
-    });
-  });
-});
-
-
 // 読み込んだあとにローカライズに関するjs
 $(document).ready(function(){
   var pathname = location.pathname,
@@ -88,11 +68,24 @@ $(document).ready(function(){
 });
 
 
+// containerの表示に関するjs
+$(document).on("click", ".js-show__container", function () {
+  var show = $(this).data('container'),
+      target = $('[data-target="' + show + '"]').attr("class"),
+      siblings = $('[data-target="' + show + '"]').siblings('[data-target]').attr("class")
+  $.when(
+    $('[data-target="' + show + '"]').siblings('[data-target]').slideUp())
+  .done(function(){
+    $('[data-target="' + show + '"]').slideDown()
+  });
+});
+
+
 //サイドメニュー表示に関するjs
 $(document).on('click', '.js-header__menu', function(){
-//レスポンシブ対応のための閾値
+  //レスポンシブ対応のための閾値
   var device_width = $(window).width()
-// サイドメニューを隠す処理は同じ
+  // サイドメニューを隠す処理は同じ
     if($(this).hasClass("js-header__menu--doing")){
       $(this).removeClass("js-header__menu--doing");
       $("body").removeClass("overflow-hidden"); //サイドメニューが表示されることで起こるレイアウトの崩れのhiddenを解除
@@ -131,7 +124,7 @@ $(document).on('click', '.js-header__menu', function(){
 });
 
 
-//グローバルナビの小メニュー表示に関するjs_テスト
+//グローバルナビの小メニュー表示に関するjs
 $(document).on('click', '.side_menu_1', function(){
   if($(this).children('.icon_pulus').hasClass("js-icon_pulus--doing")){
     $(this).children().removeClass("js-icon_pulus--doing");
@@ -142,18 +135,6 @@ $(document).on('click', '.side_menu_1', function(){
     $(this).css("background-color","#072A24");
     $(this).next(".side_menu_2").slideDown();
   };
-});
-
-// 中分類類メニュー表示
-$(document).on("click", ".js-show__container", function () {
-  var show = $(this).data('container'),
-      target = $('[data-target="' + show + '"]').attr("class"),
-      siblings = $('[data-target="' + show + '"]').siblings('[data-target]').attr("class")
-  $.when(
-    $('[data-target="' + show + '"]').siblings('[data-target]').slideUp())
-  .done(function(){
-    $('[data-target="' + show + '"]').slideDown()
-  });
 });
 
 // 小分類メニューを表示する

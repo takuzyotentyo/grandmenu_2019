@@ -1,36 +1,15 @@
-
-<!doctype html>
-<html lang="ja">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width">
-  <title>Ground Menu.com</title>
-  <link rel="icon" href="../static/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../static/css/reset.css">
-  <link rel="stylesheet" href="../static/scss/style.css">
-  <script src="../static/js/jquery-3.4.1.min.js"></script>
-  <script src="../static/js//jQuery UI - v1.11.3 - 2015-02-12.js"></script>
-  <script src="../static/js/script.js"></script>
-  <title>GroundMenu.com Login</title>
-</head>
-
-<body>
-  <div class="wrapper--header">
-    <a href="/" class="header__title">Ground Menu.com</a>
-  </div>
-
-  <div class="wrapper--main">
+{% extends "base.html" %}
+{% block global_navi %}
     <div class="wrapper--login">
       <div class="radio_button--login">
-        <input type="radio" id="login" class="js-login radio_button--login__radio" name="login_or_registration" value="login" checked="true">
+        <input type="radio" id="login" class="js-show__container radio_button--login__radio" name="login_or_registration" value="login" checked="true" data-container="login_form">
           <label for="login">ログイン</label>
 
-        <input type="radio" id="registration" class="js-registration radio_button--login__radio" name="login_or_registration" value="registration">
+        <input type="radio" id="registration" class="js-show__container radio_button--login__radio" name="login_or_registration" value="registration" data-container="registration_form">
           <label for="registration">登録</label>
       </div>
 
-      <form class="js-form--login form--login" action="/login" method="post">
+      <form class="js-form--login form--login" action="/login" method="post" data-target="login_form">
         <input class="text_box--small" type="email" name="e_mail" placeholder="ログインメールアドレス" required>
         <input class="text_box--small" type="password" name="password" placeholder="password" required>
         <div class="error">{{session.error}}</div>
@@ -40,7 +19,7 @@
         </button>
       </form>
 
-      <form class="js-form--registration form--registration form_registration" action="/create_account" method="post">
+      <form class="js-form--registration form--registration form_registration" action="/create_account" method="post" data-target="registration_form">
         <input class="text_box--small" type="email" name="e_mail" placeholder="登録用メールアドレス" required>
         <input class="text_box--small" type="password" name="password" placeholder="password" required>
         <div class="error">{{session.error}}</div>
@@ -51,6 +30,4 @@
       </form>
       <div class="picture--base"></div>
     </div>
-</div>
-</body>
-</html>
+{% endblock %}
