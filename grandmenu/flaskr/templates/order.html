@@ -1,4 +1,4 @@
-{% extends "base--user.html" %}
+{% extends "base.html" %}
 {% block global_navi %}
 <!-- class_2 = db.session.query(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2) -->
 <!-- class_3 = db.session.query(Menu.MENU_ID, Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_3_ID, Menu.CLASS_3, Menu.PRICE) -->
@@ -75,6 +75,13 @@
     <span>会計</span>
   </div>
 </div>
+
+<div class="wrapper--invitation" data-target="invitation">
+  <!-- data-target="qrcode_{{table_number[0]}}" data-one_time_password="{{one_time_password[0]}}" -->
+  <div id="container_qrcode_{{table_number}}" data-target="qrcode_{{table_number}}" data-one_time_password="{{one_time_password}}">
+    <div class="text__title">Table {{table_number}}</div>
+  </div>
+</div>
 <!-- /order_history -->
 <div class="lightbox__back" data-target="lightbox_always_show">></div>
 
@@ -82,6 +89,7 @@
 
 <div class="container--controller">
   <div class="button__order_history js-show__lightbox" data-show="order_history"></div>
+  <div class="button__invitation js-show__lightbox js-show__qrcode" data-show="invitation" data-qrcode="qrcode_{{table_number}}"></div>
 </div>
 {% endblock %}
 
