@@ -19,6 +19,9 @@ import gevent
 from gevent import monkey
 monkey.patch_all()
 
+#メール設定
+from flask_mail import Mail
+
 #Flaskの名前空間作成
 app = Flask(__name__)
 
@@ -41,7 +44,7 @@ app.config['FONTS_DIR'] = os.path.dirname(os.path.abspath(__file__)) + "/static/
 db = SQLAlchemy(app)
 
 #モデルの読み込み
-from flaskr.models import Store, Staff, Menu, Table, Order
+from flaskr.models import Store, Staff, Menu, Table, Order, RegistrationState
 
 #blueprint読み込み---S
 #他のモジュールをレンダリングするために必要
@@ -59,6 +62,11 @@ admin.add_view(ModelView(Staff, db.session))
 admin.add_view(ModelView(Menu, db.session))
 admin.add_view(ModelView(Table, db.session))
 admin.add_view(ModelView(Order, db.session))
+admin.add_view(ModelView(RegistrationState, db.session))
+
+
+#メールの名前空間作成
+mail = Mail(app)
 
 async_mode='gevent'
 # websocketは、socketio.run(app, debug=True)で動くため(本ファイル最下部参照)、run.pyに書く(いい方法があったら書き直す)
