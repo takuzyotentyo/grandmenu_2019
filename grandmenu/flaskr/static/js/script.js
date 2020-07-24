@@ -169,7 +169,7 @@ $(document).on('click', '.button__sortable', function() {
 
 $(document).on("click", "#sort_submit", function () {
   var class_2_sort_result_food = $(".js-sortable_class_2--food").sortable("toArray", { attribute: 'id'}),
-      class_2_sort_result_drink = $(".js-sortable_class_2--drink").sortable("toArray", { attribute: 'id'}).
+      class_2_sort_result_drink = $(".js-sortable_class_2--drink").sortable("toArray", { attribute: 'id'}),
       class_3_sort_result = $(".js-sortable_class_3").sortable("toArray", { attribute: 'id'});
   $("#class_2_sort_result_food").val(class_2_sort_result_food);
   $("#class_2_sort_result_drink").val(class_2_sort_result_drink);

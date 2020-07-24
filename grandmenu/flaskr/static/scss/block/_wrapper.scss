@@ -159,12 +159,13 @@
 		padding: 25px 0 170px 0;
 	}
 	&--sales_books{
-		display: block;
+		display: flex;
 		position: relative;
 		flex-flow: column;
 		align-items: center;
 		width: 100%;
-		padding: 25px auto 170px auto;
+		height: 100%;
+		padding: 25px 0 170px 0;
 		background: rgba($color-active,0.75);
 		overflow-y: scroll;
 	}

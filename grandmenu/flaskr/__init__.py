@@ -74,5 +74,5 @@ socketio=SocketIO(app, async_mode=async_mode, manage_session=False)
 
 
 #設定反映後に読み込む
-from flaskr import routes, SocketAPI
-# from flaskr import routes_test, SocketAPI_test
+# from flaskr import routes, SocketAPI
+from flaskr import routes_test, SocketAPI_test

@@ -1290,7 +1290,9 @@ blockのインポート
   padding: 25px 0 170px 0; }
 
 .wrapper--sales_books {
-  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   position: relative;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -1300,7 +1302,8 @@ blockのインポート
   -ms-flex-align: center;
   align-items: center;
   width: 100%;
-  padding: 25px auto 170px auto;
+  height: 100%;
+  padding: 25px 0 170px 0;
   background: rgba(17, 17, 17, 0.75);
   overflow-y: scroll; }
 
@@ -2429,7 +2432,9 @@ blockのインポート
   -ms-flex-pack: justify;
   justify-content: space-between;
   width: 85%;
-  max-width: 350px; }
+  max-width: 350px;
+  -ms-flex-negative: 0;
+  flex-shrink: 0; }
   .sales_book--header {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -2439,7 +2444,9 @@ blockのインポート
     justify-content: space-between;
     width: 85%;
     max-width: 350px;
-    border-bottom: double 3px #ffffff; }
+    border-bottom: double 3px #ffffff;
+    -ms-flex-negative: 0;
+    flex-shrink: 0; }
   .sales_book--total {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -2449,7 +2456,9 @@ blockのインポート
     justify-content: space-between;
     width: 85%;
     max-width: 350px;
-    border-top: solid 3px #ffffff; }
+    border-top: solid 3px #ffffff;
+    -ms-flex-negative: 0;
+    flex-shrink: 0; }
   .sales_book__item {
     white-space: nowrap;
     padding-left: 10px;

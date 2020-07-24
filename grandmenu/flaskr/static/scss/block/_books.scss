@@ -14,12 +14,14 @@
   justify-content: space-between;
   width: 85%;
   max-width: 350px;
+  flex-shrink: 0;
   &--header{
     display: flex;
     justify-content: space-between;
     width: 85%;
     max-width: 350px;
     border-bottom: double 3px $text-color-main;
+    flex-shrink: 0;
   }
   &--total{
     display: flex;
@@ -27,6 +29,7 @@
     width: 85%;
     max-width: 350px;
     border-top: solid 3px $text-color-main;
+    flex-shrink: 0;
   }
   &__item{
     white-space: nowrap;
