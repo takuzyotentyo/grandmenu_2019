@@ -54,7 +54,7 @@ def one_time_password():
 def group_id():
     store_id = session['store_id']
     table_number = session['table_number']
-    group_id_max=db.session.query(func.max(Order.GROUP_ID)).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, ORDER_STATUS=6).scalar()
+    group_id_max = db.session.query(func.max(Order.GROUP_ID)).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, ORDER_STATUS=6).scalar()
     if group_id_max is None:
         group_id=1
     else:
