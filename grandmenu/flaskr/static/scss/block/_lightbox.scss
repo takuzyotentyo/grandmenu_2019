@@ -13,6 +13,7 @@
 	// padding:5px 0 100px 0;
 	align-content: center;
 	justify-content: center;
+	backdrop-filter: blur(5px);
 }
 
 .lightbox--ws_error{
@@ -26,6 +27,7 @@
 	left: 100%;
 	visibility: hidden;
 	background: rgba($color-active,0.5);
+	backdrop-filter: blur(5px);
 	&__wi-fi{
 		width: 100px;
 		height: 100px;
