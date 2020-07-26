@@ -63,7 +63,7 @@ $(document).ready(function(){
       table_number_obj.prop("checked", true);
       table_number_obj.parent().next(".text__body").css("visibility","visible")
       $('.wrapper--qrcode').append(
-        '<div id="container_qrcode_' + table_number + '" data-target="qrcode_' + table_number + '" data-one_time_password="' + one_time_password + '"></div>')
+        '<div class="container--kitchen_qrcode" id="container_qrcode_' + table_number + '" data-target="qrcode_' + table_number + '" data-one_time_password="' + one_time_password + '"></div>')
       $("#container_qrcode_" + table_number)
         .append(
           '<div class="text__title">Table ' + table_number + '</div>' +

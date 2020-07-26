@@ -34,4 +34,8 @@
 		padding-top: 20px;
 		backdrop-filter: blur(5px);
 	}
+	&--kitchen_qrcode{
+		display: flex;
+		flex-flow: column;
+	}
 }

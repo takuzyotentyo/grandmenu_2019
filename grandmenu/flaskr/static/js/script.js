@@ -281,7 +281,7 @@ $(document).on("click", ".js-show__qrcode", function () {
       qrcode_url = location.protocol + '//' + location.host + '/qrcode/'
 
   $(".wrapper--qrcode").children().css("display", "none")
-  $("#container_" + qrcode).css("display", "block")
+  $("#container_" + qrcode).css("display", "")
 
   if($("#" + qrcode).length){
   }else{

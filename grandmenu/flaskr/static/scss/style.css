@@ -2125,6 +2125,15 @@ blockのインポート
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px); }
 
+.container--kitchen_qrcode {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column;
+  flex-flow: column; }
+
 /*====================
 サイトの基本設定
 ====================*/
