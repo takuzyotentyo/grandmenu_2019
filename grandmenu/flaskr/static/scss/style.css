@@ -1792,7 +1792,7 @@ blockのインポート
   cursor: pointer;
   width: 250px;
   height: 50px;
-  margin: 10px calc(50% - 125px) 10px calc(50% - 125px);
+  margin: 10px calc(50% - 125px);
   border-radius: 5px;
   border-style: none; }
   .form__button > span {

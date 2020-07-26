@@ -12,7 +12,7 @@ import qrcode as qr
 from PIL import Image, ImageDraw, ImageFont
 
 # メニュー操作関連(秋吉使用)
-from flask import session
+from flask import session, redirect
 from flaskr.models import Store, Staff, Menu, Table, Order
 from flask_sqlalchemy import SQLAlchemy
 from flaskr import db
@@ -54,7 +54,9 @@ def one_time_password():
 def group_id():
     store_id = session['store_id']
     table_number = session['table_number']
-    group_id_max = db.session.query(func.max(Order.GROUP_ID)).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, ORDER_STATUS=6).scalar()
+    group_id_max = db.session.query(func.max(Order.GROUP_ID)).\
+        filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, ORDER_STATUS=6).\
+        scalar()
     if group_id_max is None:
         group_id=1
     else:
@@ -63,52 +65,70 @@ def group_id():
     group_id = session['group_id']
     return group_id
 
+def menu_id_check(menu_id):
+    store_id = session['store_id']
+    try:
+        menu_id_check = db.session.query(Munu).\
+        filter_by(STORE_ID=store_id, MENU_ID=menu_id).\
+        one()
+    except:
+        return redirect('/logout')
+
+def order_id_check(order_id):
+    store_id = session['store_id']
+    table_number = session['table_number']
+    group_id = session['group_id']
+    try:
+        order_id_check = db.session.query(Order).\
+        filter_by(
+            STORE_ID=store_id,
+            TABLE_NUMBER=table_number,
+            GROUP_ID=group_id,
+            MENU_ID=menu_id).\
+        one()
+    except:
+        return redirect('/logout')
+
+
 # どのグループの会計なのかを会計直前に判別するための
 def group_id_for_kitchin(table_number):
     store_id = session['store_id']
-    print('table_numberは')
-    print(table_number)
-    print('store_idは')
-    print(store_id)
     group_id_max=db.session.query(func.max(Order.GROUP_ID)).filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, ORDER_STATUS=6).scalar()
     if group_id_max is None:
         group_id=1
-        print('group_idは')
-        print(group_id)
     else:
         group_id=group_id_max + 1
-        print('group_idは')
-        print(group_id)
     return group_id
 
-# 商品数を求める関数、oder_statusの値によって、カートの中身や、注文済み、決済済みなどの値を求められる
-def total_quantity():
-    store_id = session['store_id']
-    table_number = session['table_number']
-    group_id = session['group_id']
-    order_status = 0
-    total_quantity = db.session.query(func.sum(Order.ORDER_QUANTITY)).\
-        filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=order_status).\
-        scalar()
-    # 該当情報が1つもない場合、返り値がNoneになるので、その場合は0を代入する
-    if total_quantity is None:
-        total_quantity = 0
-    return total_quantity
-
 # テーブル単位の商品情報を求める関数、oder_statusの値によって、カートの中身や、注文済み、決済済みなどの値を求められる
-def order_list(order_status):
-    store_id = session['store_id']
-    table_number = session['table_number']
-    group_id = session['group_id']
-    order_list = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY).\
-    join(Order, Order.MENU_ID==Menu.MENU_ID).\
-    filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=order_status).\
-    all()
-    return order_list
+# def order_list(order_status):
+#     store_id = session['store_id']
+#     table_number = session['table_number']
+#     group_id = session['group_id']
+#     order_list = db.session.query(
+#         Order.ORDER_ID,
+#         Menu.CLASS_1,
+#         Menu.CLASS_2,
+#         Menu.CLASS_3,
+#         Menu.PRICE,
+#         Order.ORDER_QUANTITY,
+#     ).\
+#     join(Order, Order.MENU_ID==Menu.MENU_ID).\
+#     filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=order_status).\
+#     all()
+#     return order_list
 
 # 単一の商品を求める関数
 def order_item(order_id):
-    order_item = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Menu.PRICE, Order.ORDER_QUANTITY).\
+    order_item = db.session.query(
+        Order.ORDER_ID,
+        Menu.CLASS_1,
+        Menu.CLASS_2,
+        Menu.CLASS_3,
+        Menu.PRICE,
+        Order.ORDER_QUANTITY,
+        Order.ORDER_STATUS
+    ).\
     join(Order, Order.MENU_ID==Menu.MENU_ID).\
     filter_by(ORDER_ID=order_id).\
     all()
@@ -121,10 +141,23 @@ def order_list_for_kitchin(store_id, order_status):
     all()
     return order_list
 
+# キッチンに伝える情報を抽出
 def order_item_for_kitchin(store_id, table_number, group_id, order_status):
-    order_list = db.session.query(Order.ORDER_ID, Menu.CLASS_1, Menu.CLASS_2, Menu.CLASS_3, Order.TABLE_NUMBER, Order.ORDER_QUANTITY).\
+    order_list = db.session.query(
+        Order.ORDER_ID,
+        Menu.CLASS_1,
+        Menu.CLASS_2,
+        Menu.CLASS_3,
+        Order.TABLE_NUMBER,
+        Order.ORDER_QUANTITY
+    ).\
     join(Order, Order.MENU_ID==Menu.MENU_ID).\
-    filter_by(STORE_ID=store_id, TABLE_NUMBER=table_number, GROUP_ID=group_id, ORDER_STATUS=order_status).\
+    filter_by(
+        STORE_ID=store_id,
+        TABLE_NUMBER=table_number,
+        GROUP_ID=group_id,
+        ORDER_STATUS=order_status
+    ).\
     all()
     return order_list
 

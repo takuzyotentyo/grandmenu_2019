@@ -192,6 +192,7 @@ def show_menu():
         return redirect("/logout")
     else:
         session['group_id'] = FlaskAPI.group_id()
+        session['room'] = str(session['store_id']) + '_' + str(session['table_number']) + '_' + str(session['group_id'])
         store_id = session['store_id']
         class_2 = db.session.query(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).filter(Menu.STORE_ID==store_id).\
             group_by(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).\
@@ -382,6 +383,7 @@ def order_menu():
         store_id = session['store_id']
         table_number = session['table_number']
         session['group_id'] = FlaskAPI.group_id()
+        session['room'] = str(session['store_id']) + '_' + str(session['table_number']) + '_' + str(session['group_id'])
         class_2 = db.session.query(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).filter(Menu.STORE_ID==store_id).\
             group_by(Menu.CLASS_1_ID, Menu.CLASS_2_ID, Menu.CLASS_2).\
             order_by(Menu.CLASS_2_ID).\
