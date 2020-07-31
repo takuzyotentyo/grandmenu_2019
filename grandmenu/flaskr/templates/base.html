@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="UTF-8" />
+<head>
+  <meta charset="UTF-8" />
 
-    <!-- スマホでtouchイベントの処理を早くするためのメタタグ -->
-    <meta name="viewport" content="width=device-width">
+  <!-- スマホでtouchイベントの処理を早くするためのメタタグ -->
+  <meta name="viewport" content="width=device-width">
 
-    <title>Ground Menu.com</title>
+  <title>Ground Menu.com</title>
 
-    <!-- faviconの設定 -->
-    <link rel="icon" href="../static/img/favicon.svg" type="image/svg+xml">
+  <!-- faviconの設定 -->
+  <link rel="icon" href="../static/img/favicon.svg" type="image/svg+xml">
 
-    <!-- cssの設定 -->
-    <link rel="stylesheet" href="../static/css/reset.css">
-    <link rel="stylesheet" href="../static/scss/style.css">
+  <!-- cssの設定 -->
+  <link rel="stylesheet" href="../static/css/reset.css">
+  <link rel="stylesheet" href="../static/scss/style.css">
 
-    <!-- jsの設定 -->
-    <script src="../static/js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
-    <script src="../static/js/jQuery_UI-v1.11.3.js"></script>
-    <script src="../static/js/jquery.ui.touch-punch.min.js"></script>
-    <script type="text/javascript" src="../static/js/jquery.qrcode.min.js"></script>
-    <script src="../static/js/script.js"></script>
-    <script src="../static/js/sales_management.js"></script>
-  </head>
+  <!-- jsの設定 -->
+  <script src="../static/js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+  <script src="../static/js/jQuery_UI-v1.11.3.js"></script>
+  <script src="../static/js/jquery.ui.touch-punch.min.js"></script>
+  <script type="text/javascript" src="../static/js/jquery.qrcode.min.js"></script>
+  <script src="../static/js/script.js"></script>
+  <script src="../static/js/sales_management.js"></script>
+</head>
 
-  <body class="background_color">
-    <!-- <div class="background_color"> -->
+<body>
+  <div class="background_color">
     <div class="wrapper--header">
-      <a href="/" class="header__title">Ground Menu.com</a>
-    </div>
+    <a href="/" class="header__title">Ground Menu.com</a>
+  </div>
 
-  <!-- メインメニュー -->
-      <div class="wrapper--main">
-        {% block global_navi %}{% endblock %}
-      </div>
-    <!-- </div> -->
-  </body>
+<!-- メインメニュー -->
+    <div class="wrapper--main">
+      {% block global_navi %}{% endblock %}
+    </div>
+  </div>
+</div>
+</body>
 
 </html>
