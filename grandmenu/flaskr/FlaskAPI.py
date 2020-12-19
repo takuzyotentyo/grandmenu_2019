@@ -4,9 +4,6 @@ from flaskr import app
 #パスワードハッシュ関連
 from werkzeug.security import generate_password_hash, check_password_hash
 
-#ランダム文字列作成
-import random, string
-
 #QRコード関連
 import qrcode as qr
 from PIL import Image, ImageDraw, ImageFont
@@ -27,19 +24,6 @@ def hash_password(original_pass):
 #ハッシュパスワードと元のパスワードを比較する関数
 def verify_password(hash_pass, original_pass):
     return check_password_hash(hash_pass, original_pass)
-
-#ランダムな文字列を作成する関数
-#args=作成文字数
-def random_str(n):
-   return ''.join(random.choices(string.ascii_letters + string.digits, k=n))
-
-def check_mail_token(date_time):
-    #1日以上経過している場合はNG
-    if ((datetime.datetime.now().timestamp() - date_time.timestamp()) < 86400):
-        ret = True
-    else:
-        ret = False
-    return ret
 
 def login_check():
     if 'login' not in session:

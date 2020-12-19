@@ -2,7 +2,7 @@
 from flaskr import db
 from flaskr import app
 # このファイルでで必要なモジュール
-from sqlalchemy import Column, Integer, String, DateTime, Boolean
+from sqlalchemy import Column, Integer, String, DateTime
 
 from flask_login import LoginManager, UserMixin
 
@@ -16,16 +16,6 @@ class Store(db.Model):
 
     def __repr__(self):
         return "(STORE_ID='%s', STORE_NAME='%s', TABLES='%s')" % (self.STORE_ID, self.STORE_NAME, self.TABLES)
-#仮登録/本登録状態
-class RegistrationState(db.Model):
-    __tablename__ = 'registrationstates'
-
-    REGISTRATION_ID = db.Column(Integer, primary_key=True)
-    TOKEN = db.Column(String(255), unique=True)
-    DATE_TIME = Column(DateTime)
-    E_MAIL = db.Column(String(255), unique=True)
-    PASSWORD = db.Column(String(255))
-    STATE = Column(Boolean)
 
 class Staff(UserMixin, db.Model):
     __tablename__ = 'staffs'

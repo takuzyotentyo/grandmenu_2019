@@ -2,10 +2,10 @@
 from flask import render_template, session, redirect, request
 
 #__init__.pyから設定情報を引き継ぐ
-from flaskr import app, db, FlaskAPI, mail
+from flaskr import app, db, FlaskAPI
 
 #modelの読み込み
-from flaskr.models import Store, Staff, Menu, Table, Order, RegistrationState
+from flaskr.models import Store, Staff, Menu, Table, Order
 
 # このファイルで必要なモジュール
 from sqlalchemy.orm.exc import NoResultFound
@@ -16,14 +16,6 @@ from sqlalchemy import func, or_
 
 from flask_login import login_user, login_required, logout_user
 #デコレーター(@login_required)を使えばログインしていないユーザーのページ遷移を無効にできる。
-
-#メール関連のモジュール
-from flask_mail import Message
-import sendgrid
-from sendgrid.helpers.mail import Mail, Email, Content
-
-from datetime import datetime
-
 
 #会員情報を登録
 @app.route('/create_account', methods = ['POST'])
@@ -49,71 +41,16 @@ def create_account():
             return render_template('error_1.html')
 # 上記2パターン以外の場合、純粋な新規登録なので下記で処理
         except:
-            #if 0   問題なければ消してOK
-            # db.session.add(Staff(E_MAIL=e_mail, PASSWORD=password, STAFF_CLASS_ID=1, STAFF_CLASS="Representative")) #代表者として登録。その際のIDは1とする。
-            # store_create=db.session.query(Staff).filter(Staff.E_MAIL==e_mail).one() #登録した代表者のレコードを抽出
-            # store_create.STORE_ID = store_create.STAFF_ID
-            # store_id=store_create.STAFF_ID  #登録した代表者のSTAFF_IDを取得
-            # db.session.add(Store(STORE_ID=store_id))    #代表者が登録された場合、新しいお店としてstoresテーブルに登録
-            # db.session.commit()
-            # db.session.close()
-            #endif
-            mail_token = FlaskAPI.random_str(10)
-            db.session.add(RegistrationState(TOKEN=mail_token, DATE_TIME=datetime.now(), E_MAIL=e_mail, PASSWORD=password, STATE=False))
-            db.session.commit()
-            db.session.close()
-
-            # sg = sendgrid.SendGridAPIClient(apikey="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")
-#API化(メールサーバー不調のため一旦未実装)
-            print("/create_account/{}".format(mail_token))
-            # sg = sendgrid.SendGridAPIClient(apikey="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")
-            # from_email = Email("xxx@gmail.com")
-            # subject = "【仮登録】Grandmenu.com"
-            # to_email = Email("xxx@yahoo.co.jp")
-            # content = Content("text/plain", "以下のURLから本登録へお進みください \
-            # https://takuzyotentyo.herokuapp.com/" + mail_token \
-            # )
-            # mail = Mail(from_email, subject, to_email, content)
-            # response = sg.client.mail.send.post(request_body=mail.get())
-            # print(response.status_code)
-            # print(response.body)
-            # print(response.headers)
-
-        return render_template('login.html')
-
-@app.route('/create_account/<mail_token>')
-def valid_account(mail_token):
-    try:
-        #tokenが存在しない場合はexceptへ
-        check_token = db.session.query(RegistrationState).filter(RegistrationState.TOKEN==mail_token).one()
-        #tokenの有効期限チェック→有効期限切れならexceptへ
-        if (True == FlaskAPI.check_mail_token(check_token.DATE_TIME)):
-            #OK処理
-            check_token.STATE = True
-
-            db.session.add(Staff(E_MAIL=check_token.E_MAIL, PASSWORD=check_token.PASSWORD, STAFF_CLASS_ID=1, STAFF_CLASS="Representative")) #代表者として登録。その際のIDは1とする。
-            store_create=db.session.query(Staff).filter(Staff.E_MAIL==check_token.E_MAIL).one() #登録した代表者のレコードを抽出
+            db.session.add(Staff(E_MAIL=e_mail, PASSWORD=password, STAFF_CLASS_ID=1, STAFF_CLASS="Representative")) #代表者として登録。その際のIDは1とする。
+            store_create=db.session.query(Staff).filter(Staff.E_MAIL==e_mail).one() #登録した代表者のレコードを抽出
             store_create.STORE_ID = store_create.STAFF_ID
             store_id=store_create.STAFF_ID  #登録した代表者のSTAFF_IDを取得
             db.session.add(Store(STORE_ID=store_id))    #代表者が登録された場合、新しいお店としてstoresテーブルに登録
-
             db.session.commit()
             db.session.close()
-        else:
-            #例外発生させる
-            print("debug: MAIL_TOKEN有効期限切れ")
-            # raise Exception
-            # <TO DO> 画面追加
-            return "MAIL_TOKEN有効期限切れ"
+        return render_template('login.html')
 
 
-    except:
-        import traceback
-        traceback.print_exc()
-        # <TO DO> 画面追加
-        return "無効なMAIL TOKEN"
-
-    return redirect("/logout")
 
 # ログイン
 @app.route("/login", methods = ['POST', 'GET'])
