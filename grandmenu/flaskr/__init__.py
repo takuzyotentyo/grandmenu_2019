@@ -25,7 +25,7 @@ app = Flask(__name__)
 #-----config設定---S
 app.config['SECRET_KEY'] = 'secret key'
 # ローカルのDBを使う場合
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://localhost/postgres"
+# app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://localhost/postgres"
 # herokuにデプロイする場合
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://gimipqcrjisthu:810f3e1e7ffdabc98387f661faedd64928380107b9312a8a604787ae9b77b78d@ec2-54-152-40-168.compute-1.amazonaws.com:5432/d116vk5fkmda9j"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -67,4 +67,3 @@ socketio=SocketIO(app, async_mode=async_mode, manage_session=False)
 
 #設定反映後に読み込む
 from flaskr import routes, SocketAPI
-# from flaskr import routes_test, SocketAPI_test

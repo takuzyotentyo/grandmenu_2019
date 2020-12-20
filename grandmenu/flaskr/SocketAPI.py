@@ -33,7 +33,8 @@ def order_list_show():
 	table_number = session['table_number']
 	group_id = session['group_id']
 	room = session['room']
-
+	print("roomナンバーは")
+	print(room)
 	join_room(room)
 
 	order_list = db.session.\

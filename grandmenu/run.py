@@ -4,5 +4,5 @@ sys.dont_write_bytecode=True
 from flaskr import app, socketio
 
 if __name__ == '__main__':
-	socketio.run(app, debug=True)
-	# socketio.run(app)
+	# socketio.run(app, debug=True)
+	socketio.run(app)
